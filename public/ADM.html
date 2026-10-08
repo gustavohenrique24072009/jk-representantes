@@ -1,0 +1,4908 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ADM | Sistema de Representantes</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --fundo: #050b14;
+            --fundo-2: #091321;
+            --card: #0d1929;
+            --card-2: #101f33;
+            --card-hover: #142842;
+
+            --borda: rgba(255,255,255,.08);
+            --borda-forte: rgba(255,255,255,.13);
+
+            --azul: #1769ff;
+            --azul-claro: #5a97ff;
+            --azul-escuro: #0d47b8;
+
+            --texto: #f5f8fc;
+            --texto-secundario: #8fa1b8;
+
+            --verde: #28c76f;
+            --vermelho: #ff4d5e;
+            --amarelo: #ffbf3f;
+
+            --sombra: 0 20px 60px rgba(0,0,0,.28);
+            --sombra-forte: 0 25px 80px rgba(0,0,0,.42);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 85% -10%,
+                    rgba(23,105,255,.18),
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at 5% 50%,
+                    rgba(23,105,255,.06),
+                    transparent 28%
+                ),
+                var(--fundo);
+
+            color: var(--texto);
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            background:
+                linear-gradient(
+                    rgba(255,255,255,.015) 1px,
+                    transparent 1px
+                );
+
+            background-size: 100% 4px;
+
+            opacity: .12;
+
+            z-index: -1;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        button {
+            user-select: none;
+        }
+
+        /* =====================================================
+           TOPO
+        ===================================================== */
+
+        .topo {
+            height: 76px;
+
+            background:
+                rgba(5,12,22,.88);
+
+            border-bottom:
+                1px solid var(--borda);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 32px;
+
+            position: sticky;
+            top: 0;
+
+            z-index: 100;
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .marca {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo {
+            width: 44px;
+            height: 44px;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--azul),
+                    var(--azul-escuro)
+                );
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-weight: 900;
+            font-size: 14px;
+
+            letter-spacing: .5px;
+
+            box-shadow:
+                0 8px 28px rgba(23,105,255,.28);
+
+            border:
+                1px solid rgba(255,255,255,.12);
+        }
+
+        .marca-texto strong {
+            display: block;
+
+            font-size: 17px;
+
+            letter-spacing: .3px;
+        }
+
+        .marca-texto span {
+            display: block;
+
+            color: var(--texto-secundario);
+
+            font-size: 11px;
+
+            margin-top: 4px;
+        }
+
+        .acoes-topo {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .btn-topo {
+            border:
+                1px solid var(--borda);
+
+            background:
+                rgba(255,255,255,.035);
+
+            color: var(--texto);
+
+            padding: 10px 15px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .btn-topo:hover {
+            border-color:
+                rgba(23,105,255,.5);
+
+            background:
+                rgba(23,105,255,.09);
+
+            transform:
+                translateY(-1px);
+        }
+
+        .btn-sair {
+            color: #ff8b95;
+        }
+
+        .btn-sair:hover {
+            border-color:
+                rgba(255,77,94,.35);
+
+            background:
+                rgba(255,77,94,.08);
+        }
+
+        /* =====================================================
+           CONTEÚDO
+        ===================================================== */
+
+        .conteudo {
+            width:
+                min(
+                    1500px,
+                    calc(100% - 48px)
+                );
+
+            margin: 0 auto;
+
+            padding:
+                38px 0 80px;
+        }
+
+        .cabecalho-pagina {
+            margin-bottom: 32px;
+        }
+
+        .cabecalho-pagina h1 {
+            font-size: 32px;
+            line-height: 1.2;
+
+            margin-bottom: 8px;
+
+            letter-spacing: -.6px;
+        }
+
+        .cabecalho-pagina p {
+            color:
+                var(--texto-secundario);
+
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           TÍTULOS
+        ===================================================== */
+
+        .titulo-secao {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 16px;
+        }
+
+        .titulo-secao h2 {
+            font-size: 20px;
+            letter-spacing: -.2px;
+        }
+
+        .titulo-secao span {
+            color:
+                var(--texto-secundario);
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           PAINEL ESCOLA
+        ===================================================== */
+
+        .escola-painel {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(23,105,255,.16),
+                    rgba(8,21,37,.96)
+                );
+
+            border:
+                1px solid
+                rgba(23,105,255,.22);
+
+            border-radius: 22px;
+
+            padding: 28px;
+
+            margin-bottom: 22px;
+
+            box-shadow: var(--sombra);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .escola-painel::after {
+            content: "";
+
+            position: absolute;
+
+            width: 260px;
+            height: 260px;
+
+            right: -120px;
+            top: -130px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(23,105,255,.08);
+
+            filter: blur(5px);
+
+            pointer-events: none;
+        }
+
+        .escola-topo {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 20px;
+
+            margin-bottom: 25px;
+
+            position: relative;
+            z-index: 1;
+        }
+
+        .escola-topo h2 {
+            font-size: 24px;
+            margin-bottom: 7px;
+        }
+
+        .escola-topo p {
+            color:
+                var(--texto-secundario);
+
+            font-size: 13px;
+        }
+
+        .status-online {
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 8px 12px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(40,199,111,.08);
+
+            border:
+                1px solid
+                rgba(40,199,111,.18);
+
+            color: #73e8a7;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+        .bolinha {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background:
+                var(--verde);
+
+            box-shadow:
+                0 0 12px
+                rgba(40,199,111,.7);
+        }
+
+        .escola-indicadores {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4,1fr);
+
+            gap: 13px;
+
+            position: relative;
+            z-index: 1;
+        }
+
+        .indicador {
+            padding: 17px;
+
+            background:
+                rgba(0,0,0,.16);
+
+            border:
+                1px solid
+                rgba(255,255,255,.055);
+
+            border-radius: 14px;
+
+            transition: .2s;
+        }
+
+        .indicador:hover {
+            background:
+                rgba(255,255,255,.035);
+
+            border-color:
+                rgba(255,255,255,.10);
+        }
+
+        .indicador span {
+            color:
+                var(--texto-secundario);
+
+            display: block;
+
+            font-size: 11px;
+
+            margin-bottom: 7px;
+        }
+
+        .indicador strong {
+            font-size: 22px;
+        }
+
+        /* =====================================================
+           MÉTRICAS
+        ===================================================== */
+
+        .grid-escola {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5,minmax(0,1fr));
+
+            gap: 15px;
+
+            margin-bottom: 40px;
+        }
+
+        .card-metrica {
+            background:
+                linear-gradient(
+                    145deg,
+                    #102138,
+                    #0b1727
+                );
+
+            border:
+                1px solid var(--borda);
+
+            border-radius: 17px;
+
+            padding: 21px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(0,0,0,.17);
+
+            transition: .22s ease;
+
+            min-height: 130px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .card-metrica::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(23,105,255,.6),
+                    transparent
+                );
+
+            opacity: .5;
+        }
+
+        .card-metrica:hover {
+            transform:
+                translateY(-4px);
+
+            border-color:
+                rgba(23,105,255,.35);
+
+            box-shadow:
+                0 18px 45px
+                rgba(0,0,0,.25);
+        }
+
+        .metrica-label {
+            color:
+                var(--texto-secundario);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: .6px;
+        }
+
+        .metrica-valor {
+            font-size: 30px;
+
+            font-weight: 900;
+
+            margin-top: 14px;
+        }
+
+        .metrica-info {
+            color:
+                var(--texto-secundario);
+
+            font-size: 11px;
+
+            margin-top: 6px;
+        }
+
+        /* =====================================================
+           TURMAS
+        ===================================================== */
+
+        .secao-turmas {
+            margin-bottom: 42px;
+        }
+
+        .grid-turmas {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,minmax(0,1fr));
+
+            gap: 17px;
+        }
+
+        .card-turma {
+            background:
+                linear-gradient(
+                    145deg,
+                    var(--card-2),
+                    var(--card)
+                );
+
+            border:
+                1px solid var(--borda);
+
+            border-radius: 19px;
+
+            padding: 21px;
+
+            transition: .23s ease;
+
+            position: relative;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,.12);
+        }
+
+        .card-turma::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            width: 3px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--azul),
+                    #4d8dff
+                );
+
+            opacity: .85;
+        }
+
+        .card-turma:hover {
+            transform:
+                translateY(-5px);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #142842,
+                    #102038
+                );
+
+            border-color:
+                rgba(23,105,255,.38);
+
+            box-shadow:
+                0 20px 45px
+                rgba(0,0,0,.26);
+        }
+
+        .turma-cabecalho {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 12px;
+
+            align-items: flex-start;
+
+            margin-bottom: 18px;
+        }
+
+        .turma-nome {
+            font-size: 18px;
+
+            font-weight: 900;
+
+            letter-spacing: -.2px;
+        }
+
+        .turma-ano {
+            margin-top: 5px;
+
+            color:
+                var(--texto-secundario);
+
+            font-size: 12px;
+        }
+
+        .badge {
+            font-size: 9px;
+
+            font-weight: 900;
+
+            text-transform: uppercase;
+
+            padding: 6px 8px;
+
+            border-radius: 7px;
+
+            background:
+                rgba(23,105,255,.11);
+
+            color:
+                #78a9ff;
+
+            border:
+                1px solid
+                rgba(23,105,255,.18);
+
+            white-space: nowrap;
+        }
+
+        .turma-dados {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 10px;
+        }
+
+        .turma-dado {
+            background:
+                rgba(255,255,255,.025);
+
+            border:
+                1px solid
+                rgba(255,255,255,.035);
+
+            border-radius: 10px;
+
+            padding: 11px;
+        }
+
+        .turma-dado span {
+            display: block;
+
+            color:
+                var(--texto-secundario);
+
+            font-size: 11px;
+
+            margin-bottom: 5px;
+        }
+
+        .turma-dado strong {
+            font-size: 16px;
+        }
+
+        .turma-representante {
+            border-top:
+                1px solid var(--borda);
+
+            margin-top: 16px;
+
+            padding-top: 14px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            align-items: flex-end;
+        }
+
+        .rep-info {
+            min-width: 0;
+        }
+
+        .rep-label {
+            color:
+                var(--texto-secundario);
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            font-weight: 800;
+
+            letter-spacing: .4px;
+        }
+
+        .rep-nome {
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin-top: 4px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            max-width: 180px;
+        }
+
+        .turma-acoes {
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: flex-end;
+
+            gap: 9px;
+
+            flex-shrink: 0;
+        }
+
+        .ver-detalhes {
+            color:
+                #78a9ff;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+            cursor: pointer;
+
+            transition: .2s;
+        }
+
+        .ver-detalhes:hover {
+            color:
+                #a5c5ff;
+
+            transform:
+                translateX(2px);
+        }
+
+        .btn-excluir-turma {
+            border:
+                1px solid
+                rgba(255,77,94,.25);
+
+            background:
+                rgba(255,77,94,.07);
+
+            color:
+                #ff858f;
+
+            padding:
+                7px 10px;
+
+            border-radius: 8px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+
+            white-space: nowrap;
+        }
+
+        .btn-excluir-turma:hover {
+            background:
+                rgba(255,77,94,.18);
+
+            border-color:
+                rgba(255,77,94,.45);
+
+            color:
+                #ffb0b6;
+
+            transform:
+                translateY(-1px);
+        }
+
+        /* =====================================================
+           CADASTRO
+        ===================================================== */
+
+        .secao-cadastro {
+            margin-bottom: 42px;
+        }
+
+        .formulario-admin {
+            background:
+                linear-gradient(
+                    145deg,
+                    #0f1e31,
+                    #0b1727
+                );
+
+            border:
+                1px solid var(--borda);
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            box-shadow: var(--sombra);
+
+            max-width: 850px;
+        }
+
+        .cadastro-aviso {
+            display: flex;
+
+            gap: 12px;
+
+            align-items: flex-start;
+
+            background:
+                rgba(23,105,255,.06);
+
+            border:
+                1px solid
+                rgba(23,105,255,.16);
+
+            border-radius: 13px;
+
+            padding: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .cadastro-aviso strong {
+            display: block;
+
+            font-size: 13px;
+
+            margin-bottom: 5px;
+        }
+
+        .cadastro-aviso span {
+            color:
+                var(--texto-secundario);
+
+            font-size: 12px;
+
+            line-height: 1.55;
+        }
+
+        .campos-cadastro {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 18px;
+        }
+
+        .campo-admin {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+        }
+
+        .campo-admin label {
+            color:
+                var(--texto-secundario);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: .5px;
+        }
+
+        .campo-admin input {
+            width: 100%;
+
+            height: 45px;
+
+            border:
+                1px solid var(--borda);
+
+            border-radius: 10px;
+
+            background:
+                #081321;
+
+            color:
+                var(--texto);
+
+            padding:
+                0 13px;
+
+            outline: none;
+
+            font-size: 13px;
+
+            transition: .2s;
+        }
+
+        .campo-admin input:focus {
+            border-color:
+                var(--azul);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(23,105,255,.10);
+        }
+
+        .acoes-formulario {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 20px;
+        }
+
+        .btn-cadastrar,
+        .btn-limpar {
+            border: none;
+
+            border-radius: 10px;
+
+            padding:
+                12px 18px;
+
+            cursor: pointer;
+
+            font-weight: 800;
+
+            font-size: 13px;
+
+            transition: .2s;
+        }
+
+        .btn-cadastrar {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--azul),
+                    #0f5ae4
+                );
+
+            color: white;
+
+            box-shadow:
+                0 8px 20px
+                rgba(23,105,255,.18);
+        }
+
+        .btn-cadastrar:hover {
+            background:
+                linear-gradient(
+                    135deg,
+                    #3180ff,
+                    var(--azul)
+                );
+
+            transform:
+                translateY(-1px);
+        }
+
+        .btn-cadastrar:disabled {
+            opacity: .6;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+        .btn-limpar {
+            background:
+                #17263a;
+
+            color:
+                var(--texto-secundario);
+
+            border:
+                1px solid var(--borda);
+        }
+
+        .btn-limpar:hover {
+            color: white;
+
+            background:
+                #20334d;
+        }
+
+        .mensagem-cadastro {
+            display: none;
+
+            padding:
+                12px 14px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin-top: 15px;
+        }
+
+        .mensagem-cadastro.sucesso {
+            display: block;
+
+            color:
+                #78e6a7;
+
+            background:
+                rgba(40,199,111,.08);
+
+            border:
+                1px solid
+                rgba(40,199,111,.18);
+        }
+
+        .mensagem-cadastro.erro {
+            display: block;
+
+            color:
+                #ff8b95;
+
+            background:
+                rgba(255,77,94,.08);
+
+            border:
+                1px solid
+                rgba(255,77,94,.18);
+        }
+
+        /* =====================================================
+           REPRESENTANTES
+        ===================================================== */
+
+        .secao-representantes {
+            margin-bottom: 40px;
+        }
+
+        .tabela-container {
+            border:
+                1px solid var(--borda);
+
+            background:
+                var(--card);
+
+            border-radius: 18px;
+
+            overflow-x: auto;
+
+            box-shadow:
+                var(--sombra);
+        }
+
+        .tabela {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 750px;
+        }
+
+        .tabela th {
+            text-align: left;
+
+            padding:
+                15px 18px;
+
+            background:
+                #0a1727;
+
+            color:
+                var(--texto-secundario);
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .6px;
+        }
+
+        .tabela td {
+            padding:
+                16px 18px;
+
+            border-top:
+                1px solid var(--borda);
+
+            font-size: 13px;
+        }
+
+        .tabela tbody tr {
+            transition: .15s;
+        }
+
+        .tabela tbody tr:hover {
+            background:
+                rgba(255,255,255,.025);
+        }
+
+        .usuario {
+            color:
+                var(--texto-secundario);
+
+            font-family:
+                Consolas,
+                monospace;
+
+            font-size: 12px;
+        }
+
+        .status {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding:
+                6px 9px;
+
+            border-radius: 8px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+        }
+
+        .status.ativo {
+            color:
+                #75e6a7;
+
+            background:
+                rgba(40,199,111,.09);
+        }
+
+        .status.inativo {
+            color:
+                #ff858f;
+
+            background:
+                rgba(255,77,94,.09);
+        }
+
+        .btn-excluir-representante {
+            border:
+                1px solid
+                rgba(255,77,94,.22);
+
+            background:
+                rgba(255,77,94,.08);
+
+            color:
+                #ff858f;
+
+            border-radius: 8px;
+
+            padding:
+                7px 11px;
+
+            cursor: pointer;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            transition: .2s;
+        }
+
+        .btn-excluir-representante:hover {
+            background:
+                rgba(255,77,94,.18);
+
+            border-color:
+                rgba(255,77,94,.4);
+
+            transform:
+                translateY(-1px);
+        }
+
+        /* =====================================================
+           ESTADOS
+        ===================================================== */
+
+        .estado {
+            border:
+                1px dashed
+                rgba(255,255,255,.12);
+
+            background:
+                rgba(255,255,255,.015);
+
+            border-radius: 17px;
+
+            padding:
+                40px;
+
+            text-align: center;
+
+            color:
+                var(--texto-secundario);
+
+            line-height: 1.6;
+        }
+
+        .estado strong {
+            display: block;
+
+            color:
+                var(--texto);
+
+            font-size: 16px;
+
+            margin-bottom: 7px;
+        }
+
+        .loading {
+            animation:
+                pulsar 1.3s infinite;
+        }
+
+        @keyframes pulsar {
+
+            0%,
+            100% {
+                opacity: .5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+        }
+
+        /* =====================================================
+           MODAL
+        ===================================================== */
+
+        .modal {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 500;
+
+            background:
+                rgba(0,0,0,.72);
+
+            backdrop-filter:
+                blur(8px);
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+        .modal.aberto {
+            display: flex;
+        }
+
+        .modal-conteudo {
+            width:
+                min(
+                    950px,
+                    100%
+                );
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #0d1c2e,
+                    #081321
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,.10);
+
+            border-radius: 22px;
+
+            box-shadow:
+                var(--sombra-forte);
+        }
+
+        .modal-topo {
+            padding:
+                23px 25px;
+
+            border-bottom:
+                1px solid var(--borda);
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .modal-topo h2 {
+            font-size: 22px;
+        }
+
+        .modal-topo p {
+            color:
+                var(--texto-secundario);
+
+            font-size: 12px;
+
+            margin-top: 5px;
+        }
+
+        .fechar {
+            width: 36px;
+            height: 36px;
+
+            border-radius: 9px;
+
+            border:
+                1px solid var(--borda);
+
+            background:
+                #111f32;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 18px;
+
+            transition: .2s;
+        }
+
+        .fechar:hover {
+            background:
+                #1a2b42;
+
+            transform:
+                rotate(4deg);
+        }
+
+        .modal-corpo {
+            padding: 24px;
+        }
+
+        .detalhes-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4,1fr);
+
+            gap: 12px;
+
+            margin-bottom: 25px;
+        }
+
+        .detalhe-card {
+            padding: 15px;
+
+            border:
+                1px solid var(--borda);
+
+            background:
+                rgba(255,255,255,.025);
+
+            border-radius: 12px;
+        }
+
+        .detalhe-card span {
+            display: block;
+
+            color:
+                var(--texto-secundario);
+
+            font-size: 11px;
+
+            margin-bottom: 6px;
+        }
+
+        .detalhe-card strong {
+            font-size: 19px;
+        }
+
+        .lista-alunos {
+            border:
+                1px solid var(--borda);
+
+            border-radius: 14px;
+
+            overflow: hidden;
+        }
+
+        .lista-titulo {
+            padding:
+                13px 15px;
+
+            background:
+                #0f1e31;
+
+            font-weight: 800;
+
+            font-size: 13px;
+        }
+
+        .aluno-linha {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding:
+                12px 15px;
+
+            border-top:
+                1px solid var(--borda);
+
+            font-size: 13px;
+        }
+
+        .aluno-numero {
+            color:
+                var(--texto-secundario);
+
+            width: 28px;
+        }
+
+        .aluno-nome {
+            flex: 1;
+        }
+
+        /* =====================================================
+           RESPONSIVO
+        ===================================================== */
+
+        @media (max-width:1150px) {
+
+            .grid-escola {
+                grid-template-columns:
+                    repeat(3,1fr);
+            }
+
+            .grid-turmas {
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+        }
+
+        @media (max-width:800px) {
+
+            .topo {
+                padding:
+                    0 16px;
+            }
+
+            .conteudo {
+                width:
+                    min(
+                        calc(100% - 28px),
+                        1500px
+                    );
+
+                padding-top:
+                    25px;
+            }
+
+            .marca-texto span {
+                display: none;
+            }
+
+            .grid-escola {
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+            .escola-indicadores {
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+            .grid-turmas {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .detalhes-grid {
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+            .campos-cadastro {
+                grid-template-columns:
+                    1fr;
+            }
+
+        }
+
+        @media (max-width:600px) {
+
+            .turma-representante {
+                align-items: flex-start;
+            }
+
+            .turma-acoes {
+                align-items: flex-end;
+            }
+
+            .rep-nome {
+                max-width: 130px;
+            }
+
+        }
+
+        @media (max-width:520px) {
+
+            .cabecalho-pagina h1 {
+                font-size: 25px;
+            }
+
+            .grid-escola {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .escola-indicadores {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .acoes-topo .btn-topo:first-child {
+                display: none;
+            }
+
+            .escola-painel {
+                padding: 20px;
+            }
+
+            .escola-topo {
+                flex-direction: column;
+            }
+
+            .detalhes-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .acoes-formulario {
+                flex-direction: column;
+            }
+
+            .turma-representante {
+                flex-direction: column;
+            }
+
+            .turma-acoes {
+                width: 100%;
+
+                flex-direction: row;
+
+                justify-content: space-between;
+
+                align-items: center;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header class="topo">
+
+    <div class="marca">
+
+        <div class="logo">
+            ADM
+        </div>
+
+        <div class="marca-texto">
+
+            <strong>
+                Sistema de Representantes
+            </strong>
+
+            <span>
+                Painel Administrativo da Escola
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="acoes-topo">
+
+        <button
+            class="btn-topo"
+            onclick="gerarPDF()">
+
+            ↓ Gerar PDF
+
+        </button>
+
+        <button
+            class="btn-topo"
+            onclick="carregarDados()">
+
+            ↻ Atualizar
+
+        </button>
+
+        <button
+            class="btn-topo btn-sair"
+            onclick="sair()">
+
+            Sair
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="conteudo">
+
+    <div class="cabecalho-pagina">
+
+        <h1>
+            Painel administrativo
+        </h1>
+
+        <p>
+            Gerencie os representantes e acompanhe
+            os dados gerais das turmas da escola.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         VISÃO GERAL
+    ====================================================== -->
+
+    <section>
+
+        <div class="titulo-secao">
+
+            <h2>
+                Visão geral da escola
+            </h2>
+
+            <span id="ultimaAtualizacao">
+                Carregando...
+            </span>
+
+        </div>
+
+
+        <div class="escola-painel">
+
+            <div class="escola-topo">
+
+                <div>
+
+                    <h2>
+                        Escola
+                    </h2>
+
+                    <p>
+                        Dados consolidados de todas as
+                        turmas cadastradas no sistema.
+                    </p>
+
+                </div>
+
+                <div class="status-online">
+
+                    <span class="bolinha"></span>
+
+                    Sistema conectado
+
+                </div>
+
+            </div>
+
+
+            <div class="escola-indicadores">
+
+                <div class="indicador">
+
+                    <span>
+                        Total de turmas
+                    </span>
+
+                    <strong id="escolaTurmas">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="indicador">
+
+                    <span>
+                        Total de alunos
+                    </span>
+
+                    <strong id="escolaAlunos">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="indicador">
+
+                    <span>
+                        Representantes
+                    </span>
+
+                    <strong id="escolaRepresentantes">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="indicador">
+
+                    <span>
+                        Frequência geral
+                    </span>
+
+                    <strong id="escolaFrequencia">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="grid-escola">
+
+            <div class="card-metrica">
+
+                <div class="metrica-label">
+                    Média geral
+                </div>
+
+                <div
+                    class="metrica-valor"
+                    id="escolaMedia">
+                    —
+                </div>
+
+                <div class="metrica-info">
+                    Média das notas registradas
+                </div>
+
+            </div>
+
+
+            <div class="card-metrica">
+
+                <div class="metrica-label">
+                    Advertências
+                </div>
+
+                <div
+                    class="metrica-valor"
+                    id="escolaAdvertencias">
+                    —
+                </div>
+
+                <div class="metrica-info">
+                    Registros disciplinares
+                </div>
+
+            </div>
+
+
+            <div class="card-metrica">
+
+                <div class="metrica-label">
+                    Chamadas
+                </div>
+
+                <div
+                    class="metrica-valor"
+                    id="escolaChamadas">
+                    —
+                </div>
+
+                <div class="metrica-info">
+                    Registros de frequência
+                </div>
+
+            </div>
+
+
+            <div class="card-metrica">
+
+                <div class="metrica-label">
+                    Rep. ativos
+                </div>
+
+                <div
+                    class="metrica-valor"
+                    id="escolaRepAtivos">
+                    —
+                </div>
+
+                <div class="metrica-info">
+                    Representantes ativos
+                </div>
+
+            </div>
+
+
+            <div class="card-metrica">
+
+                <div class="metrica-label">
+                    Rep. inativos
+                </div>
+
+                <div
+                    class="metrica-valor"
+                    id="escolaRepInativos">
+                    —
+                </div>
+
+                <div class="metrica-info">
+                    Representantes inativos
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         TURMAS
+    ====================================================== -->
+
+    <section class="secao-turmas">
+
+        <div class="titulo-secao">
+
+            <div>
+
+                <h2>
+                    Turmas
+                </h2>
+
+                <span>
+                    As turmas criadas pelos representantes
+                    aparecem automaticamente aqui.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="listaTurmas"
+            class="grid-turmas">
+
+            <div class="estado loading">
+
+                <strong>
+                    Carregando turmas...
+                </strong>
+
+                Aguarde enquanto os dados são consultados.
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CADASTRAR REPRESENTANTE
+    ====================================================== -->
+
+    <section class="secao-cadastro">
+
+        <div class="titulo-secao">
+
+            <div>
+
+                <h2>
+                    Criar acesso de representante
+                </h2>
+
+                <span>
+                    O representante completará seus dados
+                    durante o primeiro acesso.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="formulario-admin">
+
+            <div class="cadastro-aviso">
+
+                <div>
+
+                    <strong>
+                        Cadastro inicial
+                    </strong>
+
+                    <span>
+                        Nesta etapa, o ADM cria somente o
+                        usuário e a senha. O representante
+                        preencherá o nome, criará sua turma
+                        e concluirá a configuração no
+                        primeiro acesso.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="campos-cadastro">
+
+                <div class="campo-admin">
+
+                    <label for="novoUsuario">
+                        Nome de usuário
+                    </label>
+
+                    <input
+                        type="text"
+                        id="novoUsuario"
+                        placeholder="Ex: joao.silva"
+                        autocomplete="off">
+
+                </div>
+
+
+                <div class="campo-admin">
+
+                    <label for="novaSenha">
+                        Senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="novaSenha"
+                        placeholder="Defina uma senha"
+                        autocomplete="new-password">
+
+                </div>
+
+            </div>
+
+
+            <div class="acoes-formulario">
+
+                <button
+                    class="btn-cadastrar"
+                    onclick="cadastrarRepresentante()">
+
+                    + Criar acesso
+
+                </button>
+
+
+                <button
+                    class="btn-limpar"
+                    onclick="limparFormularioRepresentante()">
+
+                    Limpar
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="mensagemCadastro"
+                class="mensagem-cadastro">
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         REPRESENTANTES
+    ====================================================== -->
+
+    <section class="secao-representantes">
+
+        <div class="titulo-secao">
+
+            <div>
+
+                <h2>
+                    Representantes
+                </h2>
+
+                <span>
+                    Usuários cadastrados no sistema.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="tabela-container">
+
+            <table class="tabela">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Usuário
+                        </th>
+
+                        <th>
+                            Nome
+                        </th>
+
+                        <th>
+                            Turma
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Cadastro
+                        </th>
+
+                        <th>
+                            Ações
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="listaRepresentantes">
+
+                    <tr>
+
+                        <td colspan="6">
+
+                            <div class="estado loading">
+
+                                Carregando representantes...
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
+     MODAL DA TURMA
+====================================================== -->
+
+<div
+    id="modalTurma"
+    class="modal"
+    onclick="fecharModalFora(event)">
+
+    <div class="modal-conteudo">
+
+        <div class="modal-topo">
+
+            <div>
+
+                <h2 id="modalTitulo">
+                    Turma
+                </h2>
+
+                <p id="modalSubtitulo">
+                    Detalhes da turma
+                </p>
+
+            </div>
+
+
+            <button
+                class="fechar"
+                onclick="fecharModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div
+            class="modal-corpo"
+            id="modalCorpo">
+
+            <div class="estado loading">
+
+                Carregando dados...
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       ESTADO
+    ===================================================== */
+
+    let dadosSistema = null;
+
+
+    /* =====================================================
+       ESCAPE HTML
+    ===================================================== */
+
+    function escaparHTML(valor) {
+
+        if (
+            valor === null ||
+            valor === undefined
+        ) {
+            return "";
+        }
+
+        return String(valor)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =====================================================
+       NÚMERO
+    ===================================================== */
+
+    function numero(valor) {
+
+        const n = Number(valor);
+
+        return Number.isFinite(n)
+            ? n
+            : 0;
+
+    }
+
+
+    function formatarNumero(
+        valor,
+        casas = 0
+    ) {
+
+        return numero(valor)
+            .toLocaleString(
+                "pt-BR",
+                {
+                    minimumFractionDigits: casas,
+                    maximumFractionDigits: casas
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       DATA
+    ===================================================== */
+
+    function formatarData(valor) {
+
+        if (!valor) {
+            return "—";
+        }
+
+        const data = new Date(valor);
+
+        if (
+            Number.isNaN(
+                data.getTime()
+            )
+        ) {
+            return valor;
+        }
+
+        return data.toLocaleDateString(
+            "pt-BR"
+        );
+
+    }
+
+
+    /* =====================================================
+       CARREGAR DADOS
+    ===================================================== */
+
+    async function carregarDados() {
+
+        const listaTurmas =
+            document.getElementById(
+                "listaTurmas"
+            );
+
+        const listaRepresentantes =
+            document.getElementById(
+                "listaRepresentantes"
+            );
+
+
+        listaTurmas.innerHTML = `
+            <div class="estado loading">
+                <strong>
+                    Carregando turmas...
+                </strong>
+                Consultando o banco de dados.
+            </div>
+        `;
+
+
+        listaRepresentantes.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    <div class="estado loading">
+                        Carregando representantes...
+                    </div>
+                </td>
+            </tr>
+        `;
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    "/api/admin/escola"
+                );
+
+
+            if (!resposta.ok) {
+
+                throw new Error(
+                    "Não foi possível consultar o servidor."
+                );
+
+            }
+
+
+            const dados =
+                await resposta.json();
+
+
+            if (!dados.sucesso) {
+
+                throw new Error(
+                    dados.mensagem ||
+                    "Erro ao carregar os dados."
+                );
+
+            }
+
+
+            dadosSistema = dados;
+
+
+            renderizarEscola(
+                dados.escola
+            );
+
+
+            renderizarTurmas(
+                dados.turmas || []
+            );
+
+
+            renderizarRepresentantes(
+                dados.representantes || []
+            );
+
+
+            document.getElementById(
+                "ultimaAtualizacao"
+            ).textContent =
+                "Atualizado às " +
+                new Date().toLocaleTimeString(
+                    "pt-BR",
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }
+                );
+
+
+        } catch (erro) {
+
+            console.error(erro);
+
+
+            listaTurmas.innerHTML = `
+                <div class="estado">
+
+                    <strong>
+                        Erro ao carregar as turmas
+                    </strong>
+
+                    ${escaparHTML(
+                        erro.message
+                    )}
+
+                </div>
+            `;
+
+
+            listaRepresentantes.innerHTML = `
+                <tr>
+
+                    <td colspan="6">
+
+                        <div class="estado">
+
+                            <strong>
+                                Não foi possível carregar
+                                os representantes
+                            </strong>
+
+                            ${escaparHTML(
+                                erro.message
+                            )}
+
+                        </div>
+
+                    </td>
+
+                </tr>
+            `;
+
+
+            document.getElementById(
+                "ultimaAtualizacao"
+            ).textContent =
+                "Erro na atualização";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ESCOLA
+    ===================================================== */
+
+    function renderizarEscola(escola) {
+
+        escola = escola || {};
+
+
+        document.getElementById(
+            "escolaTurmas"
+        ).textContent =
+            formatarNumero(
+                escola.totalTurmas
+            );
+
+
+        document.getElementById(
+            "escolaAlunos"
+        ).textContent =
+            formatarNumero(
+                escola.totalAlunos
+            );
+
+
+        document.getElementById(
+            "escolaRepresentantes"
+        ).textContent =
+            formatarNumero(
+                escola.totalRepresentantes
+            );
+
+
+        document.getElementById(
+            "escolaFrequencia"
+        ).textContent =
+            formatarNumero(
+                escola.frequenciaMedia,
+                2
+            ) + "%";
+
+
+        document.getElementById(
+            "escolaMedia"
+        ).textContent =
+            formatarNumero(
+                escola.notaMedia,
+                2
+            );
+
+
+        document.getElementById(
+            "escolaAdvertencias"
+        ).textContent =
+            formatarNumero(
+                escola.totalAdvertencias
+            );
+
+
+        document.getElementById(
+            "escolaChamadas"
+        ).textContent =
+            formatarNumero(
+                escola.totalChamadas
+            );
+
+
+        document.getElementById(
+            "escolaRepAtivos"
+        ).textContent =
+            formatarNumero(
+                escola.representantesAtivos
+            );
+
+
+        document.getElementById(
+            "escolaRepInativos"
+        ).textContent =
+            formatarNumero(
+                escola.representantesInativos
+            );
+
+    }
+
+
+    /* =====================================================
+       TURMAS
+    ===================================================== */
+
+    function renderizarTurmas(turmas) {
+
+        const container =
+            document.getElementById(
+                "listaTurmas"
+            );
+
+
+        if (!turmas.length) {
+
+            container.innerHTML = `
+                <div class="estado">
+
+                    <strong>
+                        Nenhuma turma cadastrada
+                    </strong>
+
+                    Quando um representante
+                    criar uma turma no primeiro
+                    acesso, ela aparecerá
+                    automaticamente aqui.
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML =
+            turmas.map(
+                turma => {
+
+                    const nome =
+                        turma.nome ||
+                        "Turma sem nome";
+
+
+                    const ano =
+                        turma.ano || "";
+
+
+                    const turno =
+                        turma.turno || "";
+
+
+                    const sala =
+                        turma.sala || "";
+
+
+                    const representante =
+                        turma.representante?.nome ||
+                        turma.representante?.usuario ||
+                        "Sem representante";
+
+
+                    /*
+                       O nome é transformado em atributo
+                       HTML seguro para o botão.
+                    */
+
+                    const nomeSeguro =
+                        encodeURIComponent(
+                            String(nome)
+                        );
+
+
+                    return `
+
+                        <article
+                            class="card-turma"
+                            data-turma-id="${numero(turma.id)}">
+
+                            <div class="turma-cabecalho">
+
+                                <div>
+
+                                    <div class="turma-nome">
+
+                                        ${escaparHTML(nome)}
+
+                                    </div>
+
+                                    <div class="turma-ano">
+
+                                        ${escaparHTML(ano)}
+
+                                        ${
+                                            turno
+                                                ? " • " +
+                                                  escaparHTML(turno)
+                                                : ""
+                                        }
+
+                                        ${
+                                            sala
+                                                ? " • Sala " +
+                                                  escaparHTML(sala)
+                                                : ""
+                                        }
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="badge">
+
+                                    TURMA
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="turma-dados">
+
+                                <div class="turma-dado">
+
+                                    <span>
+                                        Alunos
+                                    </span>
+
+                                    <strong>
+
+                                        ${formatarNumero(
+                                            turma.totalAlunos
+                                        )}
+
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="turma-dado">
+
+                                    <span>
+                                        Frequência
+                                    </span>
+
+                                    <strong>
+
+                                        ${formatarNumero(
+                                            turma.frequenciaMedia,
+                                            1
+                                        )}%
+
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="turma-dado">
+
+                                    <span>
+                                        Média
+                                    </span>
+
+                                    <strong>
+
+                                        ${formatarNumero(
+                                            turma.notaMedia,
+                                            1
+                                        )}
+
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="turma-dado">
+
+                                    <span>
+                                        Advertências
+                                    </span>
+
+                                    <strong>
+
+                                        ${formatarNumero(
+                                            turma.totalAdvertencias
+                                        )}
+
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="turma-representante">
+
+                                <div class="rep-info">
+
+                                    <div class="rep-label">
+                                        Representante
+                                    </div>
+
+                                    <div class="rep-nome">
+
+                                        ${escaparHTML(
+                                            representante
+                                        )}
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="turma-acoes">
+
+                                    <div
+                                        class="ver-detalhes"
+                                        onclick="
+                                            event.stopPropagation();
+                                            abrirTurma(${numero(turma.id)});
+                                        ">
+
+                                        Ver turma →
+
+                                    </div>
+
+
+                                    <button
+                                        type="button"
+                                        class="btn-excluir-turma"
+                                        onclick="
+                                            event.stopPropagation();
+                                            excluirTurma(
+                                                ${numero(turma.id)},
+                                                decodeURIComponent('${nomeSeguro}')
+                                            );
+                                        ">
+
+                                        Excluir turma
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    `;
+
+                }
+            ).join("");
+
+    }
+
+
+    /* =====================================================
+       REPRESENTANTES
+    ===================================================== */
+
+    function renderizarRepresentantes(
+        representantes
+    ) {
+
+        const tbody =
+            document.getElementById(
+                "listaRepresentantes"
+            );
+
+
+        if (!representantes.length) {
+
+            tbody.innerHTML = `
+                <tr>
+
+                    <td colspan="6">
+
+                        <div class="estado">
+
+                            <strong>
+                                Nenhum representante cadastrado
+                            </strong>
+
+                            Crie o primeiro acesso
+                            utilizando o formulário acima.
+
+                        </div>
+
+                    </td>
+
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        tbody.innerHTML =
+            representantes.map(
+                rep => {
+
+                    const ativo =
+                        Number(rep.ativo) === 1;
+
+
+                    const nome =
+                        rep.nome &&
+                        rep.nome !== rep.usuario
+
+                            ? rep.nome
+
+                            : "Aguardando primeiro acesso";
+
+
+                    const turma =
+                        rep.turma_nome ||
+                        "Ainda não configurada";
+
+
+                    return `
+
+                        <tr>
+
+                            <td>
+
+                                <strong>
+                                    ${escaparHTML(
+                                        rep.usuario
+                                    )}
+                                </strong>
+
+                            </td>
+
+
+                            <td>
+
+                                ${
+                                    nome ===
+                                    "Aguardando primeiro acesso"
+
+                                    ? `
+
+                                        <span
+                                            style="
+                                                color:var(--texto-secundario);
+                                                font-size:12px;
+                                            ">
+
+                                            Aguardando primeiro acesso
+
+                                        </span>
+
+                                      `
+
+                                    : `
+
+                                        ${escaparHTML(nome)}
+
+                                      `
+                                }
+
+                            </td>
+
+
+                            <td>
+
+                                ${escaparHTML(turma)}
+
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="status ${
+                                        ativo
+                                            ? "ativo"
+                                            : "inativo"
+                                    }">
+
+                                    ●
+
+                                    ${
+                                        ativo
+                                            ? "Ativo"
+                                            : "Inativo"
+                                    }
+
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                ${formatarData(
+                                    rep.criado_em
+                                )}
+
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="btn-excluir-representante"
+                                    onclick="
+                                        event.stopPropagation();
+                                        excluirRepresentante(${numero(rep.id)});
+                                    ">
+
+                                    Excluir
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            ).join("");
+
+    }
+
+
+    /* =====================================================
+       EXCLUIR REPRESENTANTE
+    ===================================================== */
+
+    async function excluirRepresentante(id) {
+
+        const representante =
+            (dadosSistema?.representantes || [])
+                .find(
+                    rep =>
+                        Number(rep.id) ===
+                        Number(id)
+                );
+
+
+        if (!representante) {
+
+            alert(
+                "Representante não encontrado."
+            );
+
+            return;
+        }
+
+
+        const nomeExibicao =
+            representante.nome &&
+            representante.nome !== representante.usuario
+
+                ? representante.nome
+
+                : representante.usuario;
+
+
+        const confirmar =
+            confirm(
+                "Deseja realmente excluir este representante?\n\n" +
+
+                "Usuário: " +
+                nomeExibicao +
+                "\n\n" +
+
+                "O acesso de login será removido.\n" +
+                "A turma e os alunos NÃO serão apagados."
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    "/api/representantes/" +
+                    encodeURIComponent(id),
+                    {
+                        method: "DELETE"
+                    }
+                );
+
+
+            const resultado =
+                await resposta.json();
+
+
+            if (
+                !resposta.ok ||
+                !resultado.sucesso
+            ) {
+
+                throw new Error(
+                    resultado.mensagem ||
+                    "Não foi possível excluir o representante."
+                );
+
+            }
+
+
+            alert(
+                "Representante excluído com sucesso."
+            );
+
+
+            await carregarDados();
+
+
+        } catch (erro) {
+
+            console.error(erro);
+
+
+            alert(
+                erro.message ||
+                "Erro ao excluir representante."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       EXCLUIR TURMA
+    ===================================================== */
+
+    async function excluirTurma(
+        id,
+        nome
+    ) {
+
+        const confirmar =
+            confirm(
+                `ATENÇÃO!\n\n` +
+                `Você está prestes a excluir a turma:\n` +
+                `"${nome}"\n\n` +
+                `Serão excluídos também:\n\n` +
+                `• Alunos\n` +
+                `• Notas\n` +
+                `• Chamadas\n` +
+                `• Disciplinas\n` +
+                `• Advertências\n\n` +
+                `O representante ficará sem turma.\n\n` +
+                `Essa ação NÃO pode ser desfeita.\n\n` +
+                `Deseja realmente continuar?`
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    "/api/admin/turma/" +
+                    encodeURIComponent(id),
+                    {
+                        method: "DELETE"
+                    }
+                );
+
+
+            const resultado =
+                await resposta.json();
+
+
+            if (
+                !resposta.ok ||
+                !resultado.sucesso
+            ) {
+
+                throw new Error(
+                    resultado.mensagem ||
+                    "Não foi possível excluir a turma."
+                );
+
+            }
+
+
+            /*
+                Se a turma estiver aberta no modal,
+                fecha o modal.
+            */
+
+            fecharModal();
+
+
+            alert(
+                "Turma excluída com sucesso."
+            );
+
+
+            /*
+                Recarrega tudo para atualizar:
+                - total de turmas
+                - total de alunos
+                - representantes
+                - cartões
+                - métricas
+            */
+
+            await carregarDados();
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao excluir turma:",
+                erro
+            );
+
+
+            alert(
+                erro.message ||
+                "Erro ao excluir turma."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CADASTRAR REPRESENTANTE
+    ===================================================== */
+
+    async function cadastrarRepresentante() {
+
+        const usuario =
+            document
+                .getElementById(
+                    "novoUsuario"
+                )
+                .value
+                .trim();
+
+
+        const senha =
+            document
+                .getElementById(
+                    "novaSenha"
+                )
+                .value;
+
+
+        if (!usuario) {
+
+            mostrarMensagemCadastro(
+                "Digite o nome de usuário.",
+                "erro"
+            );
+
+            return;
+        }
+
+
+        if (!senha) {
+
+            mostrarMensagemCadastro(
+                "Defina uma senha.",
+                "erro"
+            );
+
+            return;
+        }
+
+
+        if (senha.length < 4) {
+
+            mostrarMensagemCadastro(
+                "A senha precisa ter pelo menos 4 caracteres.",
+                "erro"
+            );
+
+            return;
+        }
+
+
+        const botao =
+            document.querySelector(
+                ".btn-cadastrar"
+            );
+
+
+        botao.disabled = true;
+
+        botao.textContent =
+            "Criando acesso...";
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    "/api/representantes",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            usuario:
+                                usuario,
+
+                            senha:
+                                senha
+
+                        })
+                    }
+                );
+
+
+            const resultado =
+                await resposta.json();
+
+
+            if (
+                !resposta.ok ||
+                !resultado.sucesso
+            ) {
+
+                throw new Error(
+                    resultado.mensagem ||
+                    "Não foi possível criar o acesso."
+                );
+
+            }
+
+
+            mostrarMensagemCadastro(
+                "Acesso criado com sucesso. O representante já pode entrar pela página de login.",
+                "sucesso"
+            );
+
+
+            limparCamposRepresentante();
+
+
+            await carregarDados();
+
+
+        } catch (erro) {
+
+            console.error(erro);
+
+
+            mostrarMensagemCadastro(
+                erro.message ||
+                "Erro ao criar acesso.",
+                "erro"
+            );
+
+        } finally {
+
+            botao.disabled = false;
+
+            botao.textContent =
+                "+ Criar acesso";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       MENSAGEM
+    ===================================================== */
+
+    function mostrarMensagemCadastro(
+        texto,
+        tipo
+    ) {
+
+        const mensagem =
+            document.getElementById(
+                "mensagemCadastro"
+            );
+
+
+        mensagem.textContent =
+            texto;
+
+
+        mensagem.className =
+            "mensagem-cadastro " +
+            tipo;
+
+    }
+
+
+    /* =====================================================
+       LIMPAR
+    ===================================================== */
+
+    function limparCamposRepresentante() {
+
+        document.getElementById(
+            "novoUsuario"
+        ).value = "";
+
+
+        document.getElementById(
+            "novaSenha"
+        ).value = "";
+
+    }
+
+
+    function limparFormularioRepresentante() {
+
+        limparCamposRepresentante();
+
+
+        const mensagem =
+            document.getElementById(
+                "mensagemCadastro"
+            );
+
+
+        mensagem.textContent = "";
+
+        mensagem.className =
+            "mensagem-cadastro";
+
+    }
+
+
+    /* =====================================================
+       ABRIR TURMA
+    ===================================================== */
+
+    async function abrirTurma(
+        turmaId
+    ) {
+
+        const modal =
+            document.getElementById(
+                "modalTurma"
+            );
+
+
+        const corpo =
+            document.getElementById(
+                "modalCorpo"
+            );
+
+
+        modal.classList.add(
+            "aberto"
+        );
+
+
+        corpo.innerHTML = `
+            <div class="estado loading">
+
+                <strong>
+                    Carregando turma...
+                </strong>
+
+                Consultando alunos e informações.
+
+            </div>
+        `;
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    "/api/admin/turma/" +
+                    encodeURIComponent(
+                        turmaId
+                    )
+                );
+
+
+            if (!resposta.ok) {
+
+                throw new Error(
+                    "Não foi possível carregar a turma."
+                );
+
+            }
+
+
+            const dados =
+                await resposta.json();
+
+
+            if (!dados.sucesso) {
+
+                throw new Error(
+                    dados.mensagem ||
+                    "Erro ao carregar a turma."
+                );
+
+            }
+
+
+            renderizarDetalhesTurma(
+                dados
+            );
+
+
+        } catch (erro) {
+
+            console.error(erro);
+
+
+            corpo.innerHTML = `
+                <div class="estado">
+
+                    <strong>
+                        Erro ao carregar a turma
+                    </strong>
+
+                    ${escaparHTML(
+                        erro.message
+                    )}
+
+                </div>
+            `;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       DETALHES TURMA
+    ===================================================== */
+
+    function renderizarDetalhesTurma(
+        dados
+    ) {
+
+        const turma =
+            dados.turma || {};
+
+
+        const alunos =
+            dados.alunos || [];
+
+
+        const representante =
+            dados.representante ||
+            null;
+
+
+        document.getElementById(
+            "modalTitulo"
+        ).textContent =
+            turma.nome ||
+            "Turma";
+
+
+        document.getElementById(
+            "modalSubtitulo"
+        ).textContent =
+            [
+                turma.ano,
+                turma.turno,
+                turma.sala
+                    ? "Sala " +
+                      turma.sala
+                    : ""
+            ]
+            .filter(Boolean)
+            .join(" • ");
+
+
+        const frequencia =
+            calcularFrequenciaLocal(
+                dados.chamadas || [],
+                alunos.length
+            );
+
+
+        const media =
+            calcularMediaNotas(
+                dados.notas || []
+            );
+
+
+        const advertencias =
+            (
+                dados.advertencias ||
+                []
+            ).length;
+
+
+        const representanteNome =
+            representante?.nome &&
+            representante.nome !==
+                representante.usuario
+
+                ? representante.nome
+
+                : representante?.usuario ||
+                  "Não definido";
+
+
+        const listaAlunos =
+            alunos.length
+
+                ? alunos.map(
+                    (
+                        aluno,
+                        indice
+                    ) => `
+
+                        <div class="aluno-linha">
+
+                            <span
+                                class="aluno-numero">
+
+                                ${indice + 1}
+
+                            </span>
+
+
+                            <span
+                                class="aluno-nome">
+
+                                ${escaparHTML(
+                                    aluno.nome
+                                )}
+
+                            </span>
+
+
+                            <span
+                                class="usuario">
+
+                                ${
+                                    aluno.data_nascimento
+                                        ? escaparHTML(
+                                            aluno.data_nascimento
+                                          )
+                                        : "—"
+                                }
+
+                            </span>
+
+                        </div>
+
+                    `
+                ).join("")
+
+                : `
+
+                    <div class="aluno-linha">
+
+                        <span class="aluno-nome">
+
+                            Nenhum aluno cadastrado.
+
+                        </span>
+
+                    </div>
+
+                `;
+
+
+        document.getElementById(
+            "modalCorpo"
+        ).innerHTML = `
+
+            <div class="detalhes-grid">
+
+                <div class="detalhe-card">
+
+                    <span>
+                        Alunos
+                    </span>
+
+                    <strong>
+                        ${alunos.length}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-card">
+
+                    <span>
+                        Frequência
+                    </span>
+
+                    <strong>
+                        ${formatarNumero(
+                            frequencia,
+                            1
+                        )}%
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-card">
+
+                    <span>
+                        Média
+                    </span>
+
+                    <strong>
+                        ${formatarNumero(
+                            media,
+                            2
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="detalhe-card">
+
+                    <span>
+                        Advertências
+                    </span>
+
+                    <strong>
+                        ${advertencias}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div
+                style="
+                    border:1px solid var(--borda);
+                    border-radius:14px;
+                    padding:15px;
+                    margin-bottom:20px;
+                    background:rgba(255,255,255,.018);
+                ">
+
+                <span
+                    style="
+                        color:var(--texto-secundario);
+                        font-size:11px;
+                        display:block;
+                        margin-bottom:6px;
+                        font-weight:800;
+                    ">
+
+                    REPRESENTANTE
+
+                </span>
+
+
+                <strong>
+
+                    ${escaparHTML(
+                        representanteNome
+                    )}
+
+                </strong>
+
+
+                ${
+                    representante?.usuario
+                        ? `
+
+                            <div
+                                style="
+                                    color:var(--texto-secundario);
+                                    font-size:12px;
+                                    margin-top:5px;
+                                ">
+
+                                Usuário:
+                                ${escaparHTML(
+                                    representante.usuario
+                                )}
+
+                            </div>
+
+                          `
+                        : ""
+                }
+
+            </div>
+
+
+            <div class="lista-alunos">
+
+                <div class="lista-titulo">
+
+                    Alunos da turma
+
+                </div>
+
+                ${listaAlunos}
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       CÁLCULO FREQUÊNCIA
+    ===================================================== */
+
+    function calcularFrequenciaLocal(
+        chamadas,
+        totalAlunos
+    ) {
+
+        if (
+            !chamadas.length ||
+            !totalAlunos
+        ) {
+            return 100;
+        }
+
+
+        const presentes =
+            chamadas.filter(
+                chamada =>
+                    Number(
+                        chamada.presente
+                    ) === 1
+            ).length;
+
+
+        return (
+            presentes /
+            chamadas.length
+        ) * 100;
+
+    }
+
+
+    /* =====================================================
+       MÉDIA
+    ===================================================== */
+
+    function calcularMediaNotas(
+        notas
+    ) {
+
+        if (!notas.length) {
+            return 0;
+        }
+
+
+        const valores =
+            notas
+                .map(
+                    nota =>
+                        Number(
+                            nota.nota
+                        )
+                )
+                .filter(
+                    valor =>
+                        Number.isFinite(
+                            valor
+                        )
+                );
+
+
+        if (!valores.length) {
+            return 0;
+        }
+
+
+        return (
+            valores.reduce(
+                (
+                    total,
+                    valor
+                ) =>
+                    total + valor,
+                0
+            ) /
+            valores.length
+        );
+
+    }
+
+
+    /* =====================================================
+       MODAL
+    ===================================================== */
+
+    function fecharModal() {
+
+        document
+            .getElementById(
+                "modalTurma"
+            )
+            .classList.remove(
+                "aberto"
+            );
+
+    }
+
+
+    function fecharModalFora(
+        evento
+    ) {
+
+        if (
+            evento.target.id ===
+            "modalTurma"
+        ) {
+
+            fecharModal();
+
+        }
+
+    }
+
+
+    document.addEventListener(
+        "keydown",
+        evento => {
+
+            if (
+                evento.key === "Escape"
+            ) {
+
+                fecharModal();
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       SAIR
+    ===================================================== */
+
+    function sair() {
+
+        const confirmar =
+            confirm(
+                "Deseja sair do painel administrativo?"
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        sessionStorage.clear();
+
+
+        window.location.href =
+            "login.html";
+
+    }
+
+
+    /* =====================================================
+       PDF
+    ===================================================== */
+
+    async function gerarPDF() {
+
+        if (!dadosSistema) {
+
+            alert(
+                "Os dados ainda não foram carregados."
+            );
+
+            return;
+        }
+
+
+        if (
+            !window.jspdf ||
+            !window.jspdf.jsPDF
+        ) {
+
+            alert(
+                "Não foi possível carregar o gerador de PDF."
+            );
+
+            return;
+        }
+
+
+        const {
+            jsPDF
+        } = window.jspdf;
+
+
+        const pdf =
+            new jsPDF({
+                orientation:
+                    "portrait",
+
+                unit:
+                    "mm",
+
+                format:
+                    "a4"
+            });
+
+
+        const escola =
+            dadosSistema.escola ||
+            {};
+
+
+        const turmas =
+            dadosSistema.turmas ||
+            [];
+
+
+        const representantes =
+            dadosSistema.representantes ||
+            [];
+
+
+        const largura =
+            pdf.internal.pageSize
+                .getWidth();
+
+
+        const altura =
+            pdf.internal.pageSize
+                .getHeight();
+
+
+        const margem = 15;
+
+        let y = 18;
+
+
+        function novaPaginaSeNecessario(
+            espaco = 10
+        ) {
+
+            if (
+                y + espaco >
+                altura - 18
+            ) {
+
+                pdf.addPage();
+
+                y = 18;
+
+                pdf.setFont(
+                    "helvetica",
+                    "bold"
+                );
+
+                pdf.setFontSize(8);
+
+                pdf.setTextColor(
+                    100,
+                    110,
+                    120
+                );
+
+                pdf.text(
+                    "SISTEMA DE REPRESENTANTES DE TURMA",
+                    margem,
+                    10
+                );
+
+                pdf.setTextColor(
+                    0,
+                    0,
+                    0
+                );
+
+            }
+
+        }
+
+
+        /* CABEÇALHO */
+
+        pdf.setFillColor(
+            10,
+            25,
+            45
+        );
+
+
+        pdf.rect(
+            0,
+            0,
+            largura,
+            45,
+            "F"
+        );
+
+
+        pdf.setTextColor(
+            255,
+            255,
+            255
+        );
+
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+
+        pdf.setFontSize(
+            21
+        );
+
+
+        pdf.text(
+            "RELATÓRIO GERAL DA ESCOLA",
+            margem,
+            20
+        );
+
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+
+        pdf.setFontSize(
+            10
+        );
+
+
+        pdf.text(
+            "Sistema de Representantes de Turma",
+            margem,
+            28
+        );
+
+
+        pdf.text(
+            "Relatório administrativo consolidado",
+            margem,
+            35
+        );
+
+
+        y = 57;
+
+
+        pdf.setTextColor(
+            0,
+            0,
+            0
+        );
+
+
+        const agora =
+            new Date();
+
+
+        pdf.setFontSize(
+            9
+        );
+
+
+        pdf.setTextColor(
+            90,
+            100,
+            110
+        );
+
+
+        pdf.text(
+            "Gerado em: " +
+            agora.toLocaleString(
+                "pt-BR"
+            ),
+            margem,
+            y
+        );
+
+
+        y += 13;
+
+
+        pdf.setTextColor(
+            0,
+            0,
+            0
+        );
+
+
+        /* RESUMO */
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+
+        pdf.setFontSize(
+            15
+        );
+
+
+        pdf.text(
+            "1. Dados gerais da escola",
+            margem,
+            y
+        );
+
+
+        y += 9;
+
+
+        const indicadores = [
+
+            [
+                "Total de turmas",
+                escola.totalTurmas
+            ],
+
+            [
+                "Total de alunos",
+                escola.totalAlunos
+            ],
+
+            [
+                "Representantes",
+                escola.totalRepresentantes
+            ],
+
+            [
+                "Representantes ativos",
+                escola.representantesAtivos
+            ],
+
+            [
+                "Representantes inativos",
+                escola.representantesInativos
+            ],
+
+            [
+                "Frequência geral",
+                formatarNumero(
+                    escola.frequenciaMedia,
+                    2
+                ) + "%"
+            ],
+
+            [
+                "Média geral",
+                formatarNumero(
+                    escola.notaMedia,
+                    2
+                )
+            ],
+
+            [
+                "Advertências",
+                escola.totalAdvertencias
+            ],
+
+            [
+                "Registros de chamadas",
+                escola.totalChamadas
+            ]
+
+        ];
+
+
+        const larguraCard =
+            (
+                largura -
+                30 -
+                10
+            ) / 2;
+
+
+        const alturaCard = 19;
+
+
+        indicadores.forEach(
+            (
+                item,
+                indice
+            ) => {
+
+                const coluna =
+                    indice % 2;
+
+
+                const linha =
+                    Math.floor(
+                        indice / 2
+                    );
+
+
+                const x =
+                    margem +
+                    coluna *
+                    (
+                        larguraCard +
+                        10
+                    );
+
+
+                const yCard =
+                    y +
+                    linha *
+                    (
+                        alturaCard +
+                        5
+                    );
+
+
+                pdf.setFillColor(
+                    244,
+                    247,
+                    251
+                );
+
+
+                pdf.setDrawColor(
+                    220,
+                    225,
+                    232
+                );
+
+
+                pdf.roundedRect(
+                    x,
+                    yCard,
+                    larguraCard,
+                    alturaCard,
+                    3,
+                    3,
+                    "FD"
+                );
+
+
+                pdf.setFont(
+                    "helvetica",
+                    "normal"
+                );
+
+
+                pdf.setFontSize(
+                    8
+                );
+
+
+                pdf.setTextColor(
+                    90,
+                    100,
+                    110
+                );
+
+
+                pdf.text(
+                    String(
+                        item[0]
+                    ),
+                    x + 5,
+                    yCard + 7
+                );
+
+
+                pdf.setFont(
+                    "helvetica",
+                    "bold"
+                );
+
+
+                pdf.setFontSize(
+                    12
+                );
+
+
+                pdf.setTextColor(
+                    20,
+                    30,
+                    45
+                );
+
+
+                pdf.text(
+                    String(
+                        item[1] ??
+                        "0"
+                    ),
+                    x + 5,
+                    yCard + 15
+                );
+
+            }
+        );
+
+
+        y +=
+            Math.ceil(
+                indicadores.length /
+                2
+            ) *
+            (
+                alturaCard +
+                5
+            ) +
+            10;
+
+
+        /* TURMAS */
+
+        novaPaginaSeNecessario(
+            20
+        );
+
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+
+        pdf.setFontSize(
+            15
+        );
+
+
+        pdf.text(
+            "2. Turmas",
+            margem,
+            y
+        );
+
+
+        y += 9;
+
+
+        if (!turmas.length) {
+
+            pdf.setFont(
+                "helvetica",
+                "normal"
+            );
+
+
+            pdf.setFontSize(
+                10
+            );
+
+
+            pdf.text(
+                "Nenhuma turma cadastrada.",
+                margem,
+                y
+            );
+
+
+            y += 10;
+
+        } else {
+
+            turmas.forEach(
+                (
+                    turma,
+                    indice
+                ) => {
+
+                    novaPaginaSeNecessario(
+                        45
+                    );
+
+
+                    pdf.setFillColor(
+                        10,
+                        25,
+                        45
+                    );
+
+
+                    pdf.roundedRect(
+                        margem,
+                        y,
+                        largura - 30,
+                        9,
+                        2,
+                        2,
+                        "F"
+                    );
+
+
+                    pdf.setTextColor(
+                        255,
+                        255,
+                        255
+                    );
+
+
+                    pdf.setFont(
+                        "helvetica",
+                        "bold"
+                    );
+
+
+                    pdf.setFontSize(
+                        10
+                    );
+
+
+                    pdf.text(
+                        (
+                            indice + 1
+                        ) +
+                        ". " +
+                        (
+                            turma.nome ||
+                            "Turma"
+                        ),
+                        margem + 4,
+                        y + 6
+                    );
+
+
+                    y += 14;
+
+
+                    pdf.setTextColor(
+                        40,
+                        50,
+                        60
+                    );
+
+
+                    pdf.setFont(
+                        "helvetica",
+                        "normal"
+                    );
+
+
+                    pdf.setFontSize(
+                        9
+                    );
+
+
+                    const rep =
+                        turma.representante?.nome ||
+                        turma.representante?.usuario ||
+                        "Não definido";
+
+
+                    const infos = [
+
+                        "Alunos: " +
+                        formatarNumero(
+                            turma.totalAlunos
+                        ),
+
+                        "Frequência: " +
+                        formatarNumero(
+                            turma.frequenciaMedia,
+                            2
+                        ) +
+                        "%",
+
+                        "Média: " +
+                        formatarNumero(
+                            turma.notaMedia,
+                            2
+                        ),
+
+                        "Advertências: " +
+                        formatarNumero(
+                            turma.totalAdvertencias
+                        ),
+
+                        "Representante: " +
+                        rep
+
+                    ];
+
+
+                    infos.forEach(
+                        info => {
+
+                            novaPaginaSeNecessario(
+                                7
+                            );
+
+
+                            pdf.text(
+                                "• " +
+                                String(info),
+                                margem + 5,
+                                y
+                            );
+
+
+                            y += 5;
+
+                        }
+                    );
+
+
+                    y += 3;
+
+
+                    pdf.setDrawColor(
+                        210,
+                        215,
+                        222
+                    );
+
+
+                    pdf.line(
+                        margem,
+                        y,
+                        largura - margem,
+                        y
+                    );
+
+
+                    y += 5;
+
+                }
+            );
+
+        }
+
+
+        /* REPRESENTANTES */
+
+        novaPaginaSeNecessario(
+            25
+        );
+
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+
+        pdf.setFontSize(
+            15
+        );
+
+
+        pdf.setTextColor(
+            0,
+            0,
+            0
+        );
+
+
+        pdf.text(
+            "3. Representantes",
+            margem,
+            y
+        );
+
+
+        y += 9;
+
+
+        representantes.forEach(
+            (
+                rep,
+                indice
+            ) => {
+
+                novaPaginaSeNecessario(
+                    24
+                );
+
+
+                const ativo =
+                    Number(
+                        rep.ativo
+                    ) === 1;
+
+
+                pdf.setFillColor(
+                    247,
+                    248,
+                    250
+                );
+
+
+                pdf.roundedRect(
+                    margem,
+                    y,
+                    largura - 30,
+                    18,
+                    2,
+                    2,
+                    "F"
+                );
+
+
+                pdf.setTextColor(
+                    30,
+                    40,
+                    50
+                );
+
+
+                pdf.setFont(
+                    "helvetica",
+                    "bold"
+                );
+
+
+                pdf.setFontSize(
+                    9
+                );
+
+
+                pdf.text(
+                    (
+                        indice + 1
+                    ) +
+                    ". " +
+                    (
+                        rep.nome &&
+                        rep.nome !==
+                            rep.usuario
+                            ? rep.nome
+                            : "Aguardando primeiro acesso"
+                    ),
+                    margem + 5,
+                    y + 7
+                );
+
+
+                pdf.setFont(
+                    "helvetica",
+                    "normal"
+                );
+
+
+                pdf.setFontSize(
+                    8
+                );
+
+
+                pdf.setTextColor(
+                    90,
+                    100,
+                    110
+                );
+
+
+                pdf.text(
+                    "Usuário: " +
+                    (
+                        rep.usuario ||
+                        "—"
+                    ),
+                    margem + 5,
+                    y + 13
+                );
+
+
+                pdf.text(
+                    "Turma: " +
+                    (
+                        rep.turma_nome ||
+                        "Sem turma"
+                    ),
+                    margem + 70,
+                    y + 13
+                );
+
+
+                pdf.setTextColor(
+                    ativo
+                        ? 30
+                        : 190,
+
+                    ativo
+                        ? 140
+                        : 50,
+
+                    ativo
+                        ? 80
+                        : 60
+                );
+
+
+                pdf.text(
+                    ativo
+                        ? "ATIVO"
+                        : "INATIVO",
+
+                    largura - 45,
+
+                    y + 10
+                );
+
+
+                y += 23;
+
+            }
+        );
+
+
+        /* RODAPÉ */
+
+        const totalPaginas =
+            pdf.internal
+                .getNumberOfPages();
+
+
+        for (
+            let pagina = 1;
+            pagina <= totalPaginas;
+            pagina++
+        ) {
+
+            pdf.setPage(
+                pagina
+            );
+
+
+            pdf.setDrawColor(
+                220,
+                225,
+                232
+            );
+
+
+            pdf.line(
+                margem,
+                altura - 12,
+                largura - margem,
+                altura - 12
+            );
+
+
+            pdf.setFont(
+                "helvetica",
+                "normal"
+            );
+
+
+            pdf.setFontSize(
+                7
+            );
+
+
+            pdf.setTextColor(
+                110,
+                120,
+                130
+            );
+
+
+            pdf.text(
+                "Sistema de Representantes de Turma",
+                margem,
+                altura - 7
+            );
+
+
+            pdf.text(
+                "Página " +
+                pagina +
+                " de " +
+                totalPaginas,
+                largura - margem,
+                altura - 7,
+                {
+                    align:
+                        "right"
+                }
+            );
+
+        }
+
+
+        const dataArquivo =
+            agora
+                .toISOString()
+                .slice(
+                    0,
+                    10
+                );
+
+
+        pdf.save(
+            "relatorio-escola-" +
+            dataArquivo +
+            ".pdf"
+        );
+
+    }
+
+
+    /* =====================================================
+       INICIALIZAÇÃO
+    ===================================================== */
+
+    carregarDados();
+
+</script>
+
+</body>
+</html>

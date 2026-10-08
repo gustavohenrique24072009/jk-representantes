@@ -1,0 +1,2137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Configurações | Representantes</title>
+
+    <link
+        rel="stylesheet"
+        href="css/sistema.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           CONFIGURAÇÕES
+           ===================================================== */
+
+        .config-page {
+            width: 100%;
+            max-width: 1150px;
+            margin: 0 auto;
+        }
+
+        .config-header {
+            margin-bottom: 28px;
+        }
+
+        .config-header h1 {
+            margin: 0;
+            color: #111827;
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .config-header p {
+            margin-top: 7px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           LAYOUT
+           ===================================================== */
+
+        .config-layout {
+            display: grid;
+            grid-template-columns: 235px 1fr;
+            gap: 22px;
+            align-items: start;
+        }
+
+
+        /* =====================================================
+           MENU DE CONFIGURAÇÕES
+           ===================================================== */
+
+        .config-menu {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 10px;
+            box-shadow:
+                0 4px 15px rgba(15, 23, 42, 0.04);
+        }
+
+        .config-menu button {
+            width: 100%;
+            min-height: 46px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 11px;
+
+            padding: 0 13px;
+
+            border: none;
+            border-radius: 9px;
+
+            background: transparent;
+
+            color: #6b7280;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            text-align: left;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .config-menu button:hover {
+            background: #f3f4f6;
+            color: #111827;
+        }
+
+        .config-menu button.ativo {
+            background: #eff6ff;
+            color: #1769ff;
+        }
+
+        .config-menu button span {
+            width: 22px;
+            min-width: 22px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 16px;
+        }
+
+
+        /* =====================================================
+           PAINEL
+           ===================================================== */
+
+        .config-conteudo {
+            background: #ffffff;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 4px 15px rgba(15, 23, 42, 0.04);
+
+            overflow: hidden;
+        }
+
+        .config-secao {
+            display: none;
+        }
+
+        .config-secao.ativa {
+            display: block;
+        }
+
+        .config-secao-header {
+            padding: 23px 25px;
+
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .config-secao-header h2 {
+            margin: 0;
+
+            font-size: 17px;
+
+            color: #111827;
+        }
+
+        .config-secao-header p {
+            margin: 5px 0 0;
+
+            font-size: 12px;
+
+            color: #9ca3af;
+        }
+
+        .config-corpo {
+            padding: 25px;
+        }
+
+
+        /* =====================================================
+           FORMULÁRIOS
+           ===================================================== */
+
+        .campo-grupo {
+            margin-bottom: 19px;
+        }
+
+        .campo-grupo:last-child {
+            margin-bottom: 0;
+        }
+
+        .campo-grupo label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #374151;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+        .campo-grupo input,
+        .campo-grupo select {
+            width: 100%;
+
+            min-height: 44px;
+
+            padding: 0 13px;
+
+            border: 1px solid #dbe1e8;
+
+            border-radius: 9px;
+
+            background: #ffffff;
+
+            color: #111827;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            outline: none;
+
+            transition: 0.2s ease;
+
+            box-sizing: border-box;
+        }
+
+        .campo-grupo input:focus,
+        .campo-grupo select:focus {
+            border-color: #1769ff;
+
+            box-shadow:
+                0 0 0 3px rgba(23, 105, 255, 0.08);
+        }
+
+        .campo-ajuda {
+            display: block;
+
+            margin-top: 5px;
+
+            color: #9ca3af;
+
+            font-size: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 18px;
+        }
+
+
+        /* =====================================================
+           BOTÕES
+           ===================================================== */
+
+        .config-acoes {
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+
+            padding-top: 23px;
+
+            margin-top: 23px;
+
+            border-top: 1px solid #eef2f7;
+        }
+
+        .btn-config {
+            min-height: 42px;
+
+            padding: 0 17px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            font-family: inherit;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .btn-config:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-secundario {
+            background: #f3f4f6;
+
+            color: #4b5563;
+        }
+
+        .btn-secundario:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-principal {
+            background: #1769ff;
+
+            color: #ffffff;
+
+            box-shadow:
+                0 5px 15px rgba(23, 105, 255, 0.20);
+        }
+
+        .btn-principal:hover {
+            background: #1257d6;
+        }
+
+
+        /* =====================================================
+           PERFIL
+           ===================================================== */
+
+        .perfil-topo {
+            display: flex;
+
+            align-items: center;
+
+            gap: 17px;
+
+            margin-bottom: 25px;
+
+            padding-bottom: 22px;
+
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .perfil-avatar {
+            width: 65px;
+            height: 65px;
+
+            min-width: 65px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #1769ff;
+
+            color: #ffffff;
+
+            font-size: 20px;
+
+            font-weight: 800;
+        }
+
+        .perfil-info h3 {
+            margin: 0;
+
+            color: #111827;
+
+            font-size: 17px;
+        }
+
+        .perfil-info p {
+            margin: 5px 0 0;
+
+            color: #9ca3af;
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           OPÇÕES
+           ===================================================== */
+
+        .opcao {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 16px 0;
+
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .opcao:first-child {
+            padding-top: 0;
+        }
+
+        .opcao:last-child {
+            border-bottom: none;
+
+            padding-bottom: 0;
+        }
+
+        .opcao-info strong {
+            display: block;
+
+            color: #374151;
+
+            font-size: 12px;
+        }
+
+        .opcao-info span {
+            display: block;
+
+            margin-top: 4px;
+
+            color: #9ca3af;
+
+            font-size: 10px;
+        }
+
+
+        /* =====================================================
+           SWITCH
+           ===================================================== */
+
+        .switch {
+            position: relative;
+
+            width: 43px;
+            height: 23px;
+
+            min-width: 43px;
+        }
+
+        .switch input {
+            opacity: 0;
+
+            width: 0;
+            height: 0;
+        }
+
+        .switch-slider {
+            position: absolute;
+
+            inset: 0;
+
+            background: #d1d5db;
+
+            border-radius: 30px;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .switch-slider::before {
+            content: "";
+
+            position: absolute;
+
+            width: 17px;
+            height: 17px;
+
+            left: 3px;
+            top: 3px;
+
+            background: #ffffff;
+
+            border-radius: 50%;
+
+            transition: 0.2s ease;
+
+            box-shadow:
+                0 1px 3px rgba(0, 0, 0, 0.15);
+        }
+
+        .switch input:checked + .switch-slider {
+            background: #1769ff;
+        }
+
+        .switch input:checked + .switch-slider::before {
+            transform: translateX(20px);
+        }
+
+
+        /* =====================================================
+           SEGURANÇA
+           ===================================================== */
+
+        .seguranca-aviso {
+            padding: 15px;
+
+            margin-bottom: 20px;
+
+            background: #eff6ff;
+
+            border: 1px solid #dbeafe;
+
+            border-radius: 10px;
+
+            color: #1d4ed8;
+
+            font-size: 11px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           ZONA DE PERIGO
+           ===================================================== */
+
+        .zona-perigo {
+            margin-top: 25px;
+
+            padding: 19px;
+
+            background: #fff7f7;
+
+            border: 1px solid #fee2e2;
+
+            border-radius: 11px;
+        }
+
+        .zona-perigo h3 {
+            margin: 0;
+
+            color: #b91c1c;
+
+            font-size: 13px;
+        }
+
+        .zona-perigo p {
+            margin: 7px 0 15px;
+
+            color: #7f1d1d;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+        }
+
+        .btn-perigo {
+            min-height: 38px;
+
+            padding: 0 14px;
+
+            border: 1px solid #fecaca;
+
+            border-radius: 8px;
+
+            background: #ffffff;
+
+            color: #b91c1c;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .btn-perigo:hover {
+            background: #fef2f2;
+        }
+
+
+        /* =====================================================
+           MENSAGEM
+           ===================================================== */
+
+        .mensagem-config {
+            position: fixed;
+
+            right: 25px;
+            bottom: 25px;
+
+            padding: 13px 17px;
+
+            border-radius: 9px;
+
+            background: #111827;
+
+            color: #ffffff;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.15);
+
+            opacity: 0;
+
+            transform: translateY(10px);
+
+            pointer-events: none;
+
+            transition: 0.25s ease;
+
+            z-index: 3000;
+        }
+
+        .mensagem-config.mostrar {
+            opacity: 1;
+
+            transform: translateY(0);
+        }
+
+
+        /* =====================================================
+           RESPONSIVO
+           ===================================================== */
+
+        @media (max-width: 850px) {
+
+            .config-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .config-menu {
+                display: grid;
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 5px;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .config-menu {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .config-header h1 {
+                font-size: 23px;
+            }
+
+            .config-corpo {
+                padding: 20px;
+            }
+
+            .perfil-topo {
+                align-items: flex-start;
+            }
+
+            .opcao {
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="sistema">
+
+
+    <!-- =====================================================
+         PAINEL LATERAL
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="sidebar-logo">
+
+            <div class="logo-circulo">
+                RT
+            </div>
+
+            <div>
+
+                <strong>
+                    REPRESENTANTES
+                </strong>
+
+                <span>
+                    Gestão da Turma
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="menu">
+
+
+            <a href="inicio.html">
+
+                <span>⌂</span>
+
+                Início
+
+            </a>
+
+
+            <a href="alunos.html">
+
+                <span>♙</span>
+
+                Alunos
+
+            </a>
+
+
+            <a href="chamada.html">
+
+                <span>✓</span>
+
+                Chamada
+
+            </a>
+
+
+            <a href="notas.html">
+
+                <span>▣</span>
+
+                Notas
+
+            </a>
+
+
+            <a href="dados.html">
+
+                <span>◫</span>
+
+                Dados da Turma
+
+            </a>
+
+
+            <a href="matriz.html">
+
+                <span>▤</span>
+
+                Matriz Curricular
+
+            </a>
+
+
+            <a
+                href="configuracoes.html"
+                class="ativo"
+            >
+
+                <span>⚙</span>
+
+                Configurações
+
+            </a>
+
+
+        </nav>
+
+
+        <div class="sidebar-rodape">
+
+            <button onclick="sairSistema()">
+
+                <span>⇥</span>
+
+                Sair
+
+            </button>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTEÚDO
+         ===================================================== -->
+
+    <main class="conteudo">
+
+
+        <div class="config-page">
+
+
+            <header class="config-header">
+
+                <h1>
+                    Configurações
+                </h1>
+
+                <p>
+                    Gerencie as informações e preferências do sistema da sua turma.
+                </p>
+
+            </header>
+
+
+
+            <div class="config-layout">
+
+
+                <!-- =================================================
+                     MENU INTERNO
+                     ================================================= -->
+
+                <aside class="config-menu">
+
+
+                    <button
+                        class="ativo"
+                        data-secao="perfil"
+                    >
+
+                        <span>♙</span>
+
+                        Meu perfil
+
+                    </button>
+
+
+                    <button
+                        data-secao="turma"
+                    >
+
+                        <span>▣</span>
+
+                        Minha turma
+
+                    </button>
+
+
+                    <button
+                        data-secao="preferencias"
+                    >
+
+                        <span>⚙</span>
+
+                        Preferências
+
+                    </button>
+
+
+                    <button
+                        data-secao="notificacoes"
+                    >
+
+                        <span>🔔</span>
+
+                        Notificações
+
+                    </button>
+
+
+                    <button
+                        data-secao="seguranca"
+                    >
+
+                        <span>🔒</span>
+
+                        Segurança
+
+                    </button>
+
+
+                </aside>
+
+
+
+                <!-- =================================================
+                     CONTEÚDO
+                     ================================================= -->
+
+                <section class="config-conteudo">
+
+
+                    <!-- =================================================
+                         PERFIL
+                         ================================================= -->
+
+                    <div
+                        class="config-secao ativa"
+                        id="secao-perfil"
+                    >
+
+                        <div class="config-secao-header">
+
+                            <h2>
+                                Meu perfil
+                            </h2>
+
+                            <p>
+                                Informações do representante responsável pela turma.
+                            </p>
+
+                        </div>
+
+
+                        <div class="config-corpo">
+
+
+                            <div class="perfil-topo">
+
+                                <div
+                                    class="perfil-avatar"
+                                    id="avatarRepresentante"
+                                >
+                                    R
+                                </div>
+
+                                <div class="perfil-info">
+
+                                    <h3 id="nomeRepresentante">
+                                        Representante
+                                    </h3>
+
+                                    <p>
+                                        Representante de turma
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-grid">
+
+
+                                <div class="campo-grupo">
+
+                                    <label>
+                                        Nome completo
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="campoNome"
+                                        placeholder="Digite seu nome"
+                                    >
+
+                                </div>
+
+
+                                <div class="campo-grupo">
+
+                                    <label>
+                                        Usuário
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="campoUsuario"
+                                        placeholder="Usuário"
+                                    >
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="config-acoes">
+
+                                <button
+                                    class="btn-principal btn-config"
+                                    onclick="salvarPerfil()"
+                                >
+                                    Salvar alterações
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         TURMA
+                         ================================================= -->
+
+                    <div
+                        class="config-secao"
+                        id="secao-turma"
+                    >
+
+                        <div class="config-secao-header">
+
+                            <h2>
+                                Minha turma
+                            </h2>
+
+                            <p>
+                                Atualize os dados básicos da turma cadastrada.
+                            </p>
+
+                        </div>
+
+
+                        <div class="config-corpo">
+
+
+                            <div class="form-grid">
+
+
+                                <div class="campo-grupo">
+
+                                    <label>
+                                        Nome da turma
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="campoTurma"
+                                        placeholder="Ex.: 2º EMTI 2"
+                                    >
+
+                                </div>
+
+
+                                <div class="campo-grupo">
+
+                                    <label>
+                                        Ano escolar
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="campoAno"
+                                        placeholder="Ex.: 2º ano"
+                                    >
+
+                                </div>
+
+
+                                <div class="campo-grupo">
+
+                                    <label>
+                                        Turno
+                                    </label>
+
+                                    <select id="campoTurno">
+
+                                        <option value="">
+                                            Selecione
+                                        </option>
+
+                                        <option value="Manhã">
+                                            Manhã
+                                        </option>
+
+                                        <option value="Tarde">
+                                            Tarde
+                                        </option>
+
+                                        <option value="Noite">
+                                            Noite
+                                        </option>
+
+                                        <option value="Integral">
+                                            Integral
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="campo-grupo">
+
+                                    <label>
+                                        Sala
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="campoSala"
+                                        placeholder="Ex.: Sala 05"
+                                    >
+
+                                </div>
+
+
+                                <div class="campo-grupo">
+
+                                    <label>
+                                        Ano letivo
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="campoAnoLetivo"
+                                        placeholder="Ex.: 2026"
+                                    >
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="config-acoes">
+
+                                <button
+                                    class="btn-principal btn-config"
+                                    onclick="salvarTurma()"
+                                >
+                                    Salvar dados da turma
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         PREFERÊNCIAS
+                         ================================================= -->
+
+                    <div
+                        class="config-secao"
+                        id="secao-preferencias"
+                    >
+
+                        <div class="config-secao-header">
+
+                            <h2>
+                                Preferências
+                            </h2>
+
+                            <p>
+                                Personalize o comportamento do sistema.
+                            </p>
+
+                        </div>
+
+
+                        <div class="config-corpo">
+
+
+                            <div class="opcao">
+
+                                <div class="opcao-info">
+
+                                    <strong>
+                                        Mostrar confirmações
+                                    </strong>
+
+                                    <span>
+                                        Exibir confirmação antes de ações importantes.
+                                    </span>
+
+                                </div>
+
+
+                                <label class="switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="confirmacoes"
+                                        checked
+                                    >
+
+                                    <span class="switch-slider"></span>
+
+                                </label>
+
+                            </div>
+
+
+                            <div class="opcao">
+
+                                <div class="opcao-info">
+
+                                    <strong>
+                                        Atualização automática
+                                    </strong>
+
+                                    <span>
+                                        Atualizar os dados da página automaticamente.
+                                    </span>
+
+                                </div>
+
+
+                                <label class="switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="atualizacao"
+                                        checked
+                                    >
+
+                                    <span class="switch-slider"></span>
+
+                                </label>
+
+                            </div>
+
+
+                            <div class="opcao">
+
+                                <div class="opcao-info">
+
+                                    <strong>
+                                        Animações do sistema
+                                    </strong>
+
+                                    <span>
+                                        Ativar pequenas animações na interface.
+                                    </span>
+
+                                </div>
+
+
+                                <label class="switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="animacoes"
+                                        checked
+                                    >
+
+                                    <span class="switch-slider"></span>
+
+                                </label>
+
+                            </div>
+
+
+                            <div class="config-acoes">
+
+                                <button
+                                    class="btn-principal btn-config"
+                                    onclick="salvarPreferencias()"
+                                >
+                                    Salvar preferências
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         NOTIFICAÇÕES
+                         ================================================= -->
+
+                    <div
+                        class="config-secao"
+                        id="secao-notificacoes"
+                    >
+
+                        <div class="config-secao-header">
+
+                            <h2>
+                                Notificações
+                            </h2>
+
+                            <p>
+                                Escolha quais avisos deseja receber.
+                            </p>
+
+                        </div>
+
+
+                        <div class="config-corpo">
+
+
+                            <div class="opcao">
+
+                                <div class="opcao-info">
+
+                                    <strong>
+                                        Alertas de frequência
+                                    </strong>
+
+                                    <span>
+                                        Avisar quando um aluno apresentar baixa frequência.
+                                    </span>
+
+                                </div>
+
+
+                                <label class="switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="alertaFrequencia"
+                                        checked
+                                    >
+
+                                    <span class="switch-slider"></span>
+
+                                </label>
+
+                            </div>
+
+
+                            <div class="opcao">
+
+                                <div class="opcao-info">
+
+                                    <strong>
+                                        Alertas de desempenho
+                                    </strong>
+
+                                    <span>
+                                        Avisar quando houver baixo desempenho acadêmico.
+                                    </span>
+
+                                </div>
+
+
+                                <label class="switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="alertaDesempenho"
+                                        checked
+                                    >
+
+                                    <span class="switch-slider"></span>
+
+                                </label>
+
+                            </div>
+
+
+                            <div class="opcao">
+
+                                <div class="opcao-info">
+
+                                    <strong>
+                                        Novidades do sistema
+                                    </strong>
+
+                                    <span>
+                                        Mostrar informações sobre novas funções.
+                                    </span>
+
+                                </div>
+
+
+                                <label class="switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="novidades"
+                                        checked
+                                    >
+
+                                    <span class="switch-slider"></span>
+
+                                </label>
+
+                            </div>
+
+
+                            <div class="config-acoes">
+
+                                <button
+                                    class="btn-principal btn-config"
+                                    onclick="salvarNotificacoes()"
+                                >
+                                    Salvar notificações
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         SEGURANÇA
+                         ================================================= -->
+
+                    <div
+                        class="config-secao"
+                        id="secao-seguranca"
+                    >
+
+                        <div class="config-secao-header">
+
+                            <h2>
+                                Segurança
+                            </h2>
+
+                            <p>
+                                Configurações relacionadas ao acesso ao sistema.
+                            </p>
+
+                        </div>
+
+
+                        <div class="config-corpo">
+
+
+                            <div class="seguranca-aviso">
+
+                                A segurança de senha será integrada ao servidor
+                                quando o sistema de autenticação estiver conectado
+                                ao banco de dados.
+
+                            </div>
+
+
+                            <div class="campo-grupo">
+
+                                <label>
+                                    Nova senha
+                                </label>
+
+                                <input
+                                    type="password"
+                                    id="novaSenha"
+                                    placeholder="Digite uma nova senha"
+                                >
+
+                            </div>
+
+
+                            <div class="campo-grupo">
+
+                                <label>
+                                    Confirmar nova senha
+                                </label>
+
+                                <input
+                                    type="password"
+                                    id="confirmarSenha"
+                                    placeholder="Digite novamente a senha"
+                                >
+
+                            </div>
+
+
+                            <div class="config-acoes">
+
+                                <button
+                                    class="btn-principal btn-config"
+                                    onclick="alterarSenha()"
+                                >
+                                    Alterar senha
+                                </button>
+
+                            </div>
+
+
+                            <div class="zona-perigo">
+
+                                <h3>
+                                    Encerrar sessão
+                                </h3>
+
+                                <p>
+                                    Você será levado novamente para a tela de login.
+                                </p>
+
+                                <button
+                                    class="btn-perigo"
+                                    onclick="sairSistema()"
+                                >
+                                    Sair do sistema
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+
+<!-- =========================================================
+     MENSAGEM
+     ========================================================= -->
+
+<div
+    class="mensagem-config"
+    id="mensagemConfig"
+>
+    Alterações salvas.
+</div>
+
+
+
+<script>
+
+    /* =========================================================
+       DADOS
+       ========================================================= */
+
+    let turma =
+        JSON.parse(
+            localStorage.getItem(
+                "turmaRepresentante"
+            ) || "null"
+        );
+
+
+    /* =========================================================
+       MENU DE CONFIGURAÇÕES
+       ========================================================= */
+
+    const botoes =
+        document.querySelectorAll(
+            ".config-menu button"
+        );
+
+
+    const secoes =
+        document.querySelectorAll(
+            ".config-secao"
+        );
+
+
+    botoes.forEach(botao => {
+
+        botao.addEventListener(
+            "click",
+            function() {
+
+                const nomeSecao =
+                    this.dataset.secao;
+
+
+                botoes.forEach(item => {
+
+                    item.classList.remove(
+                        "ativo"
+                    );
+
+                });
+
+
+                secoes.forEach(secao => {
+
+                    secao.classList.remove(
+                        "ativa"
+                    );
+
+                });
+
+
+                this.classList.add(
+                    "ativo"
+                );
+
+
+                const secao =
+                    document.getElementById(
+                        "secao-" + nomeSecao
+                    );
+
+
+                if (secao) {
+
+                    secao.classList.add(
+                        "ativa"
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+
+    /* =========================================================
+       CARREGAR TURMA
+       ========================================================= */
+
+    function carregarTurma() {
+
+        if (!turma) {
+            return;
+        }
+
+
+        document.getElementById(
+            "campoTurma"
+        ).value =
+            turma.nome || "";
+
+
+        document.getElementById(
+            "campoAno"
+        ).value =
+            turma.ano || "";
+
+
+        document.getElementById(
+            "campoTurno"
+        ).value =
+            turma.turno || "";
+
+
+        document.getElementById(
+            "campoSala"
+        ).value =
+            turma.sala || "";
+
+
+        document.getElementById(
+            "campoAnoLetivo"
+        ).value =
+            turma.anoLetivo || "";
+
+    }
+
+
+    /* =========================================================
+       PERFIL
+       ========================================================= */
+
+    function carregarPerfil() {
+
+        const perfil =
+            JSON.parse(
+                localStorage.getItem(
+                    "perfilRepresentante"
+                ) || "null"
+            );
+
+
+        if (!perfil) {
+            return;
+        }
+
+
+        document.getElementById(
+            "campoNome"
+        ).value =
+            perfil.nome || "";
+
+
+        document.getElementById(
+            "campoUsuario"
+        ).value =
+            perfil.usuario || "";
+
+
+        atualizarPerfilVisual(
+            perfil.nome
+        );
+
+    }
+
+
+    function atualizarPerfilVisual(nome) {
+
+        const nomeFinal =
+            nome || "Representante";
+
+
+        document.getElementById(
+            "nomeRepresentante"
+        ).textContent =
+            nomeFinal;
+
+
+        const inicial =
+            nomeFinal
+                .trim()
+                .charAt(0)
+                .toUpperCase();
+
+
+        document.getElementById(
+            "avatarRepresentante"
+        ).textContent =
+            inicial || "R";
+
+    }
+
+
+    function salvarPerfil() {
+
+        const nome =
+            document.getElementById(
+                "campoNome"
+            ).value.trim();
+
+
+        const usuario =
+            document.getElementById(
+                "campoUsuario"
+            ).value.trim();
+
+
+        if (!nome) {
+
+            mostrarMensagem(
+                "Digite seu nome."
+            );
+
+            return;
+
+        }
+
+
+        const perfil = {
+
+            nome,
+
+            usuario
+
+        };
+
+
+        localStorage.setItem(
+            "perfilRepresentante",
+            JSON.stringify(perfil)
+        );
+
+
+        atualizarPerfilVisual(nome);
+
+
+        mostrarMensagem(
+            "Perfil atualizado com sucesso."
+        );
+
+    }
+
+
+    /* =========================================================
+       TURMA
+       ========================================================= */
+
+    function salvarTurma() {
+
+        const nome =
+            document.getElementById(
+                "campoTurma"
+            ).value.trim();
+
+
+        const ano =
+            document.getElementById(
+                "campoAno"
+            ).value.trim();
+
+
+        const turno =
+            document.getElementById(
+                "campoTurno"
+            ).value;
+
+
+        const sala =
+            document.getElementById(
+                "campoSala"
+            ).value.trim();
+
+
+        const anoLetivo =
+            document.getElementById(
+                "campoAnoLetivo"
+            ).value.trim();
+
+
+        if (!nome) {
+
+            mostrarMensagem(
+                "Digite o nome da turma."
+            );
+
+            return;
+
+        }
+
+
+        turma = {
+
+            nome,
+
+            ano,
+
+            turno,
+
+            sala,
+
+            anoLetivo
+
+        };
+
+
+        localStorage.setItem(
+            "turmaRepresentante",
+            JSON.stringify(turma)
+        );
+
+
+        mostrarMensagem(
+            "Dados da turma atualizados."
+        );
+
+    }
+
+
+    /* =========================================================
+       PREFERÊNCIAS
+       ========================================================= */
+
+    function salvarPreferencias() {
+
+        const preferencias = {
+
+            confirmacoes:
+                document.getElementById(
+                    "confirmacoes"
+                ).checked,
+
+            atualizacao:
+                document.getElementById(
+                    "atualizacao"
+                ).checked,
+
+            animacoes:
+                document.getElementById(
+                    "animacoes"
+                ).checked
+
+        };
+
+
+        localStorage.setItem(
+            "preferenciasRepresentante",
+            JSON.stringify(preferencias)
+        );
+
+
+        mostrarMensagem(
+            "Preferências salvas."
+        );
+
+    }
+
+
+    function carregarPreferencias() {
+
+        const preferencias =
+            JSON.parse(
+                localStorage.getItem(
+                    "preferenciasRepresentante"
+                ) || "null"
+            );
+
+
+        if (!preferencias) {
+            return;
+        }
+
+
+        document.getElementById(
+            "confirmacoes"
+        ).checked =
+            preferencias.confirmacoes !== false;
+
+
+        document.getElementById(
+            "atualizacao"
+        ).checked =
+            preferencias.atualizacao !== false;
+
+
+        document.getElementById(
+            "animacoes"
+        ).checked =
+            preferencias.animacoes !== false;
+
+    }
+
+
+    /* =========================================================
+       NOTIFICAÇÕES
+       ========================================================= */
+
+    function salvarNotificacoes() {
+
+        const notificacoes = {
+
+            frequencia:
+                document.getElementById(
+                    "alertaFrequencia"
+                ).checked,
+
+            desempenho:
+                document.getElementById(
+                    "alertaDesempenho"
+                ).checked,
+
+            novidades:
+                document.getElementById(
+                    "novidades"
+                ).checked
+
+        };
+
+
+        localStorage.setItem(
+            "notificacoesRepresentante",
+            JSON.stringify(notificacoes)
+        );
+
+
+        mostrarMensagem(
+            "Preferências de notificações salvas."
+        );
+
+    }
+
+
+    function carregarNotificacoes() {
+
+        const notificacoes =
+            JSON.parse(
+                localStorage.getItem(
+                    "notificacoesRepresentante"
+                ) || "null"
+            );
+
+
+        if (!notificacoes) {
+            return;
+        }
+
+
+        document.getElementById(
+            "alertaFrequencia"
+        ).checked =
+            notificacoes.frequencia !== false;
+
+
+        document.getElementById(
+            "alertaDesempenho"
+        ).checked =
+            notificacoes.desempenho !== false;
+
+
+        document.getElementById(
+            "novidades"
+        ).checked =
+            notificacoes.novidades !== false;
+
+    }
+
+
+    /* =========================================================
+       SENHA
+       ========================================================= */
+
+    function alterarSenha() {
+
+        const novaSenha =
+            document.getElementById(
+                "novaSenha"
+            ).value;
+
+
+        const confirmarSenha =
+            document.getElementById(
+                "confirmarSenha"
+            ).value;
+
+
+        if (!novaSenha || !confirmarSenha) {
+
+            mostrarMensagem(
+                "Preencha os dois campos de senha."
+            );
+
+            return;
+
+        }
+
+
+        if (novaSenha.length < 6) {
+
+            mostrarMensagem(
+                "A senha deve ter pelo menos 6 caracteres."
+            );
+
+            return;
+
+        }
+
+
+        if (novaSenha !== confirmarSenha) {
+
+            mostrarMensagem(
+                "As senhas não são iguais."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * A alteração real da senha será feita
+         * pelo servidor quando o login estiver
+         * conectado ao banco SQLite.
+         */
+
+
+        document.getElementById(
+            "novaSenha"
+        ).value = "";
+
+
+        document.getElementById(
+            "confirmarSenha"
+        ).value = "";
+
+
+        mostrarMensagem(
+            "Senha validada. A integração com o servidor será feita na próxima etapa."
+        );
+
+    }
+
+
+    /* =========================================================
+       MENSAGEM
+       ========================================================= */
+
+    function mostrarMensagem(texto) {
+
+        const elemento =
+            document.getElementById(
+                "mensagemConfig"
+            );
+
+
+        elemento.textContent =
+            texto;
+
+
+        elemento.classList.add(
+            "mostrar"
+        );
+
+
+        setTimeout(() => {
+
+            elemento.classList.remove(
+                "mostrar"
+            );
+
+        }, 2800);
+
+    }
+
+
+    /* =========================================================
+       SAIR
+       ========================================================= */
+
+    function sairSistema() {
+
+        const confirmar =
+            confirm(
+                "Deseja realmente sair do sistema?"
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        window.location.href =
+            "login.html";
+
+    }
+
+
+    /* =========================================================
+       INICIALIZAÇÃO
+       ========================================================= */
+
+    carregarTurma();
+
+    carregarPerfil();
+
+    carregarPreferencias();
+
+    carregarNotificacoes();
+
+</script>
+
+
+</body>
+
+</html>

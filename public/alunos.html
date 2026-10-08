@@ -1,0 +1,1897 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Alunos | Representantes</title>
+
+    <link
+        rel="stylesheet"
+        href="css/sistema.css"
+    >
+
+</head>
+
+
+<body class="sistema-body">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+
+            <div class="logo-sidebar">
+                RT
+            </div>
+
+            <div>
+
+                <strong>
+                    REPRESENTANTES
+                </strong>
+
+                <span>
+                    Gestão da Turma
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="menu-sidebar">
+
+            <a href="inicio.html">
+
+                <span>⌂</span>
+
+                Início
+
+            </a>
+
+
+            <a
+                href="alunos.html"
+                class="ativo"
+            >
+
+                <span>👥</span>
+
+                Alunos
+
+            </a>
+
+
+            <a href="chamada.html">
+
+                <span>✓</span>
+
+                Chamada
+
+            </a>
+
+
+            <a href="notas.html">
+
+                <span>▣</span>
+
+                Notas
+
+            </a>
+
+
+            <a href="dados.html">
+
+                <span>▥</span>
+
+                Dados da Turma
+
+            </a>
+
+
+            <a href="matriz.html">
+
+                <span>☷</span>
+
+                Matriz Curricular
+
+            </a>
+
+
+            <a href="configuracoes.html">
+
+                <span>⚙</span>
+
+                Configurações
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-final">
+
+            <button onclick="sairSistema()">
+
+                <span>↪</span>
+
+                Sair
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTEÚDO
+    ====================================================== -->
+
+    <main class="conteudo-sistema">
+
+
+        <!-- HEADER -->
+
+        <header class="topo-sistema">
+
+            <div>
+
+                <span class="topo-label">
+                    GESTÃO DA TURMA
+                </span>
+
+                <h1>
+                    Alunos
+                </h1>
+
+                <p>
+                    Gerencie os estudantes cadastrados na sua turma.
+                </p>
+
+            </div>
+
+
+            <div class="usuario-topo">
+
+                <div
+                    class="avatar-usuario"
+                    id="avatarUsuario"
+                >
+                    R
+                </div>
+
+
+                <div>
+
+                    <strong id="nomeRepresentante">
+                        Representante
+                    </strong>
+
+                    <span id="nomeTurma">
+                        Turma
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =====================================================
+             RESUMO
+        ====================================================== -->
+
+        <section class="resumo-alunos">
+
+
+            <div class="card-resumo-alunos">
+
+                <div class="icone-resumo">
+                    👥
+                </div>
+
+                <div>
+
+                    <span>
+                        Total de alunos
+                    </span>
+
+                    <strong id="totalAlunos">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="card-resumo-alunos">
+
+                <div class="icone-resumo">
+                    ✓
+                </div>
+
+                <div>
+
+                    <span>
+                        Frequência média
+                    </span>
+
+                    <strong id="frequenciaMedia">
+                        --
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="card-resumo-alunos">
+
+                <div class="icone-resumo">
+                    ★
+                </div>
+
+                <div>
+
+                    <span>
+                        Melhor frequência
+                    </span>
+
+                    <strong id="melhorFrequencia">
+                        --
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             PAINEL
+        ====================================================== -->
+
+        <section class="painel-alunos">
+
+
+            <div class="painel-alunos-topo">
+
+                <div>
+
+                    <h2>
+                        Lista de alunos
+                    </h2>
+
+                    <p>
+                        Consulte e gerencie os estudantes da turma.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="botao-principal"
+                    onclick="abrirModalAluno()"
+                >
+                    + Adicionar aluno
+                </button>
+
+            </div>
+
+
+
+            <!-- FERRAMENTAS -->
+
+            <div class="ferramentas-alunos">
+
+
+                <div class="campo-pesquisa-alunos">
+
+                    <span>
+                        ⌕
+                    </span>
+
+                    <input
+                        type="text"
+                        id="pesquisaAluno"
+                        placeholder="Pesquisar aluno..."
+                        oninput="filtrarAlunos()"
+                    >
+
+                </div>
+
+
+
+                <select
+                    id="filtroFrequencia"
+                    onchange="filtrarAlunos()"
+                >
+
+                    <option value="todos">
+                        Todas as frequências
+                    </option>
+
+                    <option value="alta">
+                        90% ou mais
+                    </option>
+
+                    <option value="media">
+                        75% a 89%
+                    </option>
+
+                    <option value="baixa">
+                        Abaixo de 75%
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- TABELA -->
+
+            <div class="tabela-container">
+
+                <table class="tabela-alunos">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                #
+                            </th>
+
+                            <th>
+                                Aluno
+                            </th>
+
+                            <th>
+                                Data de nascimento
+                            </th>
+
+                            <th>
+                                Frequência
+                            </th>
+
+                            <th>
+                                Advertências
+                            </th>
+
+                            <th>
+                                Ações
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="listaAlunos">
+
+                    </tbody>
+
+                </table>
+
+
+
+                <div
+                    id="estadoVazioAlunos"
+                    class="estado-vazio-alunos"
+                >
+
+                    <div>
+                        👥
+                    </div>
+
+                    <h3>
+                        Nenhum aluno encontrado
+                    </h3>
+
+                    <p>
+                        Adicione alunos ou altere os filtros da pesquisa.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         MODAL NOVO ALUNO
+    ====================================================== -->
+
+    <div
+        id="modalAluno"
+        class="modal-sistema"
+    >
+
+        <div class="modal-card">
+
+
+            <div class="modal-topo">
+
+                <div>
+
+                    <span>
+                        NOVO CADASTRO
+                    </span>
+
+                    <h2>
+                        Adicionar aluno
+                    </h2>
+
+                </div>
+
+
+                <button
+                    onclick="fecharModalAluno()"
+                    class="fechar-modal"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+
+            <form id="formNovoAluno">
+
+
+                <div class="campo-form">
+
+                    <label for="novoNomeAluno">
+                        Nome completo
+                    </label>
+
+                    <input
+                        type="text"
+                        id="novoNomeAluno"
+                        placeholder="Digite o nome completo"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="campo-form">
+
+                    <label for="novaDataNascimento">
+                        Data de nascimento
+                    </label>
+
+                    <input
+                        type="date"
+                        id="novaDataNascimento"
+                    >
+
+                </div>
+
+
+
+                <div
+                    id="mensagemAluno"
+                    class="mensagem-form"
+                ></div>
+
+
+
+                <div class="modal-acoes">
+
+                    <button
+                        type="button"
+                        class="botao-voltar"
+                        onclick="fecharModalAluno()"
+                    >
+                        Cancelar
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="botao-continuar"
+                        id="botaoCadastrarAluno"
+                    >
+                        Cadastrar aluno
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+<script>
+
+/* =====================================================
+   ESTADO
+===================================================== */
+
+let alunos = [];
+
+let representanteLogado = null;
+
+let turmaAtual = null;
+
+
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    iniciarPagina
+);
+
+
+async function iniciarPagina() {
+
+    const sessaoValida =
+        carregarSessao();
+
+
+    if (!sessaoValida) {
+
+        return;
+
+    }
+
+
+    atualizarCabecalho();
+
+
+    await carregarAlunos();
+
+}
+
+
+/* =====================================================
+   SESSÃO
+===================================================== */
+
+function carregarSessao() {
+
+    try {
+
+        const representanteSalvo =
+            sessionStorage.getItem(
+                "representanteLogado"
+            );
+
+
+        const turmaSalva =
+            sessionStorage.getItem(
+                "turmaAtual"
+            );
+
+
+        if (representanteSalvo) {
+
+            representanteLogado =
+                JSON.parse(
+                    representanteSalvo
+                );
+
+        }
+
+
+        if (turmaSalva) {
+
+            turmaAtual =
+                JSON.parse(
+                    turmaSalva
+                );
+
+        }
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao recuperar sessão:",
+            erro
+        );
+
+    }
+
+
+    if (!representanteLogado) {
+
+        window.location.href =
+            "login.html";
+
+        return false;
+
+    }
+
+
+    if (
+        !turmaAtual ||
+        !turmaAtual.id
+    ) {
+
+        alert(
+            "Não foi possível identificar a turma atual."
+        );
+
+
+        window.location.href =
+            "primeiro-acesso.html";
+
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   CABEÇALHO
+===================================================== */
+
+function atualizarCabecalho() {
+
+    const nome =
+        representanteLogado.nome ||
+        representanteLogado.usuario ||
+        "Representante";
+
+
+    document.getElementById(
+        "nomeRepresentante"
+    ).textContent =
+        nome;
+
+
+    document.getElementById(
+        "nomeTurma"
+    ).textContent =
+        turmaAtual.nome ||
+        "Turma";
+
+
+    document.getElementById(
+        "avatarUsuario"
+    ).textContent =
+        nome
+            .charAt(0)
+            .toUpperCase();
+
+}
+
+
+/* =====================================================
+   CARREGAR ALUNOS
+===================================================== */
+
+async function carregarAlunos() {
+
+    const lista =
+        document.getElementById(
+            "listaAlunos"
+        );
+
+
+    lista.innerHTML = `
+
+        <tr>
+
+            <td
+                colspan="6"
+                style="
+                    text-align:center;
+                    padding:30px;
+                "
+            >
+
+                Carregando alunos...
+
+            </td>
+
+        </tr>
+
+    `;
+
+
+    try {
+
+        const resposta =
+            await fetch(
+                `/api/alunos/turma/${turmaAtual.id}`
+            );
+
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                "Erro HTTP " +
+                resposta.status
+            );
+
+        }
+
+
+        const dados =
+            await resposta.json();
+
+
+        if (Array.isArray(dados)) {
+
+            alunos = dados;
+
+        } else {
+
+            alunos =
+                Array.isArray(
+                    dados.alunos
+                )
+                    ? dados.alunos
+                    : [];
+
+        }
+
+
+        /*
+         * Normalização inicial
+         */
+
+        alunos =
+            alunos.map(aluno => {
+
+                return {
+
+                    ...aluno,
+
+                    id:
+                        Number(
+                            aluno.id
+                        ),
+
+                    nome:
+                        aluno.nome ||
+                        "",
+
+                    dataNascimento:
+                        aluno.data_nascimento ||
+                        aluno.dataNascimento ||
+                        "",
+
+                    frequencia:
+                        null,
+
+                    presencas:
+                        0,
+
+                    faltas:
+                        0,
+
+                    totalAulas:
+                        0,
+
+                    advertencias:
+                        0
+
+                };
+
+            });
+
+
+        /*
+         * Agora buscamos os dados reais
+         * de cada aluno.
+         */
+
+        await carregarDadosDosAlunos();
+
+
+        atualizarTela();
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar alunos:",
+            erro
+        );
+
+
+        alunos = [];
+
+
+        lista.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    style="
+                        text-align:center;
+                        padding:30px;
+                    "
+                >
+
+                    Não foi possível carregar os alunos.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        atualizarResumo();
+
+    }
+
+}
+
+
+/* =====================================================
+   CARREGAR FREQUÊNCIA E ADVERTÊNCIAS
+===================================================== */
+
+async function carregarDadosDosAlunos() {
+
+    if (!alunos.length) {
+
+        return;
+
+    }
+
+
+    await Promise.all(
+
+        alunos.map(
+            async aluno => {
+
+                try {
+
+                    /*
+                     * Frequência
+                     */
+
+                    const respostaFrequencia =
+                        await fetch(
+                            `/api/frequencia/aluno/${aluno.id}`
+                        );
+
+
+                    if (
+                        respostaFrequencia.ok
+                    ) {
+
+                        const dados =
+                            await respostaFrequencia.json();
+
+
+                        aluno.frequencia =
+                            Number(
+                                dados.frequencia ?? 100
+                            );
+
+
+                        aluno.presencas =
+                            Number(
+                                dados.presencas ?? 0
+                            );
+
+
+                        aluno.faltas =
+                            Number(
+                                dados.faltas ?? 0
+                            );
+
+
+                        aluno.totalAulas =
+                            Number(
+                                dados.totalAulas ?? 0
+                            );
+
+                    } else {
+
+                        aluno.frequencia =
+                            100;
+
+                    }
+
+
+                    /*
+                     * Advertências
+                     */
+
+                    const respostaResumo =
+                        await fetch(
+                            `/api/resumo-aluno/${aluno.id}`
+                        );
+
+
+                    if (
+                        respostaResumo.ok
+                    ) {
+
+                        const resumo =
+                            await respostaResumo.json();
+
+
+                        const advertencias =
+                            Array.isArray(
+                                resumo.advertencias
+                            )
+                                ? resumo.advertencias
+                                : [];
+
+
+                        aluno.advertencias =
+                            advertencias.length;
+
+                    }
+
+                } catch (erro) {
+
+                    console.error(
+                        `Erro ao carregar dados do aluno ${aluno.id}:`,
+                        erro
+                    );
+
+
+                    /*
+                     * Aluno sem chamada
+                     * começa com 100%.
+                     */
+
+                    aluno.frequencia =
+                        aluno.frequencia === null
+                            ? 100
+                            : aluno.frequencia;
+
+                }
+
+            }
+        )
+
+    );
+
+}
+
+
+/* =====================================================
+   ATUALIZAR TELA
+===================================================== */
+
+function atualizarTela() {
+
+    const pesquisa =
+        document.getElementById(
+            "pesquisaAluno"
+        ).value
+        .toLowerCase()
+        .trim();
+
+
+    const filtro =
+        document.getElementById(
+            "filtroFrequencia"
+        ).value;
+
+
+    const alunosFiltrados =
+        alunos.filter(
+            aluno => {
+
+                const nome =
+                    (
+                        aluno.nome ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+                const correspondeNome =
+                    nome.includes(
+                        pesquisa
+                    );
+
+
+                const frequencia =
+                    Number(
+                        aluno.frequencia ?? 100
+                    );
+
+
+                let correspondeFrequencia =
+                    true;
+
+
+                if (
+                    filtro === "alta"
+                ) {
+
+                    correspondeFrequencia =
+                        frequencia >= 90;
+
+                }
+
+
+                if (
+                    filtro === "media"
+                ) {
+
+                    correspondeFrequencia =
+                        frequencia >= 75 &&
+                        frequencia < 90;
+
+                }
+
+
+                if (
+                    filtro === "baixa"
+                ) {
+
+                    correspondeFrequencia =
+                        frequencia < 75;
+
+                }
+
+
+                return (
+                    correspondeNome &&
+                    correspondeFrequencia
+                );
+
+            }
+        );
+
+
+    renderizarAlunos(
+        alunosFiltrados
+    );
+
+
+    atualizarResumo();
+
+}
+
+
+/* =====================================================
+   RENDERIZAR
+===================================================== */
+
+function renderizarAlunos(lista) {
+
+    const tbody =
+        document.getElementById(
+            "listaAlunos"
+        );
+
+
+    const vazio =
+        document.getElementById(
+            "estadoVazioAlunos"
+        );
+
+
+    tbody.innerHTML = "";
+
+
+    if (!lista.length) {
+
+        vazio.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    vazio.style.display =
+        "none";
+
+
+    lista.forEach(
+        (aluno, index) => {
+
+            const tr =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const frequencia =
+                Number(
+                    aluno.frequencia ?? 100
+                );
+
+
+            let classeFrequencia =
+                "frequencia-alta";
+
+
+            if (
+                frequencia < 90
+            ) {
+
+                classeFrequencia =
+                    "frequencia-media";
+
+            }
+
+
+            if (
+                frequencia < 75
+            ) {
+
+                classeFrequencia =
+                    "frequencia-baixa";
+
+            }
+
+
+            const nome =
+                aluno.nome ||
+                "Aluno";
+
+
+            const dataNascimento =
+                aluno.dataNascimento ||
+                "";
+
+
+            const advertencias =
+                Number(
+                    aluno.advertencias || 0
+                );
+
+
+            tr.innerHTML = `
+
+                <td>
+
+                    <span class="numero-tabela">
+                        ${index + 1}
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <div class="aluno-tabela">
+
+                        <div class="avatar-aluno">
+
+                            ${escaparHTML(
+                                nome
+                                    .charAt(0)
+                                    .toUpperCase()
+                            )}
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                ${escaparHTML(
+                                    nome
+                                )}
+                            </strong>
+
+                            <span>
+                                Estudante
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    ${
+                        dataNascimento
+                            ? formatarData(
+                                dataNascimento
+                              )
+                            : "Não informado"
+                    }
+
+                </td>
+
+
+                <td>
+
+                    <div class="frequencia-celula">
+
+
+                        <div class="barra-frequencia">
+
+                            <span
+                                style="
+                                    width:${Math.max(
+                                        0,
+                                        Math.min(
+                                            frequencia,
+                                            100
+                                        )
+                                    )}%;
+                                "
+                            ></span>
+
+                        </div>
+
+
+                        <strong
+                            class="${classeFrequencia}"
+                        >
+                            ${frequencia.toFixed(1)}%
+                        </strong>
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <span class="badge-advertencias">
+
+                        ${advertencias}
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <div class="acoes-aluno">
+
+
+                        <button
+                            onclick="abrirPerfil(${aluno.id})"
+                            title="Ver perfil"
+                        >
+                            Ver
+                        </button>
+
+
+                        <button
+                            onclick="removerAluno(${aluno.id})"
+                            class="acao-excluir"
+                            title="Remover aluno"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(
+                tr
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   RESUMO
+===================================================== */
+
+function atualizarResumo() {
+
+    const total =
+        alunos.length;
+
+
+    document.getElementById(
+        "totalAlunos"
+    ).textContent =
+        total;
+
+
+    if (!total) {
+
+        document.getElementById(
+            "frequenciaMedia"
+        ).textContent =
+            "--";
+
+
+        document.getElementById(
+            "melhorFrequencia"
+        ).textContent =
+            "--";
+
+
+        return;
+
+    }
+
+
+    const frequencias =
+        alunos.map(
+            aluno =>
+                Number(
+                    aluno.frequencia ?? 100
+                )
+        );
+
+
+    const soma =
+        frequencias.reduce(
+            (total, valor) =>
+                total + valor,
+            0
+        );
+
+
+    const media =
+        soma /
+        frequencias.length;
+
+
+    const melhor =
+        Math.max(
+            ...frequencias
+        );
+
+
+    document.getElementById(
+        "frequenciaMedia"
+    ).textContent =
+        `${media.toFixed(1)}%`;
+
+
+    document.getElementById(
+        "melhorFrequencia"
+    ).textContent =
+        `${melhor.toFixed(1)}%`;
+
+}
+
+
+/* =====================================================
+   PESQUISA
+===================================================== */
+
+function filtrarAlunos() {
+
+    atualizarTela();
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function abrirModalAluno() {
+
+    document.getElementById(
+        "modalAluno"
+    ).classList.add(
+        "aberto"
+    );
+
+
+    document.getElementById(
+        "novoNomeAluno"
+    ).focus();
+
+}
+
+
+function fecharModalAluno() {
+
+    document.getElementById(
+        "modalAluno"
+    ).classList.remove(
+        "aberto"
+    );
+
+
+    document.getElementById(
+        "formNovoAluno"
+    ).reset();
+
+
+    mostrarMensagemAluno(
+        "",
+        ""
+    );
+
+}
+
+
+/* =====================================================
+   CADASTRAR ALUNO
+===================================================== */
+
+document.getElementById(
+    "formNovoAluno"
+).addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const campoNome =
+            document.getElementById(
+                "novoNomeAluno"
+            );
+
+
+        const campoData =
+            document.getElementById(
+                "novaDataNascimento"
+            );
+
+
+        const botao =
+            document.getElementById(
+                "botaoCadastrarAluno"
+            );
+
+
+        const nome =
+            campoNome.value.trim();
+
+
+        const dataNascimento =
+            campoData.value;
+
+
+        if (!nome) {
+
+            mostrarMensagemAluno(
+                "Digite o nome do aluno.",
+                "erro-form"
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Evita nomes duplicados.
+         */
+
+        const existe =
+            alunos.some(
+                aluno =>
+                    (
+                        aluno.nome ||
+                        ""
+                    )
+                    .trim()
+                    .toLowerCase()
+                    ===
+                    nome
+                        .trim()
+                        .toLowerCase()
+            );
+
+
+        if (existe) {
+
+            mostrarMensagemAluno(
+                "Esse aluno já está cadastrado.",
+                "erro-form"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            !turmaAtual ||
+            !turmaAtual.id
+        ) {
+
+            mostrarMensagemAluno(
+                "Turma não identificada.",
+                "erro-form"
+            );
+
+            return;
+
+        }
+
+
+        botao.disabled =
+            true;
+
+
+        botao.textContent =
+            "Cadastrando...";
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    "/api/alunos",
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                turma_id:
+                                    turmaAtual.id,
+
+                                nome:
+                                    nome,
+
+                                data_nascimento:
+                                    dataNascimento ||
+                                    null
+
+                            })
+
+                    }
+                );
+
+
+            const dados =
+                await resposta
+                    .json()
+                    .catch(
+                        () => ({})
+                    );
+
+
+            if (!resposta.ok) {
+
+                throw new Error(
+                    dados.erro ||
+                    dados.error ||
+                    "Não foi possível cadastrar o aluno."
+                );
+
+            }
+
+
+            mostrarMensagemAluno(
+                "Aluno cadastrado com sucesso!",
+                "sucesso-form"
+            );
+
+
+            /*
+             * Busca novamente diretamente
+             * do banco.
+             */
+
+            await carregarAlunos();
+
+
+            setTimeout(
+                () => {
+
+                    fecharModalAluno();
+
+                },
+                400
+            );
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao cadastrar aluno:",
+                erro
+            );
+
+
+            mostrarMensagemAluno(
+                erro.message ||
+                "Erro ao cadastrar aluno.",
+                "erro-form"
+            );
+
+        } finally {
+
+            botao.disabled =
+                false;
+
+
+            botao.textContent =
+                "Cadastrar aluno";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   REMOVER ALUNO
+===================================================== */
+
+async function removerAluno(id) {
+
+    const aluno =
+        alunos.find(
+            item =>
+                Number(item.id) ===
+                Number(id)
+        );
+
+
+    if (!aluno) {
+        return;
+    }
+
+
+    const confirmar =
+        confirm(
+            `Deseja remover "${aluno.nome}" da turma?`
+        );
+
+
+    if (!confirmar) {
+        return;
+    }
+
+
+    try {
+
+        const resposta =
+            await fetch(
+                `/api/alunos/${id}`,
+                {
+                    method:
+                        "DELETE"
+                }
+            );
+
+
+        const dados =
+            await resposta
+                .json()
+                .catch(
+                    () => ({})
+                );
+
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                dados.erro ||
+                dados.error ||
+                "Não foi possível remover o aluno."
+            );
+
+        }
+
+
+        await carregarAlunos();
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao remover aluno:",
+            erro
+        );
+
+
+        alert(
+            erro.message ||
+            "Erro ao remover aluno."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   ABRIR PERFIL
+===================================================== */
+
+function abrirPerfil(id) {
+
+    sessionStorage.setItem(
+        "alunoSelecionado",
+        String(id)
+    );
+
+
+    window.location.href =
+        "aluno.html";
+
+}
+
+
+/* =====================================================
+   SAIR
+===================================================== */
+
+function sairSistema() {
+
+    sessionStorage.removeItem(
+        "representanteLogado"
+    );
+
+
+    sessionStorage.removeItem(
+        "turmaAtual"
+    );
+
+
+    sessionStorage.removeItem(
+        "alunoSelecionado"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =====================================================
+   FORMATAR DATA
+===================================================== */
+
+function formatarData(data) {
+
+    if (!data) {
+
+        return "Não informado";
+
+    }
+
+
+    const partes =
+        String(data).split("-");
+
+
+    if (
+        partes.length === 3
+    ) {
+
+        return (
+            partes[2] +
+            "/" +
+            partes[1] +
+            "/" +
+            partes[0]
+        );
+
+    }
+
+
+    return data;
+
+}
+
+
+/* =====================================================
+   SEGURANÇA
+===================================================== */
+
+function escaparHTML(texto) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        texto || "";
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   MENSAGENS
+===================================================== */
+
+function mostrarMensagemAluno(
+    texto,
+    classe
+) {
+
+    const mensagem =
+        document.getElementById(
+            "mensagemAluno"
+        );
+
+
+    mensagem.textContent =
+        texto;
+
+
+    mensagem.className =
+        "mensagem-form " +
+        classe;
+
+}
+
+
+/* =====================================================
+   FECHAR MODAL FORA
+===================================================== */
+
+document.getElementById(
+    "modalAluno"
+).addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target === this
+        ) {
+
+            fecharModalAluno();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

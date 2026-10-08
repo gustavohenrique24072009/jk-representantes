@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Início | Representantes</title>
+
+    <link rel="stylesheet" href="css/sistema.css">
+
+</head>
+
+<body>
+
+    <div class="sistema">
+
+        <!-- =========================
+             MENU LATERAL
+        ========================== -->
+
+        <aside class="menu-lateral">
+
+            <div class="marca">
+
+                <div class="marca-icone">
+                    RT
+                </div>
+
+                <div>
+                    <strong>REPRESENTANTES</strong>
+                    <span>Gestão da Turma</span>
+                </div>
+
+            </div>
+
+
+            <div class="perfil-menu">
+
+                <div
+                    class="avatar"
+                    id="avatarRepresentante"
+                >
+                    RT
+                </div>
+
+                <div>
+
+                    <strong id="nomeRepresentante">
+                        Representante
+                    </strong>
+
+                    <span id="nomeTurma">
+                        Carregando turma...
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <nav>
+
+                <p class="menu-titulo">
+                    PRINCIPAL
+                </p>
+
+
+                <a
+                    href="inicio.html"
+                    class="menu-item ativo"
+                >
+
+                    <span class="menu-icone">
+                        ⌂
+                    </span>
+
+                    Início
+
+                </a>
+
+
+                <a
+                    href="alunos.html"
+                    class="menu-item"
+                >
+
+                    <span class="menu-icone">
+                        👥
+                    </span>
+
+                    Alunos
+
+                </a>
+
+
+                <a
+                    href="chamada.html"
+                    class="menu-item"
+                >
+
+                    <span class="menu-icone">
+                        ✓
+                    </span>
+
+                    Chamada
+
+                </a>
+
+
+                <a
+                    href="notas.html"
+                    class="menu-item"
+                >
+
+                    <span class="menu-icone">
+                        ▣
+                    </span>
+
+                    Notas
+
+                </a>
+
+
+                <p class="menu-titulo">
+                    ANÁLISES
+                </p>
+
+
+                <a
+                    href="dados.html"
+                    class="menu-item"
+                >
+
+                    <span class="menu-icone">
+                        ▥
+                    </span>
+
+                    Dados da Turma
+
+                </a>
+
+
+                <a
+                    href="matriz.html"
+                    class="menu-item"
+                >
+
+                    <span class="menu-icone">
+                        ▤
+                    </span>
+
+                    Matriz Curricular
+
+                </a>
+
+
+                <p class="menu-titulo">
+                    SISTEMA
+                </p>
+
+
+                <a
+                    href="configuracoes.html"
+                    class="menu-item"
+                >
+
+                    <span class="menu-icone">
+                        ⚙
+                    </span>
+
+                    Configurações
+
+                </a>
+
+            </nav>
+
+
+            <div class="menu-final">
+
+                <button
+                    class="botao-sair"
+                    onclick="sairSistema()"
+                >
+
+                    <span>
+                        ↪
+                    </span>
+
+                    Sair
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =========================
+             CONTEÚDO
+        ========================== -->
+
+        <main class="conteudo">
+
+
+            <!-- CABEÇALHO -->
+
+            <header class="topo">
+
+                <div>
+
+                    <p class="topo-data">
+                        PAINEL DA TURMA
+                    </p>
+
+                    <h1>
+
+                        Bom dia,
+
+                        <span id="saudacaoNome">
+                            Representante
+                        </span>!
+
+                    </h1>
+
+                    <p class="topo-subtitulo">
+                        Aqui está o resumo da sua turma.
+                    </p>
+
+                </div>
+
+
+                <div class="topo-acoes">
+
+                    <button
+                        class="botao-notificacao"
+                        title="Notificações"
+                    >
+                        🔔
+                    </button>
+
+
+                    <div
+                        class="topo-avatar"
+                        id="topoAvatar"
+                    >
+                        RT
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =========================
+                 CARDS
+            ========================== -->
+
+            <section class="cards-resumo">
+
+
+                <!-- ALUNOS -->
+
+                <div class="card-resumo">
+
+                    <div class="card-resumo-topo">
+
+                        <span>
+                            ALUNOS
+                        </span>
+
+                        <div class="icone-card azul">
+                            👥
+                        </div>
+
+                    </div>
+
+
+                    <strong id="totalAlunos">
+                        0
+                    </strong>
+
+
+                    <p>
+                        alunos cadastrados
+                    </p>
+
+                </div>
+
+
+                <!-- FREQUÊNCIA -->
+
+                <div class="card-resumo">
+
+                    <div class="card-resumo-topo">
+
+                        <span>
+                            FREQUÊNCIA
+                        </span>
+
+                        <div class="icone-card verde">
+                            ✓
+                        </div>
+
+                    </div>
+
+
+                    <strong id="frequenciaMedia">
+                        0%
+                    </strong>
+
+
+                    <p class="positivo">
+                        média da turma
+                    </p>
+
+                </div>
+
+
+                <!-- NOTA -->
+
+                <div class="card-resumo">
+
+                    <div class="card-resumo-topo">
+
+                        <span>
+                            NOTA MÉDIA
+                        </span>
+
+                        <div class="icone-card roxo">
+                            ★
+                        </div>
+
+                    </div>
+
+
+                    <strong id="notaMedia">
+                        0,0
+                    </strong>
+
+
+                    <p>
+                        média geral
+                    </p>
+
+                </div>
+
+
+                <!-- ADVERTÊNCIAS -->
+
+                <div class="card-resumo">
+
+                    <div class="card-resumo-topo">
+
+                        <span>
+                            ADVERTÊNCIAS
+                        </span>
+
+                        <div class="icone-card vermelho">
+                            !
+                        </div>
+
+                    </div>
+
+
+                    <strong id="totalAdvertencias">
+                        0
+                    </strong>
+
+
+                    <p>
+                        registradas
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 AÇÕES RÁPIDAS
+            ========================== -->
+
+            <section>
+
+                <div class="secao-titulo">
+
+                    <div>
+
+                        <h2>
+                            Ações rápidas
+                        </h2>
+
+                        <p>
+                            Acesse rapidamente as principais funções.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="acoes-rapidas">
+
+
+                    <a
+                        href="chamada.html"
+                        class="acao"
+                    >
+
+                        <div class="acao-icone azul">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Fazer chamada
+                            </strong>
+
+                            <span>
+                                Registrar presença
+                            </span>
+
+                        </div>
+
+                        <b>
+                            →
+                        </b>
+
+                    </a>
+
+
+                    <a
+                        href="alunos.html"
+                        class="acao"
+                    >
+
+                        <div class="acao-icone verde">
+                            👥
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Ver alunos
+                            </strong>
+
+                            <span>
+                                Lista completa da turma
+                            </span>
+
+                        </div>
+
+                        <b>
+                            →
+                        </b>
+
+                    </a>
+
+
+                    <a
+                        href="notas.html"
+                        class="acao"
+                    >
+
+                        <div class="acao-icone roxo">
+                            ★
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Lançar notas
+                            </strong>
+
+                            <span>
+                                Atualizar avaliações
+                            </span>
+
+                        </div>
+
+                        <b>
+                            →
+                        </b>
+
+                    </a>
+
+
+                    <a
+                        href="dados.html"
+                        class="acao"
+                    >
+
+                        <div class="acao-icone laranja">
+                            ▥
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Ver dados
+                            </strong>
+
+                            <span>
+                                Indicadores da turma
+                            </span>
+
+                        </div>
+
+                        <b>
+                            →
+                        </b>
+
+                    </a>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 GRÁFICOS
+            ========================== -->
+
+            <section class="graficos-grid">
+
+
+                <!-- FREQUÊNCIA -->
+
+                <div class="painel">
+
+                    <div class="painel-cabecalho">
+
+                        <div>
+
+                            <h2>
+                                Frequência da turma
+                            </h2>
+
+                            <p>
+                                Dados registrados no sistema
+                            </p>
+
+                        </div>
+
+
+                        <span
+                            class="badge-verde"
+                            id="badgeFrequencia"
+                        >
+                            0%
+                        </span>
+
+                    </div>
+
+
+                    <div class="grafico">
+
+                        <div
+                            class="barras"
+                            id="graficoFrequencia"
+                        >
+
+                            <div class="barra-coluna">
+
+                                <div
+                                    class="barra"
+                                    style="height:5%"
+                                ></div>
+
+                                <span>—</span>
+
+                            </div>
+
+
+                            <div class="barra-coluna">
+
+                                <div
+                                    class="barra"
+                                    style="height:5%"
+                                ></div>
+
+                                <span>—</span>
+
+                            </div>
+
+
+                            <div class="barra-coluna">
+
+                                <div
+                                    class="barra"
+                                    style="height:5%"
+                                ></div>
+
+                                <span>—</span>
+
+                            </div>
+
+
+                            <div class="barra-coluna">
+
+                                <div
+                                    class="barra"
+                                    style="height:5%"
+                                ></div>
+
+                                <span>—</span>
+
+                            </div>
+
+
+                            <div class="barra-coluna">
+
+                                <div
+                                    class="barra"
+                                    style="height:5%"
+                                ></div>
+
+                                <span>—</span>
+
+                            </div>
+
+
+                            <div class="barra-coluna">
+
+                                <div
+                                    class="barra"
+                                    style="height:5%"
+                                ></div>
+
+                                <span>—</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DESEMPENHO -->
+
+                <div class="painel">
+
+                    <div class="painel-cabecalho">
+
+                        <div>
+
+                            <h2>
+                                Desempenho
+                            </h2>
+
+                            <p>
+                                Média por disciplina
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="desempenho-lista"
+                        id="listaDesempenho"
+                    >
+
+                        <div class="desempenho-item">
+
+                            <div class="disciplina">
+
+                                <span>
+                                    Carregando...
+                                </span>
+
+                                <strong>
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="progresso">
+
+                                <span
+                                    style="width:5%"
+                                ></span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 ATIVIDADE RECENTE
+            ========================== -->
+
+            <section class="painel atividade">
+
+                <div class="painel-cabecalho">
+
+                    <div>
+
+                        <h2>
+                            Atividade recente
+                        </h2>
+
+                        <p>
+                            Últimos registros realizados no sistema.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="atividade-lista"
+                    id="atividadeLista"
+                >
+
+                    <div class="atividade-item">
+
+                        <div class="atividade-icone azul">
+                            ⏳
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Carregando dados
+                            </strong>
+
+                            <span>
+                                Consultando o banco de dados.
+                            </span>
+
+                        </div>
+
+                        <time>
+                            Agora
+                        </time>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+<script>
+
+    /*
+    =====================================================
+    VARIÁVEIS
+    =====================================================
+    */
+
+    let representanteAtual = null;
+
+    let turmaAtual = null;
+
+    let dadosTurmaAtual = null;
+
+
+    /*
+    =====================================================
+    INICIALIZAÇÃO
+    =====================================================
+    */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        iniciarPainel
+    );
+
+
+    async function iniciarPainel() {
+
+        try {
+
+            carregarSessao();
+
+            atualizarIdentificacao();
+
+            await carregarDadosTurma();
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao iniciar painel:",
+                erro
+            );
+
+            mostrarErroDashboard(
+                erro.message ||
+                "Não foi possível carregar o painel."
+            );
+        }
+    }
+
+
+    /*
+    =====================================================
+    SESSÃO
+    =====================================================
+    */
+
+    function carregarSessao() {
+
+        const representanteSalvo =
+            sessionStorage.getItem(
+                "representanteLogado"
+            );
+
+
+        const turmaSalva =
+            sessionStorage.getItem(
+                "turmaAtual"
+            );
+
+
+        if (!representanteSalvo) {
+
+            window.location.href =
+                "login.html";
+
+            throw new Error(
+                "Representante não autenticado."
+            );
+        }
+
+
+        if (!turmaSalva) {
+
+            throw new Error(
+                "Nenhuma turma foi encontrada."
+            );
+        }
+
+
+        try {
+
+            representanteAtual =
+                JSON.parse(
+                    representanteSalvo
+                );
+
+
+            turmaAtual =
+                JSON.parse(
+                    turmaSalva
+                );
+
+        } catch (erro) {
+
+            sessionStorage.removeItem(
+                "representanteLogado"
+            );
+
+            sessionStorage.removeItem(
+                "turmaAtual"
+            );
+
+
+            window.location.href =
+                "login.html";
+
+
+            throw new Error(
+                "Sessão inválida."
+            );
+        }
+
+
+        if (
+            !turmaAtual ||
+            !turmaAtual.id
+        ) {
+
+            throw new Error(
+                "A turma atual é inválida."
+            );
+        }
+    }
+
+
+    /*
+    =====================================================
+    IDENTIFICAÇÃO
+    =====================================================
+    */
+
+    function atualizarIdentificacao() {
+
+        const nome =
+            representanteAtual.nome ||
+            representanteAtual.usuario ||
+            "Representante";
+
+
+        const turma =
+            turmaAtual.nome ||
+            "Turma";
+
+
+        document.getElementById(
+            "nomeRepresentante"
+        ).textContent = nome;
+
+
+        document.getElementById(
+            "saudacaoNome"
+        ).textContent = nome;
+
+
+        document.getElementById(
+            "nomeTurma"
+        ).textContent = turma;
+
+
+        const iniciais =
+            obterIniciais(nome);
+
+
+        document.getElementById(
+            "avatarRepresentante"
+        ).textContent = iniciais;
+
+
+        document.getElementById(
+            "topoAvatar"
+        ).textContent = iniciais;
+    }
+
+
+    /*
+    =====================================================
+    CARREGAR DADOS DA TURMA
+    =====================================================
+    */
+
+    async function carregarDadosTurma() {
+
+        const resposta =
+            await fetch(
+                `/api/dados-turma/${turmaAtual.id}`
+            );
+
+
+        const dados =
+            await resposta.json();
+
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                dados.erro ||
+                dados.mensagem ||
+                "Não foi possível carregar os dados da turma."
+            );
+        }
+
+
+        /*
+        A API atual retorna os dados
+        diretamente no objeto.
+        */
+
+        dadosTurmaAtual =
+            dados.dados ||
+            dados;
+
+
+        console.log(
+            "Dados da turma carregados:",
+            dadosTurmaAtual
+        );
+
+
+        atualizarCards(
+            dadosTurmaAtual
+        );
+
+
+        atualizarFrequencia(
+            dadosTurmaAtual
+        );
+
+
+        atualizarDesempenho(
+            dadosTurmaAtual
+        );
+
+
+        atualizarAtividade(
+            dadosTurmaAtual
+        );
+    }
+
+
+    /*
+    =====================================================
+    CARDS PRINCIPAIS
+    =====================================================
+    */
+
+    function atualizarCards(dados) {
+
+        const totalAlunos =
+            Number(
+                dados.totalAlunos || 0
+            );
+
+
+        /*
+        A frequência vem do backend.
+
+        O backend calcula:
+
+        presenças
+        ÷
+        aulas previstas
+        ×
+        100
+        */
+
+        const frequencia =
+            Number(
+                dados.frequenciaMedia ??
+                dados.frequencia ??
+                0
+            );
+
+
+        const notaMedia =
+            Number(
+                dados.notaMedia ??
+                dados.media ??
+                0
+            );
+
+
+        const advertencias =
+            Number(
+                dados.totalAdvertencias ??
+                dados.advertencias ??
+                0
+            );
+
+
+        document.getElementById(
+            "totalAlunos"
+        ).textContent =
+            totalAlunos;
+
+
+        document.getElementById(
+            "frequenciaMedia"
+        ).textContent =
+            formatarPercentual(
+                frequencia
+            );
+
+
+        document.getElementById(
+            "badgeFrequencia"
+        ).textContent =
+            formatarPercentual(
+                frequencia
+            );
+
+
+        document.getElementById(
+            "notaMedia"
+        ).textContent =
+            formatarNota(
+                notaMedia
+            );
+
+
+        document.getElementById(
+            "totalAdvertencias"
+        ).textContent =
+            advertencias;
+    }
+
+
+    /*
+    =====================================================
+    GRÁFICO DE FREQUÊNCIA
+    =====================================================
+    */
+
+    function atualizarFrequencia(dados) {
+
+        const grafico =
+            document.getElementById(
+                "graficoFrequencia"
+            );
+
+
+        const historico =
+            dados.frequenciaHistorico ||
+            dados.historicoFrequencia ||
+            [];
+
+
+        /*
+        Se ainda não existe nenhuma chamada,
+        mostramos o gráfico vazio.
+        */
+
+        if (
+            !Array.isArray(historico) ||
+            historico.length === 0
+        ) {
+
+            grafico.innerHTML = criarGraficoVazio();
+
+            return;
+        }
+
+
+        const ultimos =
+            historico.slice(-6);
+
+
+        grafico.innerHTML =
+            ultimos.map(
+                (item, index) => {
+
+                    const valor =
+                        Number(
+                            item.valor ??
+                            item.frequencia ??
+                            item.percentual ??
+                            0
+                        );
+
+
+                    const altura =
+                        Math.max(
+                            5,
+                            Math.min(
+                                100,
+                                valor
+                            )
+                        );
+
+
+                    const rotulo =
+                        item.label ||
+                        item.data ||
+                        item.semana ||
+                        `S${index + 1}`;
+
+
+                    return `
+
+                        <div class="barra-coluna">
+
+                            <div
+                                class="barra"
+                                style="height:${altura}%"
+                                title="${formatarPercentual(valor)}"
+                            ></div>
+
+                            <span>
+                                ${escaparHTML(
+                                    formatarRotuloGrafico(
+                                        rotulo
+                                    )
+                                )}
+                            </span>
+
+                        </div>
+
+                    `;
+                }
+            ).join("");
+    }
+
+
+    /*
+    =====================================================
+    GRÁFICO VAZIO
+    =====================================================
+    */
+
+    function criarGraficoVazio() {
+
+        return [
+
+            "—",
+            "—",
+            "—",
+            "—",
+            "—",
+            "—"
+
+        ].map(
+            rotulo => `
+
+                <div class="barra-coluna">
+
+                    <div
+                        class="barra"
+                        style="height:5%"
+                    ></div>
+
+                    <span>
+                        ${rotulo}
+                    </span>
+
+                </div>
+
+            `
+        ).join("");
+    }
+
+
+    /*
+    =====================================================
+    DESEMPENHO
+    =====================================================
+    */
+
+    function atualizarDesempenho(dados) {
+
+        const lista =
+            document.getElementById(
+                "listaDesempenho"
+            );
+
+
+        const disciplinas =
+            dados.desempenho ||
+            dados.disciplinas ||
+            dados.mediasDisciplinas ||
+            [];
+
+
+        if (
+            !Array.isArray(disciplinas) ||
+            disciplinas.length === 0
+        ) {
+
+            lista.innerHTML = `
+
+                <div class="desempenho-item">
+
+                    <div class="disciplina">
+
+                        <span>
+                            Nenhuma nota registrada
+                        </span>
+
+                        <strong>
+                            —
+                        </strong>
+
+                    </div>
+
+                    <div class="progresso">
+
+                        <span
+                            style="width:0%"
+                        ></span>
+
+                    </div>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        lista.innerHTML =
+            disciplinas
+                .slice(0, 6)
+                .map(
+                    disciplina => {
+
+                        const nome =
+                            disciplina.nome ||
+                            disciplina.disciplina ||
+                            "Disciplina";
+
+
+                        const nota =
+                            Number(
+                                disciplina.media ??
+                                disciplina.notaMedia ??
+                                disciplina.nota ??
+                                0
+                            );
+
+
+                        let percentual =
+                            nota <= 10
+                                ? nota * 10
+                                : nota;
+
+
+                        percentual =
+                            Math.max(
+                                0,
+                                Math.min(
+                                    100,
+                                    percentual
+                                )
+                            );
+
+
+                        return `
+
+                            <div class="desempenho-item">
+
+                                <div class="disciplina">
+
+                                    <span>
+                                        ${escaparHTML(nome)}
+                                    </span>
+
+                                    <strong>
+                                        ${formatarNota(nota)}
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="progresso">
+
+                                    <span
+                                        style="width:${percentual}%"
+                                    ></span>
+
+                                </div>
+
+                            </div>
+
+                        `;
+                    }
+                )
+                .join("");
+    }
+
+
+    /*
+    =====================================================
+    ATIVIDADE RECENTE
+    =====================================================
+    */
+
+    function atualizarAtividade(dados) {
+
+        const lista =
+            document.getElementById(
+                "atividadeLista"
+            );
+
+
+        const atividades =
+            dados.atividades ||
+            dados.atividadeRecente ||
+            [];
+
+
+        if (
+            !Array.isArray(atividades) ||
+            atividades.length === 0
+        ) {
+
+            lista.innerHTML = `
+
+                <div class="atividade-item">
+
+                    <div class="atividade-icone azul">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Sistema conectado
+                        </strong>
+
+                        <span>
+                            Dados da turma carregados do banco.
+                        </span>
+
+                    </div>
+
+                    <time>
+                        Agora
+                    </time>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        lista.innerHTML =
+            atividades
+                .slice(0, 5)
+                .map(
+                    atividade => {
+
+                        const titulo =
+                            atividade.titulo ||
+                            atividade.nome ||
+                            "Atividade";
+
+
+                        const descricao =
+                            atividade.descricao ||
+                            atividade.detalhes ||
+                            "";
+
+
+                        const data =
+                            atividade.data ||
+                            "Recentemente";
+
+
+                        return `
+
+                            <div class="atividade-item">
+
+                                <div class="atividade-icone azul">
+                                    ✓
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        ${escaparHTML(titulo)}
+                                    </strong>
+
+                                    <span>
+                                        ${escaparHTML(descricao)}
+                                    </span>
+
+                                </div>
+
+                                <time>
+                                    ${escaparHTML(data)}
+                                </time>
+
+                            </div>
+
+                        `;
+                    }
+                )
+                .join("");
+    }
+
+
+    /*
+    =====================================================
+    FORMATAR PERCENTUAL
+    =====================================================
+    */
+
+    function formatarPercentual(valor) {
+
+        const numero =
+            Number(valor) || 0;
+
+
+        return (
+            numero.toFixed(1)
+        ).replace(".", ",") + "%";
+    }
+
+
+    /*
+    =====================================================
+    FORMATAR NOTA
+    =====================================================
+    */
+
+    function formatarNota(valor) {
+
+        const numero =
+            Number(valor) || 0;
+
+
+        return (
+            numero.toFixed(1)
+        ).replace(".", ",");
+    }
+
+
+    /*
+    =====================================================
+    ROTULO DO GRÁFICO
+    =====================================================
+    */
+
+    function formatarRotuloGrafico(
+        rotulo
+    ) {
+
+        if (!rotulo) {
+            return "—";
+        }
+
+
+        /*
+        Se for uma data YYYY-MM-DD,
+        transforma em DD/MM.
+        */
+
+        if (
+            /^\d{4}-\d{2}-\d{2}$/.test(
+                String(rotulo)
+            )
+        ) {
+
+            const partes =
+                String(rotulo)
+                    .split("-");
+
+
+            return (
+                partes[2] +
+                "/" +
+                partes[1]
+            );
+        }
+
+
+        return String(rotulo);
+    }
+
+
+    /*
+    =====================================================
+    INICIAIS
+    =====================================================
+    */
+
+    function obterIniciais(nome) {
+
+        const partes =
+            String(nome)
+                .trim()
+                .split(/\s+/)
+                .filter(Boolean);
+
+
+        if (
+            partes.length === 0
+        ) {
+
+            return "RT";
+        }
+
+
+        if (
+            partes.length === 1
+        ) {
+
+            return partes[0]
+                .substring(0, 2)
+                .toUpperCase();
+        }
+
+
+        return (
+            partes[0][0] +
+            partes[
+                partes.length - 1
+            ][0]
+        ).toUpperCase();
+    }
+
+
+    /*
+    =====================================================
+    SEGURANÇA HTML
+    =====================================================
+    */
+
+    function escaparHTML(
+        texto
+    ) {
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.textContent =
+            texto ?? "";
+
+
+        return div.innerHTML;
+    }
+
+
+    /*
+    =====================================================
+    ERRO
+    =====================================================
+    */
+
+    function mostrarErroDashboard(
+        mensagem
+    ) {
+
+        console.error(
+            mensagem
+        );
+
+
+        const mensagemExistente =
+            document.getElementById(
+                "mensagemDashboard"
+            );
+
+
+        if (mensagemExistente) {
+
+            mensagemExistente.textContent =
+                mensagem;
+
+            return;
+        }
+    }
+
+
+    /*
+    =====================================================
+    SAIR
+    =====================================================
+    */
+
+    function sairSistema() {
+
+        const confirmar =
+            confirm(
+                "Deseja realmente sair do sistema?"
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        sessionStorage.removeItem(
+            "representanteLogado"
+        );
+
+
+        sessionStorage.removeItem(
+            "turmaAtual"
+        );
+
+
+        window.location.href =
+            "login.html";
+    }
+
+</script>
+
+</body>
+
+</html>

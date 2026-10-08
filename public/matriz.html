@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Matriz Curricular | Representantes</title>
+
+    <link rel="stylesheet" href="css/sistema.css">
+</head>
+
+<body>
+
+<main class="primeiro-acesso">
+
+    <div class="cadastro-container">
+
+        <!-- TOPO -->
+        <header class="cadastro-topo">
+
+            <div class="passo-icone">
+                RT
+            </div>
+
+            <div>
+                <span class="etapa">ETAPA 3 DE 3</span>
+
+                <h1>Matriz Curricular</h1>
+
+                <p>
+                    Configure as disciplinas da sua turma.
+                </p>
+            </div>
+
+        </header>
+
+
+        <!-- PROGRESSO -->
+        <div class="progresso-etapas">
+
+            <div class="etapa-linha concluida">
+                <span>✓</span>
+                <p>Turma</p>
+            </div>
+
+            <div class="linha-progresso concluida"></div>
+
+            <div class="etapa-linha concluida">
+                <span>✓</span>
+                <p>Alunos</p>
+            </div>
+
+            <div class="linha-progresso concluida"></div>
+
+            <div class="etapa-linha ativa">
+                <span>3</span>
+                <p>Matriz</p>
+            </div>
+
+        </div>
+
+
+        <!-- CONTEÚDO -->
+        <section class="form-secao">
+
+            <div class="titulo-secao">
+
+                <div>
+                    <h2>Disciplinas da turma</h2>
+
+                    <p>
+                        Adicione todas as disciplinas que fazem parte da grade curricular.
+                    </p>
+                </div>
+
+                <div class="contador-disciplinas">
+                    <strong id="contadorDisciplinas">0</strong>
+                    <span>disciplinas</span>
+                </div>
+
+            </div>
+
+
+            <!-- ADICIONAR DISCIPLINA -->
+            <div class="adicionar-disciplina">
+
+                <div class="campo-form">
+
+                    <label for="nomeDisciplina">
+                        Nome da disciplina
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nomeDisciplina"
+                        placeholder="Ex.: Matemática"
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <div class="campo-form">
+
+                    <label for="cargaDisciplina">
+                        Carga horária semanal
+                    </label>
+
+                    <input
+                        type="number"
+                        id="cargaDisciplina"
+                        min="1"
+                        placeholder="Ex.: 4"
+                    >
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="botaoAdicionarDisciplina"
+                    class="botao-continuar botao-adicionar-disciplina"
+                    onclick="adicionarDisciplina()"
+                >
+                    + Adicionar disciplina
+                </button>
+
+            </div>
+
+
+            <!-- DISCIPLINAS SUGERIDAS -->
+            <div class="sugestoes-disciplinas">
+
+                <div class="sugestoes-topo">
+
+                    <div>
+                        <h3>Disciplinas comuns</h3>
+
+                        <p>
+                            Clique em uma disciplina para adicioná-la rapidamente.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="botoes-sugestoes">
+
+                    <button type="button" onclick="adicionarSugestao('Língua Portuguesa', 4)">
+                        Língua Portuguesa
+                    </button>
+
+                    <button type="button" onclick="adicionarSugestao('Matemática', 4)">
+                        Matemática
+                    </button>
+
+                    <button type="button" onclick="adicionarSugestao('História', 2)">
+                        História
+                    </button>
+
+                    <button type="button" onclick="adicionarSugestao('Geografia', 2)">
+                        Geografia
+                    </button>
+
+                    <button type="button" onclick="adicionarSugestao('Biologia', 2)">
+                        Biologia
+                    </button>
+
+                    <button type="button" onclick="adicionarSugestao('Física', 2)">
+                        Física
+                    </button>
+
+                    <button type="button" onclick="adicionarSugestao('Química', 2)">
+                        Química
+                    </button>
+
+                    <button type="button" onclick="adicionarSugestao('Língua Inglesa', 2)">
+                        Língua Inglesa
+                    </button>
+
+                    <button type="button" onclick="adicionarSugestao('Educação Física', 2)">
+                        Educação Física
+                    </button>
+
+                    <button type="button" onclick="adicionarSugestao('Filosofia', 1)">
+                        Filosofia
+                    </button>
+
+                    <button type="button" onclick="adicionarSugestao('Sociologia', 1)">
+                        Sociologia
+                    </button>
+
+                    <button type="button" onclick="adicionarSugestao('Arte', 1)">
+                        Arte
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- LISTA -->
+            <div class="lista-disciplinas">
+
+                <div class="lista-topo">
+
+                    <div>
+                        <h3>Disciplinas cadastradas</h3>
+
+                        <p>
+                            Essas disciplinas serão utilizadas nas notas e na chamada.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div id="listaDisciplinas">
+
+                    <div class="lista-vazia" id="listaVazia">
+
+                        <div class="lista-vazia-icone">
+                            +
+                        </div>
+
+                        <h3>Carregando disciplinas...</h3>
+
+                        <p>
+                            Aguarde um momento.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MENSAGEM -->
+            <div
+                id="mensagemMatriz"
+                class="mensagem-form"
+            ></div>
+
+
+            <!-- AVISO -->
+            <div class="aviso-cadastro">
+
+                <strong>Importante</strong>
+
+                <p>
+                    A matriz curricular será utilizada para organizar
+                    as notas, frequência e desempenho dos alunos.
+                </p>
+
+            </div>
+
+
+            <!-- BOTÕES -->
+            <div class="form-acoes">
+
+                <button
+                    type="button"
+                    class="botao-voltar"
+                    onclick="voltarAlunos()"
+                >
+                    ← Voltar
+                </button>
+
+
+                <button
+                    type="button"
+                    class="botao-continuar"
+                    onclick="finalizarCadastro()"
+                >
+                    Finalizar configuração →
+                </button>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<script>
+
+    let disciplinas = [];
+
+    let turmaAtual = null;
+
+
+    /*
+    =====================================================
+    VERIFICAR SESSÃO
+    =====================================================
+    */
+
+    function verificarSessao() {
+
+        const representanteSalvo =
+            sessionStorage.getItem("representanteLogado");
+
+        const turmaSalva =
+            sessionStorage.getItem("turmaAtual");
+
+
+        if (!representanteSalvo) {
+
+            window.location.href =
+                "login.html";
+
+            return false;
+        }
+
+
+        if (!turmaSalva) {
+
+            mostrarMensagem(
+                "Nenhuma turma foi encontrada. Volte e configure sua turma.",
+                "erro-form"
+            );
+
+            return false;
+        }
+
+
+        try {
+
+            turmaAtual =
+                JSON.parse(turmaSalva);
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao ler turma:",
+                erro
+            );
+
+            sessionStorage.removeItem(
+                "turmaAtual"
+            );
+
+            window.location.href =
+                "primeiro-acesso.html";
+
+            return false;
+        }
+
+
+        if (!turmaAtual.id) {
+
+            mostrarMensagem(
+                "A turma atual é inválida.",
+                "erro-form"
+            );
+
+            return false;
+        }
+
+
+        return true;
+
+    }
+
+
+    /*
+    =====================================================
+    CARREGAR DISCIPLINAS DO BANCO
+    =====================================================
+    */
+
+    async function carregarDisciplinas() {
+
+        if (!verificarSessao()) {
+            return;
+        }
+
+
+        const lista =
+            document.getElementById(
+                "listaDisciplinas"
+            );
+
+
+        lista.innerHTML = `
+
+            <div class="lista-vazia">
+
+                <div class="lista-vazia-icone">
+                    ⏳
+                </div>
+
+                <h3>
+                    Carregando disciplinas...
+                </h3>
+
+                <p>
+                    Buscando a matriz da sua turma.
+                </p>
+
+            </div>
+
+        `;
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    `/api/disciplinas/turma/${turmaAtual.id}`
+                );
+
+
+            const dados =
+                await resposta.json();
+
+
+            if (!resposta.ok) {
+
+                throw new Error(
+                    dados.mensagem ||
+                    "Não foi possível carregar as disciplinas."
+                );
+
+            }
+
+
+            disciplinas =
+                Array.isArray(dados.disciplinas)
+                    ? dados.disciplinas
+                    : [];
+
+
+            atualizarLista();
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao carregar disciplinas:",
+                erro
+            );
+
+
+            lista.innerHTML = `
+
+                <div class="lista-vazia">
+
+                    <div class="lista-vazia-icone">
+                        ⚠️
+                    </div>
+
+                    <h3>
+                        Erro ao carregar disciplinas
+                    </h3>
+
+                    <p>
+                        Verifique se o servidor está funcionando.
+                    </p>
+
+                </div>
+
+            `;
+
+
+            mostrarMensagem(
+                "Não foi possível carregar a matriz curricular.",
+                "erro-form"
+            );
+
+        }
+
+    }
+
+
+    /*
+    =====================================================
+    ADICIONAR DISCIPLINA
+    =====================================================
+    */
+
+    async function adicionarDisciplina(
+        nomeInformado = null,
+        cargaInformada = null
+    ) {
+
+        const nome =
+            nomeInformado !== null
+                ? nomeInformado.trim()
+                : document
+                    .getElementById("nomeDisciplina")
+                    .value
+                    .trim();
+
+
+        const carga =
+            cargaInformada !== null
+                ? Number(cargaInformada)
+                : Number(
+                    document
+                        .getElementById("cargaDisciplina")
+                        .value
+                );
+
+
+        if (!nome) {
+
+            mostrarMensagem(
+                "Digite o nome da disciplina.",
+                "erro-form"
+            );
+
+            return;
+        }
+
+
+        if (!carga || carga <= 0) {
+
+            mostrarMensagem(
+                "Informe uma carga horária válida.",
+                "erro-form"
+            );
+
+            return;
+        }
+
+
+        if (!turmaAtual || !turmaAtual.id) {
+
+            mostrarMensagem(
+                "Nenhuma turma foi encontrada.",
+                "erro-form"
+            );
+
+            return;
+        }
+
+
+        /*
+        Verifica duplicidade antes
+        de enviar ao servidor.
+        */
+
+        const existe =
+            disciplinas.some(
+                disciplina =>
+                    disciplina.nome
+                        .trim()
+                        .toLowerCase() ===
+                    nome.toLowerCase()
+            );
+
+
+        if (existe) {
+
+            mostrarMensagem(
+                "Essa disciplina já foi adicionada.",
+                "erro-form"
+            );
+
+            return;
+        }
+
+
+        const botao =
+            document.getElementById(
+                "botaoAdicionarDisciplina"
+            );
+
+
+        botao.disabled = true;
+
+        botao.textContent =
+            "Adicionando...";
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    "/api/disciplinas",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            turma_id:
+                                turmaAtual.id,
+
+                            nome:
+                                nome,
+
+                            carga_horaria:
+                                carga
+
+                        })
+                    }
+                );
+
+
+            const dados =
+                await resposta.json();
+
+
+            if (!resposta.ok || !dados.sucesso) {
+
+                throw new Error(
+                    dados.mensagem ||
+                    "Não foi possível cadastrar a disciplina."
+                );
+
+            }
+
+
+            /*
+            O banco devolve a disciplina
+            com o ID verdadeiro.
+            */
+
+            disciplinas.push(
+                dados.disciplina
+            );
+
+
+            limparCampos();
+
+
+            atualizarLista();
+
+
+            mostrarMensagem(
+                `${nome} adicionada à matriz.`,
+                "sucesso-form"
+            );
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao adicionar disciplina:",
+                erro
+            );
+
+
+            mostrarMensagem(
+                erro.message ||
+                "Não foi possível cadastrar a disciplina.",
+                "erro-form"
+            );
+
+        } finally {
+
+            botao.disabled =
+                false;
+
+            botao.textContent =
+                "+ Adicionar disciplina";
+
+        }
+
+    }
+
+
+    /*
+    =====================================================
+    SUGESTÕES
+    =====================================================
+    */
+
+    function adicionarSugestao(
+        nome,
+        carga
+    ) {
+
+        adicionarDisciplina(
+            nome,
+            carga
+        );
+
+    }
+
+
+    /*
+    =====================================================
+    REMOVER DISCIPLINA
+    =====================================================
+    */
+
+    async function removerDisciplina(id) {
+
+        const disciplina =
+            disciplinas.find(
+                item =>
+                    Number(item.id) ===
+                    Number(id)
+            );
+
+
+        if (!disciplina) {
+            return;
+        }
+
+
+        const confirmar =
+            confirm(
+                `Deseja remover a disciplina "${disciplina.nome}"?`
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    `/api/disciplinas/${id}`,
+                    {
+                        method: "DELETE"
+                    }
+                );
+
+
+            const dados =
+                await resposta.json();
+
+
+            if (!resposta.ok || !dados.sucesso) {
+
+                throw new Error(
+                    dados.mensagem ||
+                    "Não foi possível remover a disciplina."
+                );
+
+            }
+
+
+            disciplinas =
+                disciplinas.filter(
+                    item =>
+                        Number(item.id) !==
+                        Number(id)
+                );
+
+
+            atualizarLista();
+
+
+            mostrarMensagem(
+                "Disciplina removida com sucesso.",
+                "sucesso-form"
+            );
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao remover disciplina:",
+                erro
+            );
+
+
+            mostrarMensagem(
+                erro.message ||
+                "Não foi possível remover a disciplina.",
+                "erro-form"
+            );
+
+        }
+
+    }
+
+
+    /*
+    =====================================================
+    ATUALIZAR LISTA
+    =====================================================
+    */
+
+    function atualizarLista() {
+
+        const lista =
+            document.getElementById(
+                "listaDisciplinas"
+            );
+
+
+        const contador =
+            document.getElementById(
+                "contadorDisciplinas"
+            );
+
+
+        contador.textContent =
+            disciplinas.length;
+
+
+        if (disciplinas.length === 0) {
+
+            lista.innerHTML = `
+
+                <div
+                    class="lista-vazia"
+                    id="listaVazia"
+                >
+
+                    <div class="lista-vazia-icone">
+                        +
+                    </div>
+
+                    <h3>
+                        Nenhuma disciplina cadastrada
+                    </h3>
+
+                    <p>
+                        Adicione as disciplinas da sua turma acima.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        lista.innerHTML =
+            disciplinas
+                .map(
+                    (disciplina, index) => `
+
+                    <div class="disciplina-item">
+
+                        <div class="numero-disciplina">
+                            ${index + 1}
+                        </div>
+
+                        <div class="informacoes-disciplina">
+
+                            <strong>
+                                ${escaparHTML(disciplina.nome)}
+                            </strong>
+
+                            <span>
+                                ${Number(disciplina.carga_horaria || disciplina.cargaHoraria)}
+                                aula(s) por semana
+                            </span>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="botao-remover-disciplina"
+                            onclick="removerDisciplina(${disciplina.id})"
+                            title="Remover disciplina"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                `
+                )
+                .join("");
+
+    }
+
+
+    /*
+    =====================================================
+    LIMPAR CAMPOS
+    =====================================================
+    */
+
+    function limparCampos() {
+
+        document
+            .getElementById("nomeDisciplina")
+            .value = "";
+
+        document
+            .getElementById("cargaDisciplina")
+            .value = "";
+
+        document
+            .getElementById("nomeDisciplina")
+            .focus();
+
+    }
+
+
+    /*
+    =====================================================
+    FINALIZAR
+    =====================================================
+    */
+
+    function finalizarCadastro() {
+
+        if (disciplinas.length === 0) {
+
+            mostrarMensagem(
+                "Cadastre pelo menos uma disciplina para continuar.",
+                "erro-form"
+            );
+
+            return;
+        }
+
+
+        /*
+        As disciplinas já estão no SQLite.
+        Não usamos mais localStorage.
+        */
+
+
+        mostrarMensagem(
+            "Configuração concluída! Entrando no sistema...",
+            "sucesso-form"
+        );
+
+
+        setTimeout(
+            () => {
+
+                window.location.href =
+                    "inicio.html";
+
+            },
+            900
+        );
+
+    }
+
+
+    /*
+    =====================================================
+    VOLTAR
+    =====================================================
+    */
+
+    function voltarAlunos() {
+
+        window.location.href =
+            "cadastro-alunos.html";
+
+    }
+
+
+    /*
+    =====================================================
+    MENSAGEM
+    =====================================================
+    */
+
+    function mostrarMensagem(
+        texto,
+        classe
+    ) {
+
+        const mensagem =
+            document.getElementById(
+                "mensagemMatriz"
+            );
+
+
+        mensagem.textContent =
+            texto;
+
+
+        mensagem.className =
+            "mensagem-form " +
+            classe;
+
+
+        setTimeout(
+            () => {
+
+                mensagem.textContent =
+                    "";
+
+                mensagem.className =
+                    "mensagem-form";
+
+            },
+            3500
+        );
+
+    }
+
+
+    /*
+    =====================================================
+    SEGURANÇA HTML
+    =====================================================
+    */
+
+    function escaparHTML(texto) {
+
+        const div =
+            document.createElement("div");
+
+
+        div.textContent =
+            texto;
+
+
+        return div.innerHTML;
+
+    }
+
+
+    /*
+    =====================================================
+    ENTER
+    =====================================================
+    */
+
+    document
+        .getElementById("nomeDisciplina")
+        .addEventListener(
+            "keydown",
+            function(event) {
+
+                if (event.key === "Enter") {
+
+                    event.preventDefault();
+
+                    adicionarDisciplina();
+
+                }
+
+            }
+        );
+
+
+    /*
+    =====================================================
+    INICIALIZAÇÃO
+    =====================================================
+    */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            carregarDisciplinas();
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

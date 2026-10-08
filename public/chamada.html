@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chamada | Representantes</title>
+
+    <link rel="stylesheet" href="css/sistema.css">
+</head>
+
+<body class="sistema-body">
+
+    <!-- =========================================
+         SIDEBAR
+    ========================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+
+            <div class="logo-sidebar">
+                RT
+            </div>
+
+            <div>
+                <strong>REPRESENTANTES</strong>
+                <span>Gestão da Turma</span>
+            </div>
+
+        </div>
+
+        <nav class="menu-sidebar">
+
+            <a href="inicio.html">
+                <span>⌂</span>
+                Início
+            </a>
+
+            <a href="alunos.html">
+                <span>👥</span>
+                Alunos
+            </a>
+
+            <a href="chamada.html" class="ativo">
+                <span>✓</span>
+                Chamada
+            </a>
+
+            <a href="notas.html">
+                <span>▣</span>
+                Notas
+            </a>
+
+            <a href="dados.html">
+                <span>▥</span>
+                Dados da Turma
+            </a>
+
+            <a href="matriz.html">
+                <span>☷</span>
+                Matriz Curricular
+            </a>
+
+            <a href="configuracoes.html">
+                <span>⚙</span>
+                Configurações
+            </a>
+
+        </nav>
+
+        <div class="sidebar-final">
+
+            <button onclick="sairSistema()">
+                <span>↪</span>
+                Sair
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================================
+         CONTEÚDO
+    ========================================== -->
+
+    <main class="conteudo-sistema">
+
+        <!-- TOPO -->
+
+        <header class="topo-sistema">
+
+            <div>
+
+                <span class="topo-label">
+                    FREQUÊNCIA
+                </span>
+
+                <h1>Chamada</h1>
+
+                <p>
+                    Registre a presença diária dos alunos da turma.
+                </p>
+
+            </div>
+
+            <div class="usuario-topo">
+
+                <div
+                    class="avatar-usuario"
+                    id="avatarRepresentante"
+                >
+                    G
+                </div>
+
+                <div>
+
+                    <strong id="nomeRepresentante">
+                        Representante
+                    </strong>
+
+                    <span id="nomeTurma">
+                        Turma
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =========================================
+             NOVA CHAMADA
+        ========================================== -->
+
+        <section class="painel-chamada">
+
+            <div class="painel-chamada-topo">
+
+                <div>
+
+                    <span class="card-label">
+                        NOVA CHAMADA
+                    </span>
+
+                    <h2>
+                        Registrar frequência do dia
+                    </h2>
+
+                    <p class="descricao-chamada">
+                        A chamada é realizada uma vez por dia.
+                        Cada dia possui 9 aulas.
+                    </p>
+
+                </div>
+
+                <div
+                    class="status-chamada"
+                    id="statusChamada"
+                >
+                    Nova chamada
+                </div>
+
+            </div>
+
+
+            <!-- DATA -->
+
+            <div class="config-chamada">
+
+                <div class="campo-form">
+
+                    <label for="dataChamada">
+                        Data da chamada
+                    </label>
+
+                    <input
+                        type="date"
+                        id="dataChamada"
+                    >
+
+                </div>
+
+
+                <div class="informacao-aulas">
+
+                    <span>
+                        CARGA DO DIA
+                    </span>
+
+                    <strong>
+                        9 aulas
+                    </strong>
+
+                    <small>
+                        Uma falta no dia = 9 faltas
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             RESUMO
+        ========================================== -->
+
+        <section class="resumo-chamada">
+
+            <div class="card-resumo-chamada">
+
+                <span>
+                    Total de alunos
+                </span>
+
+                <strong id="totalChamada">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="card-resumo-chamada presente-card">
+
+                <span>
+                    Presentes
+                </span>
+
+                <strong id="totalPresentes">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="card-resumo-chamada falta-card">
+
+                <span>
+                    Faltantes
+                </span>
+
+                <strong id="totalFaltas">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="card-resumo-chamada">
+
+                <span>
+                    Frequência do dia
+                </span>
+
+                <strong id="percentualPresenca">
+                    0%
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             LISTA DE PRESENÇA
+        ========================================== -->
+
+        <section class="painel-lista-chamada">
+
+            <div class="painel-lista-topo">
+
+                <div>
+
+                    <span class="card-label">
+                        CHAMADA DIÁRIA
+                    </span>
+
+                    <h2>
+                        Lista de presença
+                    </h2>
+
+                    <p>
+                        Marque a situação de cada aluno.
+                        A ausência será registrada como 9 faltas.
+                    </p>
+
+                </div>
+
+
+                <div class="acoes-chamada-topo">
+
+                    <button
+                        type="button"
+                        onclick="marcarTodos(true)"
+                    >
+                        ✓ Todos presentes
+                    </button>
+
+
+                    <button
+                        type="button"
+                        onclick="marcarTodos(false)"
+                    >
+                        × Todos faltantes
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- LISTA -->
+
+            <div
+                id="listaChamada"
+                class="lista-chamada"
+            >
+            </div>
+
+
+            <!-- ESTADO VAZIO -->
+
+            <div
+                id="estadoVazioChamada"
+                class="estado-vazio-chamada"
+                style="display:none;"
+            >
+
+                <div>
+                    👥
+                </div>
+
+                <h3>
+                    Nenhum aluno cadastrado
+                </h3>
+
+                <p>
+                    Cadastre os alunos da turma antes de realizar a chamada.
+                </p>
+
+                <a href="alunos.html">
+                    Ir para alunos
+                </a>
+
+            </div>
+
+
+            <!-- MENSAGEM -->
+
+            <div
+                id="mensagemChamada"
+                class="mensagem-form"
+            ></div>
+
+
+            <!-- RODAPÉ -->
+
+            <div class="rodape-chamada">
+
+                <div>
+
+                    <strong>
+                        Chamada do dia
+                    </strong>
+
+                    <span id="resumoDataChamada">
+                        Selecione uma data.
+                    </span>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="botao-salvar-chamada"
+                    onclick="salvarChamada()"
+                >
+                    Salvar chamada
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             EXPLICAÇÃO
+        ========================================== -->
+
+        <section class="painel-regra-frequencia">
+
+            <div class="regra-icone">
+                9
+            </div>
+
+            <div>
+
+                <strong>
+                    Como a frequência funciona?
+                </strong>
+
+                <p>
+                    Cada dia letivo corresponde a 9 aulas.
+                    Quando um aluno falta um dia inteiro,
+                    o sistema registra automaticamente
+                    <strong>9 faltas</strong> no perfil dele.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             HISTÓRICO
+        ========================================== -->
+
+        <section class="painel-historico-chamada">
+
+            <div class="painel-lista-topo">
+
+                <div>
+
+                    <span class="card-label">
+                        HISTÓRICO
+                    </span>
+
+                    <h2>
+                        Chamadas recentes
+                    </h2>
+
+                    <p>
+                        Consulte os registros de frequência realizados.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="historicoChamadas"
+                class="historico-chamadas"
+            >
+            </div>
+
+        </section>
+
+    </main>
+
+
+<script>
+
+    /*
+    =====================================================
+    CONFIGURAÇÃO
+    =====================================================
+    */
+
+    const AULAS_POR_DIA = 9;
+
+    let alunos = [];
+    let chamadasSalvas = [];
+
+    let representante = null;
+    let turmaAtual = null;
+
+
+    /*
+    =====================================================
+    INICIALIZAÇÃO
+    =====================================================
+    */
+
+    async function iniciarPagina() {
+
+        try {
+
+            if (!carregarSessao()) {
+                return;
+            }
+
+            definirDataAtual();
+
+            await carregarAlunos();
+
+            await carregarChamadas();
+
+            await carregarChamadaExistente();
+
+            atualizarResumo();
+
+            atualizarResumoData();
+
+            renderizarHistorico();
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao iniciar chamada:",
+                erro
+            );
+
+            mostrarMensagem(
+                erro.message ||
+                "Não foi possível carregar os dados da chamada.",
+                "erro-form"
+            );
+        }
+    }
+
+
+    /*
+    =====================================================
+    SESSÃO
+    =====================================================
+    */
+
+    function carregarSessao() {
+
+        try {
+
+            representante = JSON.parse(
+                sessionStorage.getItem(
+                    "representanteLogado"
+                ) || "null"
+            );
+
+            turmaAtual = JSON.parse(
+                sessionStorage.getItem(
+                    "turmaAtual"
+                ) || "null"
+            );
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao ler sessão:",
+                erro
+            );
+
+            representante = null;
+            turmaAtual = null;
+        }
+
+
+        if (!representante) {
+
+            window.location.href = "login.html";
+
+            return false;
+        }
+
+
+        if (!turmaAtual || !turmaAtual.id) {
+
+            mostrarMensagem(
+                "Nenhuma turma foi encontrada.",
+                "erro-form"
+            );
+
+            return false;
+        }
+
+
+        const nome =
+            representante.nome ||
+            "Representante";
+
+
+        document.getElementById(
+            "nomeRepresentante"
+        ).textContent = nome;
+
+
+        document.getElementById(
+            "avatarRepresentante"
+        ).textContent =
+            nome.charAt(0).toUpperCase();
+
+
+        document.getElementById(
+            "nomeTurma"
+        ).textContent =
+            turmaAtual.nome || "Turma";
+
+
+        return true;
+    }
+
+
+    /*
+    =====================================================
+    DATA
+    =====================================================
+    */
+
+    function definirDataAtual() {
+
+        const hoje = new Date();
+
+        const ano =
+            hoje.getFullYear();
+
+        const mes =
+            String(
+                hoje.getMonth() + 1
+            ).padStart(2, "0");
+
+        const dia =
+            String(
+                hoje.getDate()
+            ).padStart(2, "0");
+
+        const data =
+            `${ano}-${mes}-${dia}`;
+
+
+        const campo =
+            document.getElementById(
+                "dataChamada"
+            );
+
+
+        campo.value = data;
+
+
+        campo.addEventListener(
+            "change",
+            async function () {
+
+                try {
+
+                    atualizarResumoData();
+
+                    await carregarChamadaExistente();
+
+                } catch (erro) {
+
+                    console.error(
+                        "Erro ao trocar data:",
+                        erro
+                    );
+
+                    mostrarMensagem(
+                        "Não foi possível carregar a chamada desta data.",
+                        "erro-form"
+                    );
+                }
+            }
+        );
+    }
+
+
+    /*
+    =====================================================
+    CARREGAR ALUNOS DO BANCO
+    =====================================================
+    */
+
+    async function carregarAlunos() {
+
+        if (!turmaAtual?.id) {
+            return;
+        }
+
+
+        const resposta = await fetch(
+            `/api/alunos/turma/${turmaAtual.id}`
+        );
+
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                "Erro ao carregar alunos."
+            );
+        }
+
+
+        const dados = await resposta.json();
+
+
+        alunos =
+            Array.isArray(dados)
+                ? dados
+                : (
+                    dados.alunos ||
+                    dados.dados ||
+                    []
+                );
+
+
+        alunos = alunos.map(
+            aluno => ({
+
+                ...aluno,
+
+                // Por padrão,
+                // quem ainda não possui chamada
+                // aparece como presente.
+                presencaAtual: true
+
+            })
+        );
+
+
+        renderizarLista();
+
+        atualizarResumo();
+    }
+
+
+    /*
+    =====================================================
+    CARREGAR TODAS AS CHAMADAS DO BANCO
+    =====================================================
+    */
+
+    async function carregarChamadas() {
+
+        if (!turmaAtual?.id) {
+            return;
+        }
+
+
+        const resposta = await fetch(
+            `/api/chamadas/turma/${turmaAtual.id}`
+        );
+
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                "Erro ao carregar chamadas."
+            );
+        }
+
+
+        const dados = await resposta.json();
+
+
+        const registros =
+            Array.isArray(dados)
+                ? dados
+                : (
+                    dados.chamadas ||
+                    dados.dados ||
+                    []
+                );
+
+
+        organizarChamadas(
+            registros
+        );
+    }
+
+
+    /*
+    =====================================================
+    ORGANIZAR CHAMADAS
+    =====================================================
+    */
+
+    function organizarChamadas(
+        registros
+    ) {
+
+        const mapa = {};
+
+
+        registros.forEach(
+            registro => {
+
+                if (!registro.data) {
+                    return;
+                }
+
+
+                if (!mapa[registro.data]) {
+
+                    mapa[registro.data] = {
+
+                        data:
+                            registro.data,
+
+                        registros: []
+
+                    };
+                }
+
+
+                mapa[
+                    registro.data
+                ].registros.push({
+
+                    alunoId:
+                        registro.aluno_id,
+
+                    alunoNome:
+                        registro.aluno_nome || "",
+
+                    presente:
+                        Number(
+                            registro.presente
+                        ) === 1
+
+                });
+            }
+        );
+
+
+        chamadasSalvas =
+            Object.values(mapa);
+    }
+
+
+    /*
+    =====================================================
+    CARREGAR CHAMADA DA DATA SELECIONADA
+    =====================================================
+    */
+
+    async function carregarChamadaExistente() {
+
+        const data =
+            document.getElementById(
+                "dataChamada"
+            ).value;
+
+
+        if (!data) {
+            return;
+        }
+
+
+        /*
+        IMPORTANTE:
+
+        O registro vem da variável carregada
+        diretamente da API.
+
+        Não usamos localStorage.
+        */
+
+
+        const existente =
+            chamadasSalvas.find(
+                chamada =>
+                    chamada.data === data
+            );
+
+
+        /*
+        ================================================
+        NOVA CHAMADA
+        ================================================
+        */
+
+        if (!existente) {
+
+            alunos = alunos.map(
+                aluno => ({
+
+                    ...aluno,
+
+                    presencaAtual: true
+
+                })
+            );
+
+
+            renderizarLista();
+
+            atualizarResumo();
+
+
+            document.getElementById(
+                "statusChamada"
+            ).textContent =
+                "Nova chamada";
+
+
+            document.getElementById(
+                "statusChamada"
+            ).className =
+                "status-chamada";
+
+
+            return;
+        }
+
+
+        /*
+        ================================================
+        CHAMADA JÁ EXISTENTE
+        ================================================
+        */
+
+        alunos = alunos.map(
+            aluno => {
+
+                const registro =
+                    existente.registros.find(
+                        item =>
+                            String(
+                                item.alunoId
+                            ) ===
+                            String(
+                                aluno.id
+                            )
+                    );
+
+
+                return {
+
+                    ...aluno,
+
+                    /*
+                    Se o aluno possui registro,
+                    usa o banco.
+
+                    Se não possui,
+                    permanece presente.
+                    */
+                    presencaAtual:
+                        registro
+                            ? registro.presente
+                            : true
+
+                };
+            }
+        );
+
+
+        renderizarLista();
+
+        atualizarResumo();
+
+
+        document.getElementById(
+            "statusChamada"
+        ).textContent =
+            "Chamada carregada";
+
+
+        document.getElementById(
+            "statusChamada"
+        ).className =
+            "status-chamada salva";
+    }
+
+
+    /*
+    =====================================================
+    RENDERIZAR LISTA
+    =====================================================
+    */
+
+    function renderizarLista() {
+
+        const container =
+            document.getElementById(
+                "listaChamada"
+            );
+
+        const vazio =
+            document.getElementById(
+                "estadoVazioChamada"
+            );
+
+
+        container.innerHTML = "";
+
+
+        if (alunos.length === 0) {
+
+            vazio.style.display =
+                "block";
+
+            return;
+        }
+
+
+        vazio.style.display =
+            "none";
+
+
+        alunos.forEach(
+            (aluno, index) => {
+
+                const presente =
+                    aluno.presencaAtual !== false;
+
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "item-chamada";
+
+
+                item.classList.add(
+                    presente
+                        ? "aluno-presente"
+                        : "aluno-faltante"
+                );
+
+
+                const primeiraLetra =
+                    (aluno.nome || "?")
+                        .charAt(0)
+                        .toUpperCase();
+
+
+                item.innerHTML = `
+
+                    <div class="numero-chamada">
+                        ${index + 1}
+                    </div>
+
+
+                    <div class="avatar-chamada">
+                        ${escaparHTML(
+                            primeiraLetra
+                        )}
+                    </div>
+
+
+                    <div class="nome-chamada">
+
+                        <strong>
+                            ${escaparHTML(
+                                aluno.nome
+                            )}
+                        </strong>
+
+                        <span>
+                            ${
+                                presente
+                                    ? "Presente"
+                                    : "Faltou — 9 faltas"
+                            }
+                        </span>
+
+                    </div>
+
+
+                    <div class="botoes-presenca">
+
+                        <button
+                            type="button"
+                            class="${
+                                presente
+                                    ? "selecionado-presente"
+                                    : ""
+                            }"
+                            onclick="alterarPresenca(
+                                ${aluno.id},
+                                true
+                            )"
+                        >
+                            ✓ Presente
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="${
+                                !presente
+                                    ? "selecionado-falta"
+                                    : ""
+                            }"
+                            onclick="alterarPresenca(
+                                ${aluno.id},
+                                false
+                            )"
+                        >
+                            × Faltou
+                        </button>
+
+                    </div>
+                `;
+
+
+                container.appendChild(
+                    item
+                );
+            }
+        );
+    }
+
+
+    /*
+    =====================================================
+    ALTERAR PRESENÇA
+    =====================================================
+    */
+
+    function alterarPresenca(
+        id,
+        presente
+    ) {
+
+        const aluno =
+            alunos.find(
+                item =>
+                    String(item.id) ===
+                    String(id)
+            );
+
+
+        if (!aluno) {
+            return;
+        }
+
+
+        aluno.presencaAtual =
+            Boolean(presente);
+
+
+        renderizarLista();
+
+        atualizarResumo();
+
+        atualizarStatusNaoSalva();
+    }
+
+
+    /*
+    =====================================================
+    MARCAR TODOS
+    =====================================================
+    */
+
+    function marcarTodos(
+        presente
+    ) {
+
+        alunos =
+            alunos.map(
+                aluno => ({
+
+                    ...aluno,
+
+                    presencaAtual:
+                        Boolean(presente)
+
+                })
+            );
+
+
+        renderizarLista();
+
+        atualizarResumo();
+
+        atualizarStatusNaoSalva();
+    }
+
+
+    /*
+    =====================================================
+    STATUS
+    =====================================================
+    */
+
+    function atualizarStatusNaoSalva() {
+
+        document.getElementById(
+            "statusChamada"
+        ).textContent =
+            "Não salva";
+
+
+        document.getElementById(
+            "statusChamada"
+        ).className =
+            "status-chamada";
+    }
+
+
+    /*
+    =====================================================
+    RESUMO DA CHAMADA
+    =====================================================
+    */
+
+    function atualizarResumo() {
+
+        const total =
+            alunos.length;
+
+
+        const presentes =
+            alunos.filter(
+                aluno =>
+                    aluno.presencaAtual !== false
+            ).length;
+
+
+        const faltas =
+            total - presentes;
+
+
+        const percentual =
+            total > 0
+                ? Math.round(
+                    (
+                        presentes /
+                        total
+                    ) * 100
+                )
+                : 0;
+
+
+        document.getElementById(
+            "totalChamada"
+        ).textContent =
+            total;
+
+
+        document.getElementById(
+            "totalPresentes"
+        ).textContent =
+            presentes;
+
+
+        document.getElementById(
+            "totalFaltas"
+        ).textContent =
+            faltas;
+
+
+        document.getElementById(
+            "percentualPresenca"
+        ).textContent =
+            percentual + "%";
+    }
+
+
+    /*
+    =====================================================
+    RESUMO DA DATA
+    =====================================================
+    */
+
+    function atualizarResumoData() {
+
+        const data =
+            document.getElementById(
+                "dataChamada"
+            ).value;
+
+
+        document.getElementById(
+            "resumoDataChamada"
+        ).textContent =
+            data
+                ? formatarData(data)
+                : "Selecione uma data.";
+    }
+
+
+    /*
+    =====================================================
+    SALVAR CHAMADA NO SQLITE
+    =====================================================
+    */
+
+    async function salvarChamada() {
+
+        if (alunos.length === 0) {
+
+            mostrarMensagem(
+                "Não existem alunos cadastrados.",
+                "erro-form"
+            );
+
+            return;
+        }
+
+
+        const data =
+            document.getElementById(
+                "dataChamada"
+            ).value;
+
+
+        if (!data) {
+
+            mostrarMensagem(
+                "Selecione a data da chamada.",
+                "erro-form"
+            );
+
+            return;
+        }
+
+
+        const botao =
+            document.querySelector(
+                ".botao-salvar-chamada"
+            );
+
+
+        const textoOriginal =
+            botao.textContent;
+
+
+        botao.disabled = true;
+
+        botao.textContent =
+            "Salvando...";
+
+
+        try {
+
+            /*
+            =================================================
+            UM REGISTRO PARA CADA ALUNO
+
+            O backend decide se:
+            - cria um novo registro;
+            - ou atualiza o existente.
+
+            Assim nunca duplicamos a chamada do mesmo
+            aluno na mesma data.
+            =================================================
+            */
+
+            for (
+                const aluno of alunos
+            ) {
+
+                const resposta =
+                    await fetch(
+                        "/api/chamadas",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    aluno_id:
+                                        aluno.id,
+
+                                    data:
+                                        data,
+
+                                    presente:
+                                        aluno.presencaAtual !== false
+
+                                })
+                        }
+                    );
+
+
+                const resultado =
+                    await resposta
+                        .json()
+                        .catch(
+                            () => ({})
+                        );
+
+
+                if (!resposta.ok) {
+
+                    throw new Error(
+                        resultado.erro ||
+                        "Erro ao salvar a chamada."
+                    );
+                }
+            }
+
+
+            /*
+            =================================================
+            AGORA RECARREGAMOS TUDO DO BANCO
+            =================================================
+            */
+
+            await carregarChamadas();
+
+            await carregarChamadaExistente();
+
+            atualizarResumo();
+
+            atualizarResumoData();
+
+            renderizarHistorico();
+
+
+            /*
+            =================================================
+            STATUS
+            =================================================
+            */
+
+            document.getElementById(
+                "statusChamada"
+            ).textContent =
+                "Salva no sistema";
+
+
+            document.getElementById(
+                "statusChamada"
+            ).className =
+                "status-chamada salva";
+
+
+            mostrarMensagem(
+                "Chamada salva com sucesso. Os dados foram registrados no banco.",
+                "sucesso-form"
+            );
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao salvar chamada:",
+                erro
+            );
+
+
+            mostrarMensagem(
+                erro.message ||
+                "Não foi possível salvar a chamada.",
+                "erro-form"
+            );
+
+
+        } finally {
+
+            botao.disabled =
+                false;
+
+            botao.textContent =
+                textoOriginal;
+        }
+    }
+
+
+    /*
+    =====================================================
+    HISTÓRICO
+    =====================================================
+    */
+
+    function renderizarHistorico() {
+
+        const container =
+            document.getElementById(
+                "historicoChamadas"
+            );
+
+
+        if (chamadasSalvas.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="historico-vazio">
+
+                    <div>
+                        ✓
+                    </div>
+
+                    <h3>
+                        Nenhuma chamada registrada
+                    </h3>
+
+                    <p>
+                        As chamadas salvas aparecerão aqui.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        const ordenadas =
+            [...chamadasSalvas].sort(
+                (a, b) =>
+                    new Date(b.data) -
+                    new Date(a.data)
+            );
+
+
+        container.innerHTML = "";
+
+
+        ordenadas
+            .slice(0, 10)
+            .forEach(
+                chamada => {
+
+                    const total =
+                        chamada.registros.length;
+
+
+                    const presentes =
+                        chamada.registros.filter(
+                            registro =>
+                                registro.presente
+                        ).length;
+
+
+                    const faltantes =
+                        total -
+                        presentes;
+
+
+                    const percentual =
+                        total > 0
+                            ? Math.round(
+                                (
+                                    presentes /
+                                    total
+                                ) * 100
+                            )
+                            : 0;
+
+
+                    const totalFaltas =
+                        faltantes *
+                        AULAS_POR_DIA;
+
+
+                    const item =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    item.className =
+                        "historico-item";
+
+
+                    item.innerHTML = `
+
+                        <div class="historico-data">
+                            ${formatarData(
+                                chamada.data
+                            )}
+                        </div>
+
+
+                        <div class="historico-info">
+
+                            <strong>
+                                Chamada diária
+                            </strong>
+
+                            <span>
+                                ${AULAS_POR_DIA}
+                                aulas contabilizadas
+                            </span>
+
+                        </div>
+
+
+                        <div class="historico-presenca">
+
+                            <strong>
+                                ${percentual}%
+                            </strong>
+
+                            <span>
+                                ${presentes}/${total}
+                                presentes
+                            </span>
+
+                        </div>
+
+
+                        <div class="historico-faltas">
+
+                            <strong>
+                                ${totalFaltas}
+                            </strong>
+
+                            <span>
+                                faltas
+                            </span>
+
+                        </div>
+
+                    `;
+
+
+                    container.appendChild(
+                        item
+                    );
+                }
+            );
+    }
+
+
+    /*
+    =====================================================
+    MENSAGEM
+    =====================================================
+    */
+
+    function mostrarMensagem(
+        texto,
+        classe
+    ) {
+
+        const mensagem =
+            document.getElementById(
+                "mensagemChamada"
+            );
+
+
+        mensagem.textContent =
+            texto;
+
+
+        mensagem.className =
+            "mensagem-form " +
+            classe;
+
+
+        setTimeout(
+            () => {
+
+                mensagem.textContent =
+                    "";
+
+                mensagem.className =
+                    "mensagem-form";
+
+            },
+            4000
+        );
+    }
+
+
+    /*
+    =====================================================
+    FORMATAR DATA
+    =====================================================
+    */
+
+    function formatarData(
+        data
+    ) {
+
+        if (!data) {
+            return "--";
+        }
+
+
+        const partes =
+            data.split("-");
+
+
+        if (
+            partes.length !== 3
+        ) {
+            return data;
+        }
+
+
+        return (
+            partes[2] +
+            "/" +
+            partes[1] +
+            "/" +
+            partes[0]
+        );
+    }
+
+
+    /*
+    =====================================================
+    SEGURANÇA
+    =====================================================
+    */
+
+    function escaparHTML(
+        texto
+    ) {
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.textContent =
+            texto || "";
+
+
+        return div.innerHTML;
+    }
+
+
+    /*
+    =====================================================
+    SAIR
+    =====================================================
+    */
+
+    function sairSistema() {
+
+        sessionStorage.removeItem(
+            "representanteLogado"
+        );
+
+        sessionStorage.removeItem(
+            "turmaAtual"
+        );
+
+
+        window.location.href =
+            "login.html";
+    }
+
+
+    /*
+    =====================================================
+    INICIAR
+    =====================================================
+    */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        iniciarPagina
+    );
+
+</script>
+
+</body>
+
+</html>

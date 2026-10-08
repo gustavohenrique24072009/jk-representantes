@@ -1,0 +1,2269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dados da Turma | Representantes</title>
+
+    <link rel="stylesheet" href="css/sistema.css">
+
+    <style>
+        .dados-page {
+            width: 100%;
+        }
+
+        .dados-header {
+            margin-bottom: 28px;
+        }
+
+        .dados-header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #111827;
+            font-weight: 800;
+        }
+
+        .dados-header p {
+            margin-top: 7px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .dados-identificacao {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 22px 24px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+        }
+
+        .turma-info h2 {
+            margin: 0;
+            font-size: 20px;
+            color: #111827;
+        }
+
+        .turma-info p {
+            margin: 6px 0 0;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .status-turma {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 13px;
+            border-radius: 20px;
+            background: #ecfdf5;
+            color: #047857;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .status-turma::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+
+        .dados-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .dados-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 21px;
+            min-height: 135px;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+            transition: 0.2s ease;
+        }
+
+        .dados-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .dados-card-topo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .dados-card-label {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .dados-card-icone {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: #eff6ff;
+            color: #1769ff;
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .dados-card-valor {
+            margin-top: 15px;
+            font-size: 28px;
+            line-height: 1;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        .dados-card-descricao {
+            margin-top: 9px;
+            font-size: 11px;
+            color: #9ca3af;
+        }
+
+        .dados-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .dados-painel {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 23px;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+        }
+
+        .dados-painel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .dados-painel-header h3 {
+            margin: 0;
+            color: #111827;
+            font-size: 16px;
+        }
+
+        .dados-painel-header p {
+            margin: 5px 0 0;
+            color: #9ca3af;
+            font-size: 11px;
+        }
+
+        .indicador {
+            padding: 6px 10px;
+            border-radius: 8px;
+            background: #f3f4f6;
+            color: #4b5563;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .barra-item {
+            margin-bottom: 18px;
+        }
+
+        .barra-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .barra-topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 7px;
+        }
+
+        .barra-nome {
+            font-size: 12px;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .barra-valor {
+            font-size: 12px;
+            color: #111827;
+            font-weight: 800;
+        }
+
+        .barra-fundo {
+            width: 100%;
+            height: 9px;
+            background: #eef2f7;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .barra-preenchimento {
+            height: 100%;
+            width: 0;
+            border-radius: 20px;
+            background: #1769ff;
+            transition: width 0.7s ease;
+        }
+
+        .barra-preenchimento.verde {
+            background: #10b981;
+        }
+
+        .barra-preenchimento.amarela {
+            background: #f59e0b;
+        }
+
+        .barra-preenchimento.vermelha {
+            background: #ef4444;
+        }
+
+        .frequencia-central {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 0 25px;
+        }
+
+        .circulo-frequencia {
+            width: 155px;
+            height: 155px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background:
+                conic-gradient(
+                    #1769ff var(--frequencia),
+                    #e5e7eb var(--frequencia)
+                );
+        }
+
+        .circulo-frequencia::before {
+            content: "";
+            position: absolute;
+            width: 118px;
+            height: 118px;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+
+        .circulo-conteudo {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .circulo-conteudo strong {
+            display: block;
+            font-size: 30px;
+            color: #111827;
+            font-weight: 800;
+        }
+
+        .circulo-conteudo span {
+            display: block;
+            margin-top: 3px;
+            font-size: 11px;
+            color: #6b7280;
+        }
+
+        .legenda-frequencia {
+            display: flex;
+            justify-content: center;
+            gap: 22px;
+            margin-top: 4px;
+        }
+
+        .legenda-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 11px;
+            color: #6b7280;
+        }
+
+        .legenda-ponto {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #1769ff;
+        }
+
+        .legenda-ponto.falta {
+            background: #e5e7eb;
+        }
+
+        .desempenho-resumo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .mini-indicador {
+            padding: 13px;
+            background: #f8fafc;
+            border: 1px solid #eef2f7;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .mini-indicador strong {
+            display: block;
+            font-size: 19px;
+            color: #111827;
+        }
+
+        .mini-indicador span {
+            display: block;
+            margin-top: 4px;
+            font-size: 10px;
+            color: #9ca3af;
+        }
+
+        .ranking {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .ranking-item {
+            display: grid;
+            grid-template-columns: 32px 1fr 75px;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 12px;
+            background: #f8fafc;
+            border: 1px solid #eef2f7;
+            border-radius: 10px;
+        }
+
+        .ranking-posicao {
+            width: 27px;
+            height: 27px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: #e5e7eb;
+            color: #374151;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .ranking-nome {
+            min-width: 0;
+        }
+
+        .ranking-nome strong {
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 12px;
+            color: #111827;
+        }
+
+        .ranking-nome span {
+            display: block;
+            margin-top: 2px;
+            font-size: 10px;
+            color: #9ca3af;
+        }
+
+        .ranking-nota {
+            text-align: right;
+            font-size: 14px;
+            color: #1769ff;
+            font-weight: 800;
+        }
+
+        .situacoes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 13px;
+        }
+
+        .situacao {
+            padding: 16px;
+            border-radius: 11px;
+            border: 1px solid;
+        }
+
+        .situacao strong {
+            display: block;
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .situacao span {
+            display: block;
+            margin-top: 5px;
+            font-size: 11px;
+        }
+
+        .situacao.boa {
+            background: #ecfdf5;
+            border-color: #d1fae5;
+            color: #047857;
+        }
+
+        .situacao.atencao {
+            background: #fffbeb;
+            border-color: #fef3c7;
+            color: #b45309;
+        }
+
+        .situacao.critica {
+            background: #fef2f2;
+            border-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .atividade-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+        }
+
+        .atividade {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            background: #f8fafc;
+        }
+
+        .atividade-icone {
+            width: 34px;
+            height: 34px;
+            min-width: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9px;
+            background: #eff6ff;
+            color: #1769ff;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .atividade-texto {
+            min-width: 0;
+        }
+
+        .atividade-texto strong {
+            display: block;
+            font-size: 11px;
+            color: #374151;
+        }
+
+        .atividade-texto span {
+            display: block;
+            margin-top: 3px;
+            font-size: 10px;
+            color: #9ca3af;
+        }
+
+        .estado-vazio-dados {
+            padding: 45px 20px;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        .estado-vazio-dados strong {
+            display: block;
+            margin-bottom: 7px;
+            color: #374151;
+            font-size: 15px;
+        }
+
+        .estado-vazio-dados span {
+            font-size: 12px;
+        }
+
+        .carregando-dados {
+            padding: 35px 20px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .erro-dados {
+            padding: 25px;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 12px;
+            color: #991b1b;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 1100px) {
+            .dados-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 850px) {
+            .dados-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .dados-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .dados-identificacao {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .desempenho-resumo,
+            .situacoes {
+                grid-template-columns: 1fr;
+            }
+
+            .dados-header h1 {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="sistema">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+
+            <div class="logo-circulo">
+                RT
+            </div>
+
+            <div>
+                <strong>REPRESENTANTES</strong>
+                <span>Gestão da Turma</span>
+            </div>
+
+        </div>
+
+        <nav class="menu">
+
+            <a href="inicio.html">
+                <span>⌂</span>
+                Início
+            </a>
+
+            <a href="alunos.html">
+                <span>♙</span>
+                Alunos
+            </a>
+
+            <a href="chamada.html">
+                <span>✓</span>
+                Chamada
+            </a>
+
+            <a href="notas.html">
+                <span>▣</span>
+                Notas
+            </a>
+
+            <a href="dados.html" class="ativo">
+                <span>◫</span>
+                Dados da Turma
+            </a>
+
+            <a href="matriz.html">
+                <span>▤</span>
+                Matriz Curricular
+            </a>
+
+            <a href="configuracoes.html">
+                <span>⚙</span>
+                Configurações
+            </a>
+
+        </nav>
+
+        <div class="sidebar-rodape">
+
+            <button onclick="sairSistema()">
+                <span>⇥</span>
+                Sair
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <main class="conteudo">
+
+        <div class="dados-page">
+
+            <div class="dados-header">
+
+                <h1>Dados da Turma</h1>
+
+                <p>
+                    Acompanhe os principais indicadores, frequência e desempenho da sua turma.
+                </p>
+
+            </div>
+
+
+            <div id="mensagemErro"></div>
+
+
+            <section class="dados-identificacao">
+
+                <div class="turma-info">
+
+                    <h2 id="nomeTurma">
+                        Carregando turma...
+                    </h2>
+
+                    <p id="informacaoTurma">
+                        Carregando informações...
+                    </p>
+
+                </div>
+
+                <div class="status-turma">
+                    Sistema ativo
+                </div>
+
+            </section>
+
+
+            <section class="dados-cards">
+
+                <div class="dados-card">
+
+                    <div class="dados-card-topo">
+
+                        <span class="dados-card-label">
+                            ALUNOS
+                        </span>
+
+                        <div class="dados-card-icone">
+                            ♙
+                        </div>
+
+                    </div>
+
+                    <div class="dados-card-valor" id="totalAlunos">
+                        0
+                    </div>
+
+                    <div class="dados-card-descricao">
+                        Alunos cadastrados na turma
+                    </div>
+
+                </div>
+
+
+                <div class="dados-card">
+
+                    <div class="dados-card-topo">
+
+                        <span class="dados-card-label">
+                            FREQUÊNCIA MÉDIA
+                        </span>
+
+                        <div class="dados-card-icone">
+                            %
+                        </div>
+
+                    </div>
+
+                    <div class="dados-card-valor" id="frequenciaMedia">
+                        0%
+                    </div>
+
+                    <div class="dados-card-descricao">
+                        Frequência calculada pelas chamadas
+                    </div>
+
+                </div>
+
+
+                <div class="dados-card">
+
+                    <div class="dados-card-topo">
+
+                        <span class="dados-card-label">
+                            MÉDIA DA TURMA
+                        </span>
+
+                        <div class="dados-card-icone">
+                            ★
+                        </div>
+
+                    </div>
+
+                    <div class="dados-card-valor" id="mediaTurma">
+                        0,0
+                    </div>
+
+                    <div class="dados-card-descricao">
+                        Média das notas cadastradas
+                    </div>
+
+                </div>
+
+
+                <div class="dados-card">
+
+                    <div class="dados-card-topo">
+
+                        <span class="dados-card-label">
+                            ADVERTÊNCIAS
+                        </span>
+
+                        <div class="dados-card-icone">
+                            !
+                        </div>
+
+                    </div>
+
+                    <div class="dados-card-valor" id="totalAdvertencias">
+                        0
+                    </div>
+
+                    <div class="dados-card-descricao">
+                        Registros de advertências
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="dados-grid">
+
+                <div class="dados-painel">
+
+                    <div class="dados-painel-header">
+
+                        <div>
+                            <h3>Frequência da turma</h3>
+
+                            <p>
+                                Resultado geral das chamadas realizadas
+                            </p>
+                        </div>
+
+                        <span class="indicador">
+                            Frequência
+                        </span>
+
+                    </div>
+
+
+                    <div class="frequencia-central">
+
+                        <div
+                            class="circulo-frequencia"
+                            id="circuloFrequencia"
+                            style="--frequencia: 0deg;"
+                        >
+
+                            <div class="circulo-conteudo">
+
+                                <strong id="frequenciaCirculo">
+                                    0%
+                                </strong>
+
+                                <span>
+                                    frequência média
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="legenda-frequencia">
+
+                        <div class="legenda-item">
+                            <span class="legenda-ponto"></span>
+                            Presença
+                        </div>
+
+                        <div class="legenda-item">
+                            <span class="legenda-ponto falta"></span>
+                            Ausência
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dados-painel">
+
+                    <div class="dados-painel-header">
+
+                        <div>
+                            <h3>Desempenho acadêmico</h3>
+
+                            <p>
+                                Distribuição dos alunos por desempenho
+                            </p>
+                        </div>
+
+                        <span class="indicador">
+                            Notas
+                        </span>
+
+                    </div>
+
+
+                    <div class="desempenho-resumo">
+
+                        <div class="mini-indicador">
+
+                            <strong id="maiorNota">
+                                0,0
+                            </strong>
+
+                            <span>
+                                Maior média
+                            </span>
+
+                        </div>
+
+                        <div class="mini-indicador">
+
+                            <strong id="menorNota">
+                                0,0
+                            </strong>
+
+                            <span>
+                                Menor média
+                            </span>
+
+                        </div>
+
+                        <div class="mini-indicador">
+
+                            <strong id="alunosComNotas">
+                                0
+                            </strong>
+
+                            <span>
+                                Com notas
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="barra-item">
+
+                        <div class="barra-topo">
+
+                            <span class="barra-nome">
+                                Bom desempenho
+                            </span>
+
+                            <span class="barra-valor" id="percentualBom">
+                                0%
+                            </span>
+
+                        </div>
+
+                        <div class="barra-fundo">
+
+                            <div
+                                class="barra-preenchimento verde"
+                                id="barraBom"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="barra-item">
+
+                        <div class="barra-topo">
+
+                            <span class="barra-nome">
+                                Atenção
+                            </span>
+
+                            <span class="barra-valor" id="percentualAtencao">
+                                0%
+                            </span>
+
+                        </div>
+
+                        <div class="barra-fundo">
+
+                            <div
+                                class="barra-preenchimento amarela"
+                                id="barraAtencao"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="barra-item">
+
+                        <div class="barra-topo">
+
+                            <span class="barra-nome">
+                                Desempenho crítico
+                            </span>
+
+                            <span class="barra-valor" id="percentualCritico">
+                                0%
+                            </span>
+
+                        </div>
+
+                        <div class="barra-fundo">
+
+                            <div
+                                class="barra-preenchimento vermelha"
+                                id="barraCritico"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="dados-grid">
+
+                <div class="dados-painel">
+
+                    <div class="dados-painel-header">
+
+                        <div>
+                            <h3>Situação dos alunos</h3>
+
+                            <p>
+                                Distribuição geral da turma
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="situacoes">
+
+                        <div class="situacao boa">
+
+                            <strong id="alunosBoaSituacao">
+                                0
+                            </strong>
+
+                            <span>
+                                Boa situação
+                            </span>
+
+                        </div>
+
+
+                        <div class="situacao atencao">
+
+                            <strong id="alunosAtencao">
+                                0
+                            </strong>
+
+                            <span>
+                                Precisam de atenção
+                            </span>
+
+                        </div>
+
+
+                        <div class="situacao critica">
+
+                            <strong id="alunosCriticos">
+                                0
+                            </strong>
+
+                            <span>
+                                Situação crítica
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dados-painel">
+
+                    <div class="dados-painel-header">
+
+                        <div>
+                            <h3>Desempenho dos alunos</h3>
+
+                            <p>
+                                Alunos com maior média registrada
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="ranking"
+                        id="rankingAlunos"
+                    >
+
+                        <div class="estado-vazio-dados">
+
+                            <strong>
+                                Carregando...
+                            </strong>
+
+                            <span>
+                                Buscando dados da turma.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="dados-painel" style="margin-bottom: 24px;">
+
+                <div class="dados-painel-header">
+
+                    <div>
+
+                        <h3>
+                            Frequência por aluno
+                        </h3>
+
+                        <p>
+                            Acompanhamento individual da frequência
+                        </p>
+
+                    </div>
+
+                    <span class="indicador">
+                        Chamada
+                    </span>
+
+                </div>
+
+
+                <div id="listaFrequencia">
+
+                    <div class="carregando-dados">
+                        Carregando frequência...
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="dados-painel">
+
+                <div class="dados-painel-header">
+
+                    <div>
+
+                        <h3>
+                            Resumo das atividades
+                        </h3>
+
+                        <p>
+                            Informações registradas no sistema
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="atividade-lista">
+
+                    <div class="atividade">
+
+                        <div class="atividade-icone">
+                            ✓
+                        </div>
+
+                        <div class="atividade-texto">
+
+                            <strong id="atividadeChamada">
+                                Carregando chamadas...
+                            </strong>
+
+                            <span>
+                                Registro de frequência
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="atividade">
+
+                        <div class="atividade-icone">
+                            ★
+                        </div>
+
+                        <div class="atividade-texto">
+
+                            <strong id="atividadeNotas">
+                                Carregando notas...
+                            </strong>
+
+                            <span>
+                                Registro de desempenho acadêmico
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="atividade">
+
+                        <div class="atividade-icone">
+                            !
+                        </div>
+
+                        <div class="atividade-texto">
+
+                            <strong id="atividadeAdvertencias">
+                                Carregando advertências...
+                            </strong>
+
+                            <span>
+                                Registro disciplinar
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    let representanteLogado = null;
+    let turmaAtual = null;
+    let dadosTurma = null;
+
+
+    /* =========================================================
+       INICIALIZAÇÃO
+       ========================================================= */
+
+    document.addEventListener("DOMContentLoaded", iniciarPagina);
+
+
+    async function iniciarPagina() {
+
+        try {
+
+            representanteLogado =
+                JSON.parse(
+                    sessionStorage.getItem("representanteLogado") || "null"
+                );
+
+            turmaAtual =
+                JSON.parse(
+                    sessionStorage.getItem("turmaAtual") || "null"
+                );
+
+
+            if (!representanteLogado) {
+
+                window.location.href = "login.html";
+                return;
+
+            }
+
+
+            if (!turmaAtual || !turmaAtual.id) {
+
+                window.location.href = "primeiro-acesso.html";
+                return;
+
+            }
+
+
+            await carregarDadosTurma();
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao iniciar dados.html:",
+                erro
+            );
+
+            mostrarErro(
+                "Não foi possível carregar os dados da turma."
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       CARREGAR DADOS DO BANCO
+       ========================================================= */
+
+    async function carregarDadosTurma() {
+
+        const resposta =
+            await fetch(
+                `/api/dados-turma/${turmaAtual.id}`
+            );
+
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                "Erro HTTP " + resposta.status
+            );
+
+        }
+
+
+        const dados =
+            await resposta.json();
+
+
+        if (!dados.sucesso) {
+
+            throw new Error(
+                dados.mensagem ||
+                "Erro ao carregar dados da turma."
+            );
+
+        }
+
+
+        dadosTurma = dados;
+
+
+        carregarIdentificacao();
+
+        atualizarCards();
+
+        atualizarDesempenho();
+
+        atualizarRanking();
+
+        atualizarListaFrequencia();
+
+        atualizarAtividades();
+
+    }
+
+
+    /* =========================================================
+       IDENTIFICAÇÃO DA TURMA
+       ========================================================= */
+
+    function carregarIdentificacao() {
+
+        const nome =
+            document.getElementById("nomeTurma");
+
+        const informacao =
+            document.getElementById("informacaoTurma");
+
+
+        const turma =
+            dadosTurma.turma || turmaAtual;
+
+
+        nome.textContent =
+            turma.nome || "Turma";
+
+
+        const informacoes = [];
+
+
+        if (turma.ano) {
+            informacoes.push(turma.ano);
+        }
+
+
+        if (turma.turno) {
+            informacoes.push(turma.turno);
+        }
+
+
+        if (turma.sala) {
+            informacoes.push(
+                "Sala " + turma.sala
+            );
+        }
+
+
+        if (turma.ano_letivo) {
+
+            informacoes.push(
+                turma.ano_letivo
+            );
+
+        } else if (turma.anoLetivo) {
+
+            informacoes.push(
+                turma.anoLetivo
+            );
+
+        }
+
+
+        informacao.textContent =
+            informacoes.length
+                ? informacoes.join(" • ")
+                : "Informações da turma";
+
+    }
+
+
+    /* =========================================================
+       CARDS
+       ========================================================= */
+
+    function atualizarCards() {
+
+        const total =
+            Number(
+                dadosTurma.totalAlunos || 0
+            );
+
+
+        const frequencia =
+            Number(
+                dadosTurma.frequenciaMedia || 0
+            );
+
+
+        const media =
+            Number(
+                dadosTurma.notaMedia || 0
+            );
+
+
+        const advertencias =
+            Number(
+                dadosTurma.totalAdvertencias || 0
+            );
+
+
+        document.getElementById(
+            "totalAlunos"
+        ).textContent = total;
+
+
+        document.getElementById(
+            "frequenciaMedia"
+        ).textContent =
+            formatarNumero(frequencia) + "%";
+
+
+        document.getElementById(
+            "mediaTurma"
+        ).textContent =
+            formatarNumero(media, 1);
+
+
+        document.getElementById(
+            "totalAdvertencias"
+        ).textContent =
+            advertencias;
+
+
+        document.getElementById(
+            "frequenciaCirculo"
+        ).textContent =
+            formatarNumero(frequencia) + "%";
+
+
+        const graus =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    frequencia
+                )
+            ) * 3.6;
+
+
+        document.getElementById(
+            "circuloFrequencia"
+        ).style.setProperty(
+            "--frequencia",
+            graus + "deg"
+        );
+
+    }
+
+
+    /* =========================================================
+       DESEMPENHO
+       ========================================================= */
+
+    function obterDesempenho() {
+
+        if (
+            Array.isArray(
+                dadosTurma.desempenho
+            )
+        ) {
+
+            return dadosTurma.desempenho;
+
+        }
+
+
+        if (
+            Array.isArray(
+                dadosTurma.alunos
+            )
+        ) {
+
+            return dadosTurma.alunos.map(
+                aluno => ({
+                    aluno,
+                    media:
+                        aluno.media !== undefined
+                            ? Number(aluno.media)
+                            : null
+                })
+            );
+
+        }
+
+
+        return [];
+
+    }
+
+
+    function atualizarDesempenho() {
+
+        const desempenho =
+            obterDesempenho();
+
+
+        const comNotas =
+            desempenho.filter(
+                item =>
+                    item.media !== null &&
+                    item.media !== undefined &&
+                    !Number.isNaN(
+                        Number(item.media)
+                    )
+            );
+
+
+        document.getElementById(
+            "alunosComNotas"
+        ).textContent =
+            comNotas.length;
+
+
+        if (comNotas.length === 0) {
+
+            document.getElementById(
+                "maiorNota"
+            ).textContent = "0,0";
+
+
+            document.getElementById(
+                "menorNota"
+            ).textContent = "0,0";
+
+        } else {
+
+            const valores =
+                comNotas.map(
+                    item =>
+                        Number(item.media)
+                );
+
+
+            const maior =
+                Math.max(...valores);
+
+
+            const menor =
+                Math.min(...valores);
+
+
+            document.getElementById(
+                "maiorNota"
+            ).textContent =
+                formatarNumero(
+                    maior,
+                    1
+                );
+
+
+            document.getElementById(
+                "menorNota"
+            ).textContent =
+                formatarNumero(
+                    menor,
+                    1
+                );
+
+        }
+
+
+        let bom = 0;
+        let atencao = 0;
+        let critico = 0;
+
+
+        comNotas.forEach(item => {
+
+            const media =
+                Number(item.media);
+
+
+            if (media >= 7) {
+
+                bom++;
+
+            } else if (media >= 5) {
+
+                atencao++;
+
+            } else {
+
+                critico++;
+
+            }
+
+        });
+
+
+        const total =
+            comNotas.length;
+
+
+        const percentualBom =
+            total > 0
+                ? (bom / total) * 100
+                : 0;
+
+
+        const percentualAtencao =
+            total > 0
+                ? (atencao / total) * 100
+                : 0;
+
+
+        const percentualCritico =
+            total > 0
+                ? (critico / total) * 100
+                : 0;
+
+
+        document.getElementById(
+            "percentualBom"
+        ).textContent =
+            Math.round(
+                percentualBom
+            ) + "%";
+
+
+        document.getElementById(
+            "percentualAtencao"
+        ).textContent =
+            Math.round(
+                percentualAtencao
+            ) + "%";
+
+
+        document.getElementById(
+            "percentualCritico"
+        ).textContent =
+            Math.round(
+                percentualCritico
+            ) + "%";
+
+
+        document.getElementById(
+            "barraBom"
+        ).style.width =
+            percentualBom + "%";
+
+
+        document.getElementById(
+            "barraAtencao"
+        ).style.width =
+            percentualAtencao + "%";
+
+
+        document.getElementById(
+            "barraCritico"
+        ).style.width =
+            percentualCritico + "%";
+
+
+        document.getElementById(
+            "alunosBoaSituacao"
+        ).textContent =
+            bom;
+
+
+        document.getElementById(
+            "alunosAtencao"
+        ).textContent =
+            atencao;
+
+
+        document.getElementById(
+            "alunosCriticos"
+        ).textContent =
+            critico;
+
+    }
+
+
+    /* =========================================================
+       RANKING
+       ========================================================= */
+
+    function atualizarRanking() {
+
+        const container =
+            document.getElementById(
+                "rankingAlunos"
+            );
+
+
+        const desempenho =
+            obterDesempenho()
+                .filter(
+                    item =>
+                        item.media !== null &&
+                        item.media !== undefined &&
+                        !Number.isNaN(
+                            Number(item.media)
+                        )
+                )
+                .sort(
+                    (a, b) =>
+                        Number(b.media) -
+                        Number(a.media)
+                )
+                .slice(0, 5);
+
+
+        if (desempenho.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="estado-vazio-dados">
+
+                    <strong>
+                        Nenhum dado disponível
+                    </strong>
+
+                    <span>
+                        Cadastre notas para gerar o ranking.
+                    </span>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        container.innerHTML = "";
+
+
+        desempenho.forEach(
+            (item, index) => {
+
+                const aluno =
+                    item.aluno ||
+                    item;
+
+
+                const nome =
+                    aluno.nome ||
+                    item.nome ||
+                    "Aluno";
+
+
+                const media =
+                    Number(item.media);
+
+
+                const elemento =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                elemento.className =
+                    "ranking-item";
+
+
+                elemento.innerHTML = `
+
+                    <div class="ranking-posicao">
+                        ${index + 1}
+                    </div>
+
+                    <div class="ranking-nome">
+
+                        <strong>
+                            ${escaparHTML(nome)}
+                        </strong>
+
+                        <span>
+                            Média geral
+                        </span>
+
+                    </div>
+
+                    <div class="ranking-nota">
+                        ${formatarNumero(media, 1)}
+                    </div>
+
+                `;
+
+
+                container.appendChild(
+                    elemento
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       FREQUÊNCIA DOS ALUNOS
+       ========================================================= */
+
+    function obterFrequencias() {
+
+        if (
+            Array.isArray(
+                dadosTurma.frequencia
+            )
+        ) {
+
+            return dadosTurma.frequencia;
+
+        }
+
+
+        if (
+            dadosTurma.frequencia &&
+            Array.isArray(
+                dadosTurma.frequencia.alunos
+            )
+        ) {
+
+            return dadosTurma.frequencia.alunos;
+
+        }
+
+
+        if (
+            Array.isArray(
+                dadosTurma.alunos
+            )
+        ) {
+
+            return dadosTurma.alunos
+                .filter(
+                    aluno =>
+                        aluno.frequencia !== undefined
+                )
+                .map(
+                    aluno => ({
+                        aluno,
+                        frequencia:
+                            Number(
+                                aluno.frequencia
+                            )
+                    })
+                );
+
+        }
+
+
+        return [];
+
+    }
+
+
+    function atualizarListaFrequencia() {
+
+        const container =
+            document.getElementById(
+                "listaFrequencia"
+            );
+
+
+        const dados =
+            obterFrequencias()
+                .map(item => {
+
+                    const aluno =
+                        item.aluno ||
+                        item;
+
+
+                    let percentual =
+                        item.frequencia;
+
+
+                    if (
+                        typeof item.frequencia === "object"
+                    ) {
+
+                        percentual =
+                            item.frequencia.frequencia ??
+                            item.frequencia.percentual ??
+                            0;
+
+                    }
+
+
+                    if (
+                        percentual === undefined ||
+                        percentual === null
+                    ) {
+
+                        percentual = 0;
+
+                    }
+
+
+                    return {
+
+                        aluno,
+
+                        percentual:
+                            Number(percentual),
+
+                        faltas:
+                            Number(
+                                item.faltas ??
+                                item.frequencia?.faltas ??
+                                0
+                            )
+
+                    };
+
+                })
+                .sort(
+                    (a, b) =>
+                        a.percentual -
+                        b.percentual
+                );
+
+
+        if (dados.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="estado-vazio-dados">
+
+                    <strong>
+                        Nenhuma chamada registrada
+                    </strong>
+
+                    <span>
+                        Realize as chamadas para acompanhar a frequência dos alunos.
+                    </span>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        container.innerHTML = "";
+
+
+        dados.forEach(item => {
+
+            const percentual =
+                Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        item.percentual
+                    )
+                );
+
+
+            let classe = "";
+
+
+            if (percentual >= 80) {
+
+                classe = "verde";
+
+            } else if (percentual >= 60) {
+
+                classe = "amarela";
+
+            } else {
+
+                classe = "vermelha";
+
+            }
+
+
+            const elemento =
+                document.createElement(
+                    "div"
+                );
+
+
+            elemento.className =
+                "barra-item";
+
+
+            elemento.innerHTML = `
+
+                <div class="barra-topo">
+
+                    <span class="barra-nome">
+                        ${escaparHTML(
+                            item.aluno?.nome ||
+                            "Aluno"
+                        )}
+                    </span>
+
+                    <span class="barra-valor">
+                        ${Math.round(percentual)}%
+                        • ${item.faltas} faltas
+                    </span>
+
+                </div>
+
+                <div class="barra-fundo">
+
+                    <div
+                        class="barra-preenchimento ${classe}"
+                        style="width: ${percentual}%"
+                    ></div>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                elemento
+            );
+
+        });
+
+    }
+
+
+    /* =========================================================
+       ATIVIDADES
+       ========================================================= */
+
+    function atualizarAtividades() {
+
+        const atividadeChamada =
+            document.getElementById(
+                "atividadeChamada"
+            );
+
+
+        const atividadeNotas =
+            document.getElementById(
+                "atividadeNotas"
+            );
+
+
+        const atividadeAdvertencias =
+            document.getElementById(
+                "atividadeAdvertencias"
+            );
+
+
+        const chamadas =
+            obterArraySeguro(
+                dadosTurma.chamadas
+            );
+
+
+        const notas =
+            obterArraySeguro(
+                dadosTurma.notas
+            );
+
+
+        const advertencias =
+            Number(
+                dadosTurma.totalAdvertencias || 0
+            );
+
+
+        const totalChamadas =
+            chamadas.length;
+
+
+        const totalNotas =
+            notas.length;
+
+
+        if (totalChamadas > 0) {
+
+            atividadeChamada.textContent =
+                totalChamadas +
+                (
+                    totalChamadas === 1
+                        ? " registro de chamada"
+                        : " registros de chamada"
+                );
+
+        } else {
+
+            atividadeChamada.textContent =
+                "Nenhuma chamada registrada";
+
+        }
+
+
+        if (totalNotas > 0) {
+
+            atividadeNotas.textContent =
+                totalNotas +
+                (
+                    totalNotas === 1
+                        ? " nota cadastrada"
+                        : " notas cadastradas"
+                );
+
+        } else {
+
+            atividadeNotas.textContent =
+                "Nenhuma nota cadastrada";
+
+        }
+
+
+        if (advertencias > 0) {
+
+            atividadeAdvertencias.textContent =
+                advertencias +
+                (
+                    advertencias === 1
+                        ? " advertência registrada"
+                        : " advertências registradas"
+                );
+
+        } else {
+
+            atividadeAdvertencias.textContent =
+                "Nenhuma advertência registrada";
+
+        }
+
+    }
+
+
+    /* =========================================================
+       UTILITÁRIOS
+       ========================================================= */
+
+    function obterArraySeguro(valor) {
+
+        return Array.isArray(valor)
+            ? valor
+            : [];
+
+    }
+
+
+    function formatarNumero(
+        valor,
+        casas = 0
+    ) {
+
+        const numero =
+            Number(valor);
+
+
+        if (
+            Number.isNaN(numero)
+        ) {
+
+            return casas > 0
+                ? "0," + "0".repeat(casas)
+                : "0";
+
+        }
+
+
+        return numero
+            .toFixed(casas)
+            .replace(
+                ".",
+                ","
+            );
+
+    }
+
+
+    function escaparHTML(texto) {
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+        div.textContent =
+            texto ?? "";
+
+        return div.innerHTML;
+
+    }
+
+
+    /* =========================================================
+       SAIR
+       ========================================================= */
+
+    function sairSistema() {
+
+        const confirmar =
+            confirm(
+                "Deseja realmente sair do sistema?"
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        sessionStorage.removeItem(
+            "representanteLogado"
+        );
+
+        sessionStorage.removeItem(
+            "turmaAtual"
+        );
+
+        sessionStorage.removeItem(
+            "alunoSelecionado"
+        );
+
+
+        window.location.href =
+            "login.html";
+
+    }
+
+
+    /* =========================================================
+       ERRO
+       ========================================================= */
+
+    function mostrarErro(mensagem) {
+
+        const elemento =
+            document.getElementById(
+                "mensagemErro"
+            );
+
+
+        elemento.innerHTML = `
+
+            <div class="erro-dados">
+
+                <strong>
+                    Erro ao carregar os dados
+                </strong>
+
+                <div style="margin-top:6px;">
+                    ${escaparHTML(mensagem)}
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+</script>
+
+</body>
+</html>

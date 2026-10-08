@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Login | Representantes</title>
+
+    <link rel="stylesheet" href="css/sistema.css">
+
+</head>
+
+<body>
+
+    <main class="login-page">
+
+        <section class="login-card">
+
+            <div class="login-logo">
+                RT
+            </div>
+
+            <h1>Bem-vindo</h1>
+
+            <p class="login-subtitulo">
+                Sistema de Gestão da Turma
+            </p>
+
+            <form id="formLogin">
+
+                <div class="campo">
+
+                    <label for="usuario">
+                        Usuário
+                    </label>
+
+                    <input
+                        type="text"
+                        id="usuario"
+                        placeholder="Digite seu usuário"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+                <div class="campo">
+
+                    <label for="senha">
+                        Senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="senha"
+                        placeholder="Digite sua senha"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+                <button type="submit" id="botaoEntrar">
+                    Entrar
+                </button>
+
+            </form>
+
+            <p id="mensagemLogin"></p>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        async function realizarLogin() {
+
+            const usuario =
+                document.getElementById("usuario").value.trim();
+
+            const senha =
+                document.getElementById("senha").value;
+
+            const mensagem =
+                document.getElementById("mensagemLogin");
+
+            const botao =
+                document.getElementById("botaoEntrar");
+
+
+            // Verificação dos campos
+
+            if (!usuario || !senha) {
+
+                mensagem.textContent =
+                    "Preencha todos os campos.";
+
+                mensagem.className = "erro";
+
+                return;
+            }
+
+
+            // Estado de carregamento
+
+            mensagem.textContent =
+                "Verificando acesso...";
+
+            mensagem.className = "";
+
+            botao.disabled = true;
+
+            botao.textContent =
+                "Entrando...";
+
+
+            try {
+
+                // Envia os dados para o servidor
+
+                const resposta = await fetch("/api/login", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        usuario: usuario,
+
+                        senha: senha
+
+                    })
+
+                });
+
+
+                const dados =
+                    await resposta.json();
+
+
+                console.log(
+                    "Resposta da API de login:",
+                    dados
+                );
+
+
+                // Login recusado
+
+                if (!resposta.ok || !dados.sucesso) {
+
+                    mensagem.textContent =
+                        dados.mensagem ||
+                        "Usuário ou senha incorretos.";
+
+                    mensagem.className = "erro";
+
+                    botao.disabled = false;
+
+                    botao.textContent =
+                        "Entrar";
+
+                    return;
+                }
+
+
+                // ==========================
+                // LOGIN REALIZADO
+                // ==========================
+
+                sessionStorage.setItem(
+                    "representanteLogado",
+                    JSON.stringify(
+                        dados.representante
+                    )
+                );
+
+
+                // Se já existir uma turma,
+                // salva também
+
+                if (dados.turma) {
+
+                    sessionStorage.setItem(
+                        "turmaAtual",
+                        JSON.stringify(
+                            dados.turma
+                        )
+                    );
+
+                } else {
+
+                    sessionStorage.removeItem(
+                        "turmaAtual"
+                    );
+
+                }
+
+
+                mensagem.textContent =
+                    "Login realizado com sucesso!";
+
+                mensagem.className = "sucesso";
+
+
+                // ==========================
+                // REDIRECIONAMENTO
+                // ==========================
+
+                setTimeout(function() {
+
+                    const representante =
+                        dados.representante;
+
+
+                    /*
+                     * Primeiro acesso:
+                     *
+                     * primeiro_acesso = 1
+                     *
+                     * OU
+                     *
+                     * ainda não possui turma.
+                     */
+
+                    if (
+                        Number(
+                            representante.primeiro_acesso
+                        ) === 1
+                        ||
+                        !representante.turma_id
+                    ) {
+
+                        window.location.href =
+                            "primeiro-acesso.html";
+
+                        return;
+                    }
+
+
+                    /*
+                     * Representante já configurado.
+                     */
+
+                    window.location.href =
+                        "inicio.html";
+
+                }, 500);
+
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao realizar login:",
+                    erro
+                );
+
+
+                mensagem.textContent =
+                    "Não foi possível conectar ao servidor.";
+
+                mensagem.className = "erro";
+
+
+                botao.disabled = false;
+
+                botao.textContent =
+                    "Entrar";
+            }
+
+        }
+
+
+        // ==========================
+        // FORMULÁRIO
+        // ==========================
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                const formulario =
+                    document.getElementById(
+                        "formLogin"
+                    );
+
+
+                if (!formulario) {
+
+                    console.error(
+                        "Formulário #formLogin não encontrado."
+                    );
+
+                    return;
+                }
+
+
+                formulario.addEventListener(
+                    "submit",
+                    function(event) {
+
+                        event.preventDefault();
+
+                        realizarLogin();
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

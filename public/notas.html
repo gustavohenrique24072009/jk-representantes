@@ -1,0 +1,2600 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Notas | Representantes de Turma</title>
+
+    <link
+        rel="stylesheet"
+        href="css/sistema.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         SISTEMA PRINCIPAL
+    ====================================================== -->
+
+    <div class="sistema">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside class="sidebar">
+
+
+            <div class="sidebar-logo">
+
+                <div class="logo-circulo">
+                    RT
+                </div>
+
+                <div>
+
+                    <strong>
+                        REPRESENTANTES
+                    </strong>
+
+                    <span>
+                        Sistema de Gestão
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <nav class="menu">
+
+                <a href="inicio.html">
+
+                    <span>⌂</span>
+
+                    Início
+
+                </a>
+
+
+                <a href="alunos.html">
+
+                    <span>👥</span>
+
+                    Alunos
+
+                </a>
+
+
+                <a href="chamada.html">
+
+                    <span>✓</span>
+
+                    Chamada
+
+                </a>
+
+
+                <a
+                    href="notas.html"
+                    class="ativo"
+                >
+
+                    <span>▣</span>
+
+                    Notas
+
+                </a>
+
+
+                <a href="dados.html">
+
+                    <span>▥</span>
+
+                    Dados da Turma
+
+                </a>
+
+
+                <a href="matriz.html">
+
+                    <span>▤</span>
+
+                    Matriz Curricular
+
+                </a>
+
+
+                <a href="configuracoes.html">
+
+                    <span>⚙</span>
+
+                    Configurações
+
+                </a>
+
+            </nav>
+
+
+
+            <div class="sidebar-rodape">
+
+                <button onclick="sairSistema()">
+
+                    <span>⇥</span>
+
+                    Sair
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             CONTEÚDO
+        ================================================== -->
+
+        <main class="conteudo">
+
+
+            <!-- CABEÇALHO -->
+
+            <header class="topo-pagina">
+
+                <div>
+
+                    <span class="topo-tag">
+                        AVALIAÇÃO ACADÊMICA
+                    </span>
+
+                    <h1>
+                        Notas
+                    </h1>
+
+                    <p>
+                        Registre e acompanhe o desempenho dos alunos da turma.
+                    </p>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- =================================================
+                 CONFIGURAÇÃO
+            ================================================== -->
+
+            <section class="notas-config">
+
+
+                <div class="campo-config">
+
+                    <label for="disciplinaSelect">
+                        Disciplina
+                    </label>
+
+                    <select id="disciplinaSelect">
+
+                        <option value="">
+                            Carregando disciplinas...
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="campo-config">
+
+                    <label for="trimestreSelect">
+                        Trimestre
+                    </label>
+
+                    <select id="trimestreSelect">
+
+                        <option value="1">
+                            1º Trimestre — 30 pontos
+                        </option>
+
+                        <option value="2">
+                            2º Trimestre — 30 pontos
+                        </option>
+
+                        <option value="3">
+                            3º Trimestre — 40 pontos
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 REGRA
+            ================================================== -->
+
+            <section class="regra-notas">
+
+                <div class="regra-notas-icone">
+                    ✓
+                </div>
+
+                <div>
+
+                    <strong id="regraTitulo">
+                        1º Trimestre
+                    </strong>
+
+                    <p id="regraDescricao">
+                        O trimestre vale 30 pontos. O aluno precisa alcançar
+                        no mínimo 18 pontos.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 RESUMO
+            ================================================== -->
+
+            <section class="cards-notas">
+
+
+                <div class="card-nota">
+
+                    <span>
+                        ALUNOS
+                    </span>
+
+                    <strong id="totalAlunos">
+                        0
+                    </strong>
+
+                </div>
+
+
+
+                <div class="card-nota">
+
+                    <span>
+                        MÉDIA DA TURMA
+                    </span>
+
+                    <strong id="mediaTurma">
+                        0,0
+                    </strong>
+
+                </div>
+
+
+
+                <div class="card-nota">
+
+                    <span>
+                        MAIOR NOTA
+                    </span>
+
+                    <strong id="maiorNota">
+                        0,0
+                    </strong>
+
+                </div>
+
+
+
+                <div class="card-nota">
+
+                    <span>
+                        MENOR NOTA
+                    </span>
+
+                    <strong id="menorNota">
+                        0,0
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 LISTA DE ALUNOS
+            ================================================== -->
+
+            <section class="painel-notas">
+
+
+                <div class="painel-notas-topo">
+
+                    <div>
+
+                        <h2>
+                            Registro de notas
+                        </h2>
+
+                        <p>
+                            Digite a pontuação de cada aluno.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div id="listaNotas">
+
+                </div>
+
+
+
+                <div
+                    id="estadoVazio"
+                    class="estado-vazio"
+                >
+
+                    <strong>
+                        Nenhum aluno encontrado
+                    </strong>
+
+                    <p>
+                        Cadastre os alunos da turma antes de registrar as notas.
+                    </p>
+
+                </div>
+
+
+
+                <div class="notas-acoes">
+
+
+                    <button
+                        class="botao-secundario"
+                        onclick="limparNotas()"
+                    >
+
+                        Limpar notas
+
+                    </button>
+
+
+
+                    <button
+                        class="botao-primario"
+                        onclick="salvarNotas()"
+                        id="botaoSalvarNotas"
+                    >
+
+                        Salvar notas
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 BOLETIM
+            ================================================== -->
+
+            <section
+                class="painel-boletim"
+                id="painelBoletim"
+            >
+
+
+                <div class="boletim-topo">
+
+                    <div>
+
+                        <span>
+                            DOCUMENTO ACADÊMICO
+                        </span>
+
+                        <h2>
+                            Boletim do Aluno
+                        </h2>
+
+                    </div>
+
+
+                    <button
+                        class="fechar-boletim"
+                        onclick="fecharBoletim()"
+                    >
+
+                        ×
+
+                    </button>
+
+                </div>
+
+
+
+                <div class="boletim-identificacao">
+
+
+                    <div>
+
+                        <small>
+                            ALUNO
+                        </small>
+
+                        <strong id="boletimNome">
+                            -
+                        </strong>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <small>
+                            TURMA
+                        </small>
+
+                        <strong id="boletimTurma">
+                            -
+                        </strong>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <small>
+                            ANO LETIVO
+                        </small>
+
+                        <strong id="boletimAno">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="boletim-etapa">
+
+                    <strong id="boletimTrimestre">
+                        1º Trimestre
+                    </strong>
+
+                    <span id="boletimRegra">
+                        30 pontos
+                    </span>
+
+                </div>
+
+
+
+                <div class="tabela-boletim-container">
+
+                    <table class="tabela-boletim">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Disciplina
+                                </th>
+
+                                <th>
+                                    Nota
+                                </th>
+
+                                <th>
+                                    Máximo
+                                </th>
+
+                                <th>
+                                    Situação
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="tabelaBoletim">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+
+                <div class="boletim-resumos">
+
+
+                    <div>
+
+                        <span>
+                            FALTAS
+                        </span>
+
+                        <strong id="boletimFaltas">
+                            0
+                        </strong>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <span>
+                            FREQUÊNCIA
+                        </span>
+
+                        <strong id="boletimFrequencia">
+                            0%
+                        </strong>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <span>
+                            RESULTADO
+                        </span>
+
+                        <strong id="boletimResultado">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="boletim-acoes">
+
+
+                    <button
+                        class="botao-primario"
+                        onclick="imprimirBoletim()"
+                    >
+
+                        Imprimir boletim
+
+                    </button>
+
+
+
+                    <button
+                        class="botao-secundario"
+                        onclick="fecharBoletim()"
+                    >
+
+                        Fechar
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 GERAR BOLETIM
+            ================================================== -->
+
+            <section class="area-boletim">
+
+
+                <div>
+
+                    <h2>
+                        Boletim individual
+                    </h2>
+
+                    <p>
+                        Gere o boletim completo de um aluno.
+                    </p>
+
+                </div>
+
+
+
+                <button
+                    class="botao-boletim"
+                    onclick="abrirGeradorBoletim()"
+                >
+
+                    Gerar boletim
+
+                </button>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+<script>
+
+/* =====================================================
+   ESTADO
+===================================================== */
+
+let alunos = [];
+
+let disciplinas = [];
+
+let notas = [];
+
+let representanteLogado = null;
+
+let turmaAtual = null;
+
+
+
+const regras = {
+
+    1: {
+        nome: "1º Trimestre",
+        maximo: 30,
+        minimo: 18
+    },
+
+    2: {
+        nome: "2º Trimestre",
+        maximo: 30,
+        minimo: 18
+    },
+
+    3: {
+        nome: "3º Trimestre",
+        maximo: 40,
+        minimo: 24
+    }
+
+};
+
+
+
+/* =====================================================
+   ELEMENTOS
+===================================================== */
+
+const disciplinaSelect =
+    document.getElementById(
+        "disciplinaSelect"
+    );
+
+
+const trimestreSelect =
+    document.getElementById(
+        "trimestreSelect"
+    );
+
+
+const listaNotas =
+    document.getElementById(
+        "listaNotas"
+    );
+
+
+const estadoVazio =
+    document.getElementById(
+        "estadoVazio"
+    );
+
+
+
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    iniciarPagina
+);
+
+
+async function iniciarPagina() {
+
+    if (!carregarSessao()) {
+
+        return;
+
+    }
+
+
+    await carregarDados();
+
+}
+
+
+
+/* =====================================================
+   SESSÃO
+===================================================== */
+
+function carregarSessao() {
+
+    try {
+
+        const representanteSalvo =
+            sessionStorage.getItem(
+                "representanteLogado"
+            );
+
+
+        const turmaSalva =
+            sessionStorage.getItem(
+                "turmaAtual"
+            );
+
+
+        if (representanteSalvo) {
+
+            representanteLogado =
+                JSON.parse(
+                    representanteSalvo
+                );
+
+        }
+
+
+        if (turmaSalva) {
+
+            turmaAtual =
+                JSON.parse(
+                    turmaSalva
+                );
+
+        }
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao recuperar sessão:",
+            erro
+        );
+
+    }
+
+
+    if (!representanteLogado) {
+
+        window.location.href =
+            "login.html";
+
+        return false;
+
+    }
+
+
+    if (
+        !turmaAtual ||
+        !turmaAtual.id
+    ) {
+
+        alert(
+            "Não foi possível identificar a turma atual."
+        );
+
+
+        window.location.href =
+            "primeiro-acesso.html";
+
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+
+/* =====================================================
+   CARREGAR DADOS
+===================================================== */
+
+async function carregarDados() {
+
+    bloquearTela(
+        "Carregando dados..."
+    );
+
+
+    try {
+
+        /*
+         * Alunos
+         */
+
+        const respostaAlunos =
+            await fetch(
+                `/api/alunos/turma/${turmaAtual.id}`
+            );
+
+
+        if (!respostaAlunos.ok) {
+
+            throw new Error(
+                "Não foi possível carregar os alunos."
+            );
+
+        }
+
+
+        const dadosAlunos =
+            await respostaAlunos.json();
+
+
+        alunos =
+            Array.isArray(dadosAlunos)
+                ? dadosAlunos
+                : (
+                    Array.isArray(
+                        dadosAlunos.alunos
+                    )
+                        ? dadosAlunos.alunos
+                        : []
+                );
+
+
+
+        /*
+         * Disciplinas
+         */
+
+        const respostaDisciplinas =
+            await fetch(
+                `/api/disciplinas/turma/${turmaAtual.id}`
+            );
+
+
+        if (!respostaDisciplinas.ok) {
+
+            throw new Error(
+                "Não foi possível carregar as disciplinas."
+            );
+
+        }
+
+
+        const dadosDisciplinas =
+            await respostaDisciplinas.json();
+
+
+        disciplinas =
+            Array.isArray(
+                dadosDisciplinas
+            )
+                ? dadosDisciplinas
+                : (
+                    Array.isArray(
+                        dadosDisciplinas.disciplinas
+                    )
+                        ? dadosDisciplinas.disciplinas
+                        : []
+                );
+
+
+
+        /*
+         * Carrega notas existentes
+         */
+
+        await carregarTodasAsNotas();
+
+
+
+        carregarDisciplinas();
+
+        atualizarRegra();
+
+        carregarNotas();
+
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar dados:",
+            erro
+        );
+
+
+        alert(
+            erro.message ||
+            "Não foi possível carregar os dados."
+        );
+
+
+        alunos = [];
+
+        disciplinas = [];
+
+        notas = [];
+
+
+        carregarDisciplinas();
+
+        carregarNotas();
+
+
+    } finally {
+
+        desbloquearTela();
+
+    }
+
+}
+
+
+
+/* =====================================================
+   CARREGAR TODAS AS NOTAS
+===================================================== */
+
+async function carregarTodasAsNotas() {
+
+    notas = [];
+
+
+    if (!alunos.length) {
+
+        return;
+
+    }
+
+
+    /*
+     * O backend possui consulta por aluno.
+     * Buscamos as notas de cada estudante.
+     */
+
+    await Promise.all(
+
+        alunos.map(
+            async aluno => {
+
+                try {
+
+                    const resposta =
+                        await fetch(
+                            `/api/notas/aluno/${aluno.id}`
+                        );
+
+
+                    if (!resposta.ok) {
+
+                        return;
+
+                    }
+
+
+                    const dados =
+                        await resposta.json();
+
+
+                    const lista =
+                        Array.isArray(
+                            dados
+                        )
+                            ? dados
+                            : (
+                                Array.isArray(
+                                    dados.notas
+                                )
+                                    ? dados.notas
+                                    : []
+                            );
+
+
+                    lista.forEach(
+                        nota => {
+
+                            notas.push({
+
+                                id:
+                                    nota.id,
+
+                                alunoId:
+                                    Number(
+                                        nota.aluno_id ??
+                                        nota.alunoId
+                                    ),
+
+                                disciplinaId:
+                                    Number(
+                                        nota.disciplina_id ??
+                                        nota.disciplinaId
+                                    ),
+
+                                trimestre:
+                                    String(
+                                        nota.etapa ??
+                                        nota.trimestre
+                                    ),
+
+                                nota:
+                                    nota.nota === null ||
+                                    nota.nota === undefined
+                                        ? ""
+                                        : Number(
+                                            nota.nota
+                                          )
+
+                            });
+
+                        }
+                    );
+
+
+                } catch (erro) {
+
+                    console.error(
+                        `Erro ao carregar notas do aluno ${aluno.id}:`,
+                        erro
+                    );
+
+                }
+
+            }
+        )
+
+    );
+
+}
+
+
+
+/* =====================================================
+   DISCIPLINAS
+===================================================== */
+
+function carregarDisciplinas() {
+
+    disciplinaSelect.innerHTML = "";
+
+
+    if (!disciplinas.length) {
+
+        const opcao =
+            document.createElement(
+                "option"
+            );
+
+
+        opcao.value = "";
+
+
+        opcao.textContent =
+            "Nenhuma disciplina cadastrada";
+
+
+        disciplinaSelect.appendChild(
+            opcao
+        );
+
+
+        return;
+
+    }
+
+
+    disciplinas.forEach(
+        disciplina => {
+
+            const opcao =
+                document.createElement(
+                    "option"
+                );
+
+
+            opcao.value =
+                disciplina.id;
+
+
+            opcao.textContent =
+                disciplina.nome;
+
+
+            disciplinaSelect.appendChild(
+                opcao
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   EVENTOS DOS SELECTS
+===================================================== */
+
+trimestreSelect.addEventListener(
+    "change",
+    function() {
+
+        atualizarRegra();
+
+        carregarNotas();
+
+    }
+);
+
+
+disciplinaSelect.addEventListener(
+    "change",
+    function() {
+
+        carregarNotas();
+
+    }
+);
+
+
+
+/* =====================================================
+   REGRA
+===================================================== */
+
+function atualizarRegra() {
+
+    const trimestre =
+        trimestreSelect.value;
+
+
+    const regra =
+        regras[trimestre];
+
+
+    document.getElementById(
+        "regraTitulo"
+    ).textContent =
+        regra.nome;
+
+
+    document.getElementById(
+        "regraDescricao"
+    ).textContent =
+        `O trimestre vale ${regra.maximo} pontos. ` +
+        `O aluno precisa alcançar no mínimo ` +
+        `${regra.minimo} pontos.`;
+
+}
+
+
+
+/* =====================================================
+   CARREGAR NOTAS NA TELA
+===================================================== */
+
+function carregarNotas() {
+
+    listaNotas.innerHTML = "";
+
+
+    if (!alunos.length) {
+
+        estadoVazio.style.display =
+            "block";
+
+
+        atualizarResumo();
+
+
+        return;
+
+    }
+
+
+    if (!disciplinaSelect.value) {
+
+        estadoVazio.style.display =
+            "block";
+
+
+        listaNotas.innerHTML = `
+
+            <div
+                style="
+                    padding:30px;
+                    text-align:center;
+                "
+            >
+
+                Cadastre uma disciplina na
+                Matriz Curricular antes de
+                lançar notas.
+
+            </div>
+
+        `;
+
+
+        atualizarResumo();
+
+
+        return;
+
+    }
+
+
+    estadoVazio.style.display =
+        "none";
+
+
+    const disciplinaId =
+        disciplinaSelect.value;
+
+
+    const trimestre =
+        trimestreSelect.value;
+
+
+    const regra =
+        regras[trimestre];
+
+
+    alunos.forEach(
+        (aluno, indice) => {
+
+
+            const registro =
+                encontrarNota(
+                    aluno.id,
+                    disciplinaId,
+                    trimestre
+                );
+
+
+            const nota =
+                registro
+                    ? registro.nota
+                    : "";
+
+
+            const situacao =
+                calcularSituacao(
+                    nota,
+                    trimestre
+                );
+
+
+            const linha =
+                document.createElement(
+                    "div"
+                );
+
+
+            linha.className =
+                "linha-nota";
+
+
+            linha.innerHTML = `
+
+                <div class="numero-aluno">
+                    ${indice + 1}
+                </div>
+
+
+                <div class="nome-aluno-nota">
+
+                    ${escaparHTML(
+                        aluno.nome
+                    )}
+
+                </div>
+
+
+                <div class="campo-digitar-nota">
+
+                    <input
+                        type="number"
+                        class="input-nota"
+                        min="0"
+                        max="${regra.maximo}"
+                        step="0.1"
+                        value="${
+                            nota === ""
+                                ? ""
+                                : nota
+                        }"
+                        placeholder="0,0"
+                        data-aluno="${aluno.id}"
+                    >
+
+                </div>
+
+
+                <div
+                    class="situacao-nota ${situacao.classe}"
+                    id="situacao-${aluno.id}"
+                >
+
+                    ${situacao.texto}
+
+                </div>
+
+            `;
+
+
+            const input =
+                linha.querySelector(
+                    ".input-nota"
+                );
+
+
+            input.addEventListener(
+                "input",
+                function() {
+
+                    let valor =
+                        this.value === ""
+                            ? ""
+                            : Number(
+                                this.value
+                              );
+
+
+                    if (
+                        valor !== "" &&
+                        valor > regra.maximo
+                    ) {
+
+                        valor =
+                            regra.maximo;
+
+
+                        this.value =
+                            regra.maximo;
+
+                    }
+
+
+                    if (
+                        valor !== "" &&
+                        valor < 0
+                    ) {
+
+                        valor = 0;
+
+                        this.value = 0;
+
+                    }
+
+
+                    const resultado =
+                        calcularSituacao(
+                            valor,
+                            trimestre
+                        );
+
+
+                    const elemento =
+                        document.getElementById(
+                            `situacao-${aluno.id}`
+                        );
+
+
+                    elemento.className =
+                        `situacao-nota ${resultado.classe}`;
+
+
+                    elemento.textContent =
+                        resultado.texto;
+
+
+                    atualizarResumoDaTela();
+
+                }
+            );
+
+
+            listaNotas.appendChild(
+                linha
+            );
+
+        }
+    );
+
+
+    atualizarResumo();
+
+}
+
+
+
+/* =====================================================
+   ENCONTRAR NOTA
+===================================================== */
+
+function encontrarNota(
+    alunoId,
+    disciplinaId,
+    trimestre
+) {
+
+    return notas.find(
+        registro =>
+
+            Number(
+                registro.alunoId
+            ) ===
+            Number(alunoId)
+
+            &&
+
+            Number(
+                registro.disciplinaId
+            ) ===
+            Number(disciplinaId)
+
+            &&
+
+            String(
+                registro.trimestre
+            ) ===
+            String(trimestre)
+    );
+
+}
+
+
+
+/* =====================================================
+   SITUAÇÃO
+===================================================== */
+
+function calcularSituacao(
+    nota,
+    trimestre
+) {
+
+    if (
+        nota === "" ||
+        nota === null ||
+        nota === undefined
+    ) {
+
+        return {
+
+            texto:
+                "Sem nota",
+
+            classe:
+                "situacao-neutra"
+
+        };
+
+    }
+
+
+    const valor =
+        Number(nota);
+
+
+    if (
+        valor >=
+        regras[trimestre].minimo
+    ) {
+
+        return {
+
+            texto:
+                "Atingiu o mínimo",
+
+            classe:
+                "situacao-aprovado"
+
+        };
+
+    }
+
+
+    return {
+
+        texto:
+            "Abaixo do mínimo",
+
+        classe:
+            "situacao-reprovado"
+
+    };
+
+}
+
+
+
+/* =====================================================
+   RESUMO
+===================================================== */
+
+function atualizarResumo() {
+
+    document.getElementById(
+        "totalAlunos"
+    ).textContent =
+        alunos.length;
+
+
+    atualizarResumoDaTela();
+
+}
+
+
+function atualizarResumoDaTela() {
+
+    const disciplinaId =
+        disciplinaSelect.value;
+
+
+    const trimestre =
+        trimestreSelect.value;
+
+
+    const valores = [];
+
+
+    /*
+     * Primeiro pega o que está digitado na tela.
+     */
+
+    document
+        .querySelectorAll(
+            ".input-nota"
+        )
+        .forEach(input => {
+
+            if (
+                input.value !== ""
+            ) {
+
+                const valor =
+                    Number(
+                        input.value
+                    );
+
+
+                if (
+                    !isNaN(valor)
+                ) {
+
+                    valores.push(
+                        valor
+                    );
+
+                }
+
+            }
+
+        });
+
+
+    /*
+     * Se não houver inputs na tela,
+     * utiliza os registros do banco.
+     */
+
+    if (
+        valores.length === 0 &&
+        disciplinaId
+    ) {
+
+        alunos.forEach(
+            aluno => {
+
+                const registro =
+                    encontrarNota(
+                        aluno.id,
+                        disciplinaId,
+                        trimestre
+                    );
+
+
+                if (
+                    registro &&
+                    registro.nota !== ""
+                ) {
+
+                    valores.push(
+                        Number(
+                            registro.nota
+                        )
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    if (!valores.length) {
+
+        document.getElementById(
+            "mediaTurma"
+        ).textContent =
+            "0,0";
+
+
+        document.getElementById(
+            "maiorNota"
+        ).textContent =
+            "0,0";
+
+
+        document.getElementById(
+            "menorNota"
+        ).textContent =
+            "0,0";
+
+
+        return;
+
+    }
+
+
+    const soma =
+        valores.reduce(
+            (
+                total,
+                valor
+            ) =>
+                total + valor,
+            0
+        );
+
+
+    const media =
+        soma /
+        valores.length;
+
+
+    document.getElementById(
+        "mediaTurma"
+    ).textContent =
+        formatarNumero(
+            media
+        );
+
+
+    document.getElementById(
+        "maiorNota"
+    ).textContent =
+        formatarNumero(
+            Math.max(
+                ...valores
+            )
+        );
+
+
+    document.getElementById(
+        "menorNota"
+    ).textContent =
+        formatarNumero(
+            Math.min(
+                ...valores
+            )
+        );
+
+}
+
+
+
+/* =====================================================
+   SALVAR NOTAS
+===================================================== */
+
+async function salvarNotas() {
+
+    const disciplinaId =
+        disciplinaSelect.value;
+
+
+    const trimestre =
+        trimestreSelect.value;
+
+
+    if (!disciplinaId) {
+
+        alert(
+            "Selecione uma disciplina antes de salvar."
+        );
+
+        return;
+
+    }
+
+
+    const inputs =
+        document.querySelectorAll(
+            ".input-nota"
+        );
+
+
+    if (!inputs.length) {
+
+        alert(
+            "Não existem alunos para registrar."
+        );
+
+        return;
+
+    }
+
+
+    const botao =
+        document.getElementById(
+            "botaoSalvarNotas"
+        );
+
+
+    botao.disabled =
+        true;
+
+
+    botao.textContent =
+        "Salvando...";
+
+
+    try {
+
+        /*
+         * Salva cada aluno.
+         */
+
+        for (
+            const input of inputs
+        ) {
+
+            const alunoId =
+                Number(
+                    input.dataset.aluno
+                );
+
+
+            const valor =
+                input.value === ""
+                    ? 0
+                    : Number(
+                        input.value
+                      );
+
+
+            if (
+                isNaN(valor)
+            ) {
+
+                continue;
+
+            }
+
+
+            const resposta =
+                await fetch(
+                    "/api/notas",
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                aluno_id:
+                                    alunoId,
+
+                                disciplina_id:
+                                    Number(
+                                        disciplinaId
+                                    ),
+
+                                etapa:
+                                    trimestre,
+
+                                nota:
+                                    valor
+
+                            })
+
+                    }
+                );
+
+
+            const dados =
+                await resposta
+                    .json()
+                    .catch(
+                        () => ({})
+                    );
+
+
+            if (!resposta.ok) {
+
+                throw new Error(
+                    dados.erro ||
+                    dados.error ||
+                    "Erro ao salvar uma das notas."
+                );
+
+            }
+
+        }
+
+
+        /*
+         * Busca novamente no banco.
+         */
+
+        await carregarTodasAsNotas();
+
+
+        carregarNotas();
+
+
+        alert(
+            "Notas salvas com sucesso!"
+        );
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao salvar notas:",
+            erro
+        );
+
+
+        alert(
+            erro.message ||
+            "Não foi possível salvar as notas."
+        );
+
+
+    } finally {
+
+        botao.disabled =
+            false;
+
+
+        botao.textContent =
+            "Salvar notas";
+
+    }
+
+}
+
+
+
+/* =====================================================
+   LIMPAR NOTAS
+===================================================== */
+
+async function limparNotas() {
+
+    const disciplinaId =
+        disciplinaSelect.value;
+
+
+    const trimestre =
+        trimestreSelect.value;
+
+
+    if (!disciplinaId) {
+
+        return;
+
+    }
+
+
+    const confirmou =
+        confirm(
+            "Deseja realmente limpar as notas deste trimestre e desta disciplina?"
+        );
+
+
+    if (!confirmou) {
+
+        return;
+
+    }
+
+
+    /*
+     * Como a API atual trabalha com
+     * salvamento/atualização de notas,
+     * zeramos os registros desta etapa.
+     */
+
+    try {
+
+        const alunosComNotas =
+            alunos.filter(
+                aluno =>
+                    encontrarNota(
+                        aluno.id,
+                        disciplinaId,
+                        trimestre
+                    )
+            );
+
+
+        for (
+            const aluno of alunosComNotas
+        ) {
+
+            const resposta =
+                await fetch(
+                    "/api/notas",
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                aluno_id:
+                                    aluno.id,
+
+                                disciplina_id:
+                                    Number(
+                                        disciplinaId
+                                    ),
+
+                                etapa:
+                                    trimestre,
+
+                                nota:
+                                    0
+
+                            })
+
+                    }
+                );
+
+
+            if (!resposta.ok) {
+
+                throw new Error(
+                    "Não foi possível limpar todas as notas."
+                );
+
+            }
+
+        }
+
+
+        await carregarTodasAsNotas();
+
+
+        carregarNotas();
+
+
+        alert(
+            "Notas limpas com sucesso."
+        );
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao limpar notas:",
+            erro
+        );
+
+
+        alert(
+            erro.message ||
+            "Não foi possível limpar as notas."
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   GERAR BOLETIM
+===================================================== */
+
+async function abrirGeradorBoletim() {
+
+    if (!alunos.length) {
+
+        alert(
+            "Não existem alunos cadastrados."
+        );
+
+        return;
+
+    }
+
+
+    let lista =
+        "Escolha o número do aluno:\n\n";
+
+
+    alunos.forEach(
+        (
+            aluno,
+            indice
+        ) => {
+
+            lista +=
+                `${indice + 1} - ${aluno.nome}\n`;
+
+        }
+    );
+
+
+    const escolha =
+        prompt(lista);
+
+
+    if (!escolha) {
+
+        return;
+
+    }
+
+
+    const indice =
+        Number(escolha) - 1;
+
+
+    if (
+        isNaN(indice) ||
+        !alunos[indice]
+    ) {
+
+        alert(
+            "Aluno inválido."
+        );
+
+        return;
+
+    }
+
+
+    await gerarBoletim(
+        alunos[indice]
+    );
+
+}
+
+
+
+/* =====================================================
+   BOLETIM
+===================================================== */
+
+async function gerarBoletim(
+    aluno
+) {
+
+    const trimestre =
+        trimestreSelect.value;
+
+
+    const regra =
+        regras[trimestre];
+
+
+    document.getElementById(
+        "painelBoletim"
+    ).classList.add(
+        "visivel"
+    );
+
+
+    document.getElementById(
+        "boletimNome"
+    ).textContent =
+        aluno.nome;
+
+
+    document.getElementById(
+        "boletimTurma"
+    ).textContent =
+        turmaAtual.nome ||
+        "Não informada";
+
+
+    document.getElementById(
+        "boletimAno"
+    ).textContent =
+        turmaAtual.ano_letivo ||
+        turmaAtual.anoLetivo ||
+        new Date().getFullYear();
+
+
+    document.getElementById(
+        "boletimTrimestre"
+    ).textContent =
+        regra.nome;
+
+
+    document.getElementById(
+        "boletimRegra"
+    ).textContent =
+        `Valor: ${regra.maximo} pontos | Mínimo: ${regra.minimo}`;
+
+
+    /*
+     * Busca as notas atuais do aluno.
+     */
+
+    let notasAluno = [];
+
+
+    try {
+
+        const resposta =
+            await fetch(
+                `/api/notas/aluno/${aluno.id}`
+            );
+
+
+        if (resposta.ok) {
+
+            const dados =
+                await resposta.json();
+
+
+            notasAluno =
+                Array.isArray(dados)
+                    ? dados
+                    : (
+                        Array.isArray(
+                            dados.notas
+                        )
+                            ? dados.notas
+                            : []
+                    );
+
+        }
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar boletim:",
+            erro
+        );
+
+    }
+
+
+    const tabela =
+        document.getElementById(
+            "tabelaBoletim"
+        );
+
+
+    tabela.innerHTML = "";
+
+
+    let somaNotas = 0;
+
+    let quantidadeNotas = 0;
+
+
+    disciplinas.forEach(
+        disciplina => {
+
+
+            const registro =
+                notasAluno.find(
+                    nota =>
+
+                        Number(
+                            nota.disciplina_id ??
+                            nota.disciplinaId
+                        ) ===
+                        Number(
+                            disciplina.id
+                        )
+
+                        &&
+
+                        String(
+                            nota.etapa ??
+                            nota.trimestre
+                        ) ===
+                        String(
+                            trimestre
+                        )
+                );
+
+
+            const nota =
+                registro
+                    ? Number(
+                        registro.nota
+                      )
+                    : 0;
+
+
+            if (registro) {
+
+                somaNotas +=
+                    nota;
+
+                quantidadeNotas++;
+
+            }
+
+
+            const situacao =
+                nota >=
+                regra.minimo
+                    ? "Atingiu o mínimo"
+                    : "Abaixo do mínimo";
+
+
+            const classe =
+                nota >=
+                regra.minimo
+                    ? "boletim-aprovado"
+                    : "boletim-reprovado";
+
+
+            const linha =
+                document.createElement(
+                    "tr"
+                );
+
+
+            linha.innerHTML = `
+
+                <td>
+                    ${escaparHTML(
+                        disciplina.nome
+                    )}
+                </td>
+
+                <td>
+                    ${formatarNumero(
+                        nota
+                    )}
+                </td>
+
+                <td>
+                    ${regra.maximo}
+                </td>
+
+                <td class="${classe}">
+                    ${situacao}
+                </td>
+
+            `;
+
+
+            tabela.appendChild(
+                linha
+            );
+
+        }
+    );
+
+
+    await calcularFrequenciaBoletim(
+        aluno
+    );
+
+
+    let resultado =
+        "SEM NOTAS";
+
+
+    if (
+        quantidadeNotas > 0
+    ) {
+
+        const media =
+            somaNotas /
+            quantidadeNotas;
+
+
+        resultado =
+            media >=
+            regra.minimo
+
+                ? "MÉDIA DENTRO DO MÍNIMO"
+
+                : "ABAIXO DO MÍNIMO";
+
+    }
+
+
+    document.getElementById(
+        "boletimResultado"
+    ).textContent =
+        resultado;
+
+}
+
+
+
+/* =====================================================
+   FREQUÊNCIA DO BOLETIM
+===================================================== */
+
+async function calcularFrequenciaBoletim(
+    aluno
+) {
+
+    try {
+
+        const resposta =
+            await fetch(
+                `/api/frequencia/aluno/${aluno.id}`
+            );
+
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                "Erro ao carregar frequência."
+            );
+
+        }
+
+
+        const dados =
+            await resposta.json();
+
+
+        const faltas =
+            Number(
+                dados.faltas || 0
+            );
+
+
+        const frequencia =
+            Number(
+                dados.frequencia ?? 100
+            );
+
+
+        document.getElementById(
+            "boletimFaltas"
+        ).textContent =
+            faltas;
+
+
+        document.getElementById(
+            "boletimFrequencia"
+        ).textContent =
+            `${formatarNumero(
+                frequencia
+            )}%`;
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar frequência:",
+            erro
+        );
+
+
+        document.getElementById(
+            "boletimFaltas"
+        ).textContent =
+            "0";
+
+
+        document.getElementById(
+            "boletimFrequencia"
+        ).textContent =
+            "100%";
+
+    }
+
+}
+
+
+
+/* =====================================================
+   FECHAR BOLETIM
+===================================================== */
+
+function fecharBoletim() {
+
+    document.getElementById(
+        "painelBoletim"
+    ).classList.remove(
+        "visivel"
+    );
+
+}
+
+
+
+/* =====================================================
+   IMPRIMIR
+===================================================== */
+
+function imprimirBoletim() {
+
+    window.print();
+
+}
+
+
+
+/* =====================================================
+   TELA DE CARREGAMENTO
+===================================================== */
+
+function bloquearTela(
+    texto
+) {
+
+    /*
+     * Não cria uma tela nova para
+     * não interferir no CSS existente.
+     */
+
+    console.log(
+        texto
+    );
+
+}
+
+
+function desbloquearTela() {
+
+    console.log(
+        "Carregamento concluído."
+    );
+
+}
+
+
+
+/* =====================================================
+   UTILIDADES
+===================================================== */
+
+function formatarNumero(
+    numero
+) {
+
+    return Number(
+        numero || 0
+    )
+        .toFixed(1)
+        .replace(
+            ".",
+            ","
+        );
+
+}
+
+
+function escaparHTML(
+    texto
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        texto ?? "";
+
+
+    return div.innerHTML;
+
+}
+
+
+
+/* =====================================================
+   SAIR
+===================================================== */
+
+function sairSistema() {
+
+    const confirmou =
+        confirm(
+            "Deseja sair do sistema?"
+        );
+
+
+    if (!confirmou) {
+
+        return;
+
+    }
+
+
+    sessionStorage.removeItem(
+        "representanteLogado"
+    );
+
+
+    sessionStorage.removeItem(
+        "turmaAtual"
+    );
+
+
+    sessionStorage.removeItem(
+        "alunoSelecionado"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Alunos | Representantes</title>
+
+    <link rel="stylesheet" href="css/sistema.css">
+
+</head>
+
+<body>
+
+    <main class="primeiro-acesso">
+
+        <section class="cadastro-container">
+
+            <div class="cadastro-topo">
+
+                <div class="passo-icone">
+                    2
+                </div>
+
+                <div>
+
+                    <span class="etapa">
+                        PRIMEIRO ACESSO
+                    </span>
+
+                    <h1>
+                        Cadastre os alunos
+                    </h1>
+
+                    <p>
+                        Adicione todos os alunos que pertencem à sua turma.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="progresso-etapas">
+
+                <div class="etapa-linha ativa"></div>
+                <div class="etapa-linha ativa"></div>
+                <div class="etapa-linha"></div>
+
+            </div>
+
+
+            <div class="lista-cadastro-alunos">
+
+                <div class="lista-topo">
+
+                    <div>
+
+                        <h2>
+                            Alunos da turma
+                        </h2>
+
+                        <p>
+                            Total cadastrados:
+                            <strong id="contadorAlunos">0</strong>
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="adicionar-aluno">
+
+                    <input
+                        type="text"
+                        id="nomeAluno"
+                        placeholder="Digite o nome completo do aluno"
+                        autocomplete="off"
+                    >
+
+                    <button
+                        type="button"
+                        id="botaoAdicionar"
+                        onclick="adicionarAluno()"
+                    >
+                        + Adicionar
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="mensagemAluno"
+                    class="mensagem-form"
+                ></div>
+
+
+                <div
+                    id="listaAlunos"
+                    class="lista-alunos"
+                >
+
+                    <div class="lista-vazia">
+
+                        <div>
+                            👥
+                        </div>
+
+                        <strong>
+                            Carregando alunos...
+                        </strong>
+
+                        <span>
+                            Aguarde um momento.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-acoes">
+
+                <a
+                    href="primeiro-acesso.html"
+                    class="botao-voltar"
+                >
+                    ← Voltar
+                </a>
+
+                <button
+                    type="button"
+                    class="botao-continuar"
+                    onclick="continuar()"
+                >
+
+                    Continuar
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        let alunos = [];
+
+        let turmaAtual = null;
+
+
+        const input =
+            document.getElementById("nomeAluno");
+
+        const botaoAdicionar =
+            document.getElementById("botaoAdicionar");
+
+
+        /*
+        =====================================================
+        VERIFICAR LOGIN E TURMA
+        =====================================================
+        */
+
+        function verificarSessao() {
+
+            const representanteSalvo =
+                sessionStorage.getItem("representanteLogado");
+
+            const turmaSalva =
+                sessionStorage.getItem("turmaAtual");
+
+
+            if (!representanteSalvo) {
+
+                window.location.href =
+                    "login.html";
+
+                return false;
+
+            }
+
+
+            if (!turmaSalva) {
+
+                mostrarMensagem(
+                    "Nenhuma turma foi encontrada. Volte e cadastre sua turma.",
+                    "erro-form"
+                );
+
+                return false;
+
+            }
+
+
+            try {
+
+                turmaAtual =
+                    JSON.parse(turmaSalva);
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao ler a turma:",
+                    erro
+                );
+
+                sessionStorage.removeItem(
+                    "turmaAtual"
+                );
+
+                window.location.href =
+                    "primeiro-acesso.html";
+
+                return false;
+
+            }
+
+
+            if (!turmaAtual.id) {
+
+                mostrarMensagem(
+                    "A turma atual é inválida.",
+                    "erro-form"
+                );
+
+                return false;
+
+            }
+
+
+            return true;
+
+        }
+
+
+        /*
+        =====================================================
+        CARREGAR ALUNOS DO BANCO
+        =====================================================
+        */
+
+        async function carregarAlunos() {
+
+            if (!verificarSessao()) {
+                return;
+            }
+
+
+            const lista =
+                document.getElementById("listaAlunos");
+
+
+            lista.innerHTML = `
+
+                <div class="lista-vazia">
+
+                    <div>⏳</div>
+
+                    <strong>
+                        Carregando alunos...
+                    </strong>
+
+                    <span>
+                        Buscando os alunos da turma.
+                    </span>
+
+                </div>
+
+            `;
+
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        `/api/alunos/turma/${turmaAtual.id}`
+                    );
+
+
+                const dados =
+                    await resposta.json();
+
+
+                if (!resposta.ok) {
+
+                    throw new Error(
+                        dados.mensagem ||
+                        "Não foi possível carregar os alunos."
+                    );
+
+                }
+
+
+                alunos =
+                    Array.isArray(dados.alunos)
+                        ? dados.alunos
+                        : [];
+
+
+                atualizarLista();
+
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao carregar alunos:",
+                    erro
+                );
+
+
+                lista.innerHTML = `
+
+                    <div class="lista-vazia">
+
+                        <div>⚠️</div>
+
+                        <strong>
+                            Não foi possível carregar os alunos
+                        </strong>
+
+                        <span>
+                            Verifique se o servidor está funcionando.
+                        </span>
+
+                    </div>
+
+                `;
+
+
+                mostrarMensagem(
+                    "Erro ao carregar os alunos.",
+                    "erro-form"
+                );
+
+            }
+
+        }
+
+
+        /*
+        =====================================================
+        ADICIONAR ALUNO
+        =====================================================
+        */
+
+        async function adicionarAluno() {
+
+            const nome =
+                input.value.trim();
+
+
+            if (!nome) {
+
+                mostrarMensagem(
+                    "Digite o nome do aluno.",
+                    "erro-form"
+                );
+
+                input.focus();
+
+                return;
+
+            }
+
+
+            if (!turmaAtual || !turmaAtual.id) {
+
+                mostrarMensagem(
+                    "Nenhuma turma foi encontrada.",
+                    "erro-form"
+                );
+
+                return;
+
+            }
+
+
+            /*
+            Evita cadastrar o mesmo nome
+            duas vezes na mesma turma.
+            */
+
+            const alunoExistente =
+                alunos.some(
+                    aluno =>
+                        aluno.nome.trim().toLowerCase() ===
+                        nome.toLowerCase()
+                );
+
+
+            if (alunoExistente) {
+
+                mostrarMensagem(
+                    "Este aluno já está cadastrado.",
+                    "erro-form"
+                );
+
+                input.focus();
+
+                return;
+
+            }
+
+
+            botaoAdicionar.disabled = true;
+
+            botaoAdicionar.textContent =
+                "Adicionando...";
+
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        "/api/alunos",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                turma_id:
+                                    turmaAtual.id,
+
+                                nome:
+                                    nome
+
+                            })
+
+                        }
+                    );
+
+
+                const dados =
+                    await resposta.json();
+
+
+                if (!resposta.ok || !dados.sucesso) {
+
+                    throw new Error(
+                        dados.mensagem ||
+                        "Não foi possível cadastrar o aluno."
+                    );
+
+                }
+
+
+                /*
+                Adiciona o aluno retornado
+                pelo banco à lista.
+                */
+
+                alunos.push(
+                    dados.aluno
+                );
+
+
+                input.value = "";
+
+                atualizarLista();
+
+
+                mostrarMensagem(
+                    "Aluno cadastrado com sucesso.",
+                    "sucesso-form"
+                );
+
+
+                input.focus();
+
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao adicionar aluno:",
+                    erro
+                );
+
+
+                mostrarMensagem(
+                    erro.message ||
+                    "Não foi possível cadastrar o aluno.",
+                    "erro-form"
+                );
+
+            } finally {
+
+                botaoAdicionar.disabled =
+                    false;
+
+                botaoAdicionar.textContent =
+                    "+ Adicionar";
+
+            }
+
+        }
+
+
+        /*
+        =====================================================
+        REMOVER ALUNO
+        =====================================================
+        */
+
+        async function removerAluno(id) {
+
+            const aluno =
+                alunos.find(
+                    item =>
+                        Number(item.id) ===
+                        Number(id)
+                );
+
+
+            if (!aluno) {
+                return;
+            }
+
+
+            const confirmar =
+                confirm(
+                    `Deseja remover o aluno "${aluno.nome}" da turma?`
+                );
+
+
+            if (!confirmar) {
+                return;
+            }
+
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        `/api/alunos/${id}`,
+                        {
+                            method: "DELETE"
+                        }
+                    );
+
+
+                const dados =
+                    await resposta.json();
+
+
+                if (!resposta.ok || !dados.sucesso) {
+
+                    throw new Error(
+                        dados.mensagem ||
+                        "Não foi possível remover o aluno."
+                    );
+
+                }
+
+
+                alunos =
+                    alunos.filter(
+                        item =>
+                            Number(item.id) !==
+                            Number(id)
+                    );
+
+
+                atualizarLista();
+
+
+                mostrarMensagem(
+                    "Aluno removido com sucesso.",
+                    "sucesso-form"
+                );
+
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao remover aluno:",
+                    erro
+                );
+
+
+                mostrarMensagem(
+                    erro.message ||
+                    "Não foi possível remover o aluno.",
+                    "erro-form"
+                );
+
+            }
+
+        }
+
+
+        /*
+        =====================================================
+        ATUALIZAR LISTA
+        =====================================================
+        */
+
+        function atualizarLista() {
+
+            const lista =
+                document.getElementById("listaAlunos");
+
+            const contador =
+                document.getElementById("contadorAlunos");
+
+
+            contador.textContent =
+                alunos.length;
+
+
+            if (alunos.length === 0) {
+
+                lista.innerHTML = `
+
+                    <div class="lista-vazia">
+
+                        <div>👥</div>
+
+                        <strong>
+                            Nenhum aluno cadastrado
+                        </strong>
+
+                        <span>
+                            Digite o nome acima para começar.
+                        </span>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            lista.innerHTML =
+                alunos.map(
+                    (aluno, index) => `
+
+                    <div class="aluno-cadastro-item">
+
+                        <div class="numero-aluno">
+                            ${index + 1}
+                        </div>
+
+                        <div class="nome-aluno">
+                            ${escaparHTML(aluno.nome)}
+                        </div>
+
+                        <button
+                            type="button"
+                            onclick="removerAluno(${aluno.id})"
+                            title="Remover aluno"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                `
+                ).join("");
+
+        }
+
+
+        /*
+        =====================================================
+        PROTEÇÃO CONTRA HTML NO NOME
+        =====================================================
+        */
+
+        function escaparHTML(texto) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent =
+                texto;
+
+            return div.innerHTML;
+
+        }
+
+
+        /*
+        =====================================================
+        MENSAGENS
+        =====================================================
+        */
+
+        function mostrarMensagem(
+            texto,
+            classe
+        ) {
+
+            const mensagem =
+                document.getElementById(
+                    "mensagemAluno"
+                );
+
+
+            mensagem.textContent =
+                texto;
+
+
+            mensagem.className =
+                "mensagem-form " +
+                classe;
+
+        }
+
+
+        /*
+        =====================================================
+        CONTINUAR
+        =====================================================
+        */
+
+        function continuar() {
+
+            if (alunos.length === 0) {
+
+                mostrarMensagem(
+                    "Cadastre pelo menos um aluno para continuar.",
+                    "erro-form"
+                );
+
+                return;
+
+            }
+
+
+            /*
+            Não salvamos mais os alunos
+            no localStorage.
+
+            Eles já estão no SQLite.
+            */
+
+
+            window.location.href =
+                "matriz.html";
+
+        }
+
+
+        /*
+        =====================================================
+        ENTER = ADICIONAR
+        =====================================================
+        */
+
+        input.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (event.key === "Enter") {
+
+                    event.preventDefault();
+
+                    adicionarAluno();
+
+                }
+
+            }
+        );
+
+
+        /*
+        =====================================================
+        INICIALIZAÇÃO
+        =====================================================
+        */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                carregarAlunos();
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

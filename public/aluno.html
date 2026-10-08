@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Perfil do Aluno | Representantes</title>
+
+    <link rel="stylesheet" href="css/sistema.css">
+</head>
+
+<body class="sistema-body">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <div class="logo-sidebar">RT</div>
+
+            <div>
+                <strong>REPRESENTANTES</strong>
+                <span>Gestão da Turma</span>
+            </div>
+        </div>
+
+        <nav class="menu-sidebar">
+
+            <a href="inicio.html">
+                <span>⌂</span>
+                Início
+            </a>
+
+            <a href="alunos.html" class="ativo">
+                <span>👥</span>
+                Alunos
+            </a>
+
+            <a href="chamada.html">
+                <span>✓</span>
+                Chamada
+            </a>
+
+            <a href="notas.html">
+                <span>▣</span>
+                Notas
+            </a>
+
+            <a href="dados.html">
+                <span>▥</span>
+                Dados da Turma
+            </a>
+
+            <a href="matriz.html">
+                <span>☷</span>
+                Matriz Curricular
+            </a>
+
+            <a href="configuracoes.html">
+                <span>⚙</span>
+                Configurações
+            </a>
+
+        </nav>
+
+        <div class="sidebar-final">
+
+            <button onclick="sairSistema()">
+                <span>↪</span>
+                Sair
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- CONTEÚDO -->
+    <main class="conteudo-sistema">
+
+        <!-- TOPO -->
+        <header class="topo-sistema">
+
+            <div>
+
+                <span class="topo-label">
+                    ALUNOS / PERFIL
+                </span>
+
+                <h1>Perfil do aluno</h1>
+
+                <p>
+                    Informações acadêmicas e acompanhamento do estudante.
+                </p>
+
+            </div>
+
+            <div class="usuario-topo">
+
+                <div class="avatar-usuario" id="avatarRepresentante">
+                    G
+                </div>
+
+                <div>
+
+                    <strong id="nomeRepresentante">
+                        Representante
+                    </strong>
+
+                    <span id="nomeTurma">
+                        Turma
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- VOLTAR -->
+        <button
+            class="botao-voltar-pagina"
+            onclick="voltarAlunos()"
+        >
+            ← Voltar para alunos
+        </button>
+
+
+        <!-- PERFIL -->
+        <section class="perfil-aluno-principal">
+
+            <div class="perfil-identidade">
+
+                <div
+                    class="avatar-aluno-grande"
+                    id="avatarAluno"
+                >
+                    A
+                </div>
+
+                <div>
+
+                    <span class="perfil-label">
+                        ESTUDANTE
+                    </span>
+
+                    <h2 id="nomeAluno">
+                        Carregando...
+                    </h2>
+
+                    <p id="informacaoTurma">
+                        Turma
+                    </p>
+
+                </div>
+
+            </div>
+
+            <button
+                class="botao-editar-aluno"
+                onclick="abrirEdicao()"
+            >
+                ✎ Editar informações
+            </button>
+
+        </section>
+
+
+        <!-- INDICADORES -->
+        <section class="indicadores-aluno">
+
+            <div class="indicador-aluno">
+
+                <span>Frequência</span>
+
+                <strong
+                    id="frequenciaAluno"
+                    class="indicador-verde"
+                >
+                    0%
+                </strong>
+
+                <small>
+                    calculada pela chamada
+                </small>
+
+            </div>
+
+
+            <div class="indicador-aluno">
+
+                <span>Média geral</span>
+
+                <strong id="mediaAluno">
+                    0,0
+                </strong>
+
+                <small>
+                    notas cadastradas
+                </small>
+
+            </div>
+
+
+            <div class="indicador-aluno">
+
+                <span>Advertências</span>
+
+                <strong id="advertenciasAluno">
+                    0
+                </strong>
+
+                <small>
+                    registros
+                </small>
+
+            </div>
+
+
+            <div class="indicador-aluno">
+
+                <span>Disciplinas</span>
+
+                <strong id="totalDisciplinas">
+                    0
+                </strong>
+
+                <small>
+                    na matriz curricular
+                </small>
+
+            </div>
+
+        </section>
+
+
+        <!-- GRID PRINCIPAL -->
+        <div class="grid-perfil-aluno">
+
+
+            <!-- DADOS PESSOAIS -->
+            <section class="card-perfil">
+
+                <div class="card-perfil-topo">
+
+                    <div>
+
+                        <span class="card-label">
+                            INFORMAÇÕES
+                        </span>
+
+                        <h3>Dados pessoais</h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dados-pessoais">
+
+                    <div>
+
+                        <span>Nome completo</span>
+
+                        <strong id="dadoNome">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>Data de nascimento</span>
+
+                        <strong id="dadoNascimento">
+                            Não informado
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>Idade</span>
+
+                        <strong id="dadoIdade">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>Turma</span>
+
+                        <strong id="dadoTurma">
+                            --
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- FREQUÊNCIA -->
+            <section class="card-perfil">
+
+                <div class="card-perfil-topo">
+
+                    <div>
+
+                        <span class="card-label">
+                            PRESENÇA
+                        </span>
+
+                        <h3>Frequência</h3>
+
+                    </div>
+
+                    <strong
+                        id="porcentagemFrequencia"
+                        class="porcentagem-card"
+                    >
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div class="frequencia-perfil">
+
+                    <div class="circulo-frequencia">
+
+                        <span id="circuloNumero">
+                            0%
+                        </span>
+
+                    </div>
+
+
+                    <div class="legenda-frequencia">
+
+                        <div>
+                            <span class="ponto presente"></span>
+                            Presenças
+
+                            <strong id="totalPresencas">
+                                0
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span class="ponto falta"></span>
+                            Faltas
+
+                            <strong id="totalFaltas">
+                                0
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <p class="texto-informativo">
+                    A frequência será atualizada automaticamente
+                    conforme as chamadas forem registradas.
+                </p>
+
+            </section>
+
+
+            <!-- NOTAS -->
+            <section class="card-perfil card-largo">
+
+                <div class="card-perfil-topo">
+
+                    <div>
+
+                        <span class="card-label">
+                            DESEMPENHO
+                        </span>
+
+                        <h3>Notas por disciplina</h3>
+
+                    </div>
+
+                    <a
+                        href="notas.html"
+                        class="link-card"
+                    >
+                        Gerenciar notas →
+                    </a>
+
+                </div>
+
+
+                <div
+                    id="listaNotasAluno"
+                    class="lista-notas-aluno"
+                >
+                    <div class="estado-vazio-perfil">
+
+                        <div>▣</div>
+
+                        <h4>Carregando notas...</h4>
+
+                        <p>
+                            Buscando informações acadêmicas.
+                        </p>
+
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- ADVERTÊNCIAS -->
+            <section class="card-perfil card-largo">
+
+                <div class="card-perfil-topo">
+
+                    <div>
+
+                        <span class="card-label">
+                            ACOMPANHAMENTO
+                        </span>
+
+                        <h3>Advertências e registros</h3>
+
+                    </div>
+
+                    <button
+                        class="botao-pequeno"
+                        onclick="adicionarAdvertencia()"
+                    >
+                        + Registrar
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="listaAdvertencias"
+                    class="lista-advertencias"
+                >
+                    <div class="estado-vazio-perfil">
+
+                        <div>✓</div>
+
+                        <h4>Carregando registros...</h4>
+
+                        <p>
+                            Buscando informações.
+                        </p>
+
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- MODAL DE EDIÇÃO -->
+    <div
+        id="modalEdicaoAluno"
+        class="modal-sistema"
+    >
+
+        <div class="modal-card">
+
+            <div class="modal-topo">
+
+                <div>
+
+                    <span>EDITAR ESTUDANTE</span>
+
+                    <h2>Informações do aluno</h2>
+
+                </div>
+
+                <button
+                    class="fechar-modal"
+                    onclick="fecharEdicao()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="campo-form">
+
+                <label for="editarNome">
+                    Nome completo
+                </label>
+
+                <input
+                    type="text"
+                    id="editarNome"
+                >
+
+            </div>
+
+
+            <div class="campo-form">
+
+                <label for="editarNascimento">
+                    Data de nascimento
+                </label>
+
+                <input
+                    type="date"
+                    id="editarNascimento"
+                >
+
+            </div>
+
+
+            <div
+                id="mensagemEdicao"
+                class="mensagem-form"
+            ></div>
+
+
+            <div class="modal-acoes">
+
+                <button
+                    class="botao-voltar"
+                    onclick="fecharEdicao()"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    class="botao-continuar"
+                    id="botaoSalvarEdicao"
+                    onclick="salvarEdicao()"
+                >
+                    Salvar alterações
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+<script>
+
+    /* =====================================================
+       ESTADO
+    ===================================================== */
+
+    let alunoAtual = null;
+
+    let representanteLogado = null;
+
+    let turmaAtual = null;
+
+
+    /* =====================================================
+       INICIAR
+    ===================================================== */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        iniciarPagina
+    );
+
+
+    async function iniciarPagina() {
+
+        carregarSessao();
+
+        carregarRepresentante();
+
+        carregarTurma();
+
+        const alunoId =
+            sessionStorage.getItem(
+                "alunoSelecionado"
+            );
+
+
+        if (!alunoId) {
+
+            mostrarAlunoNaoEncontrado();
+
+            return;
+
+        }
+
+
+        await carregarAluno(alunoId);
+
+    }
+
+
+    /* =====================================================
+       SESSÃO
+    ===================================================== */
+
+    function carregarSessao() {
+
+        try {
+
+            const representante =
+                sessionStorage.getItem(
+                    "representanteLogado"
+                );
+
+
+            const turma =
+                sessionStorage.getItem(
+                    "turmaAtual"
+                );
+
+
+            if (representante) {
+
+                representanteLogado =
+                    JSON.parse(representante);
+
+            }
+
+
+            if (turma) {
+
+                turmaAtual =
+                    JSON.parse(turma);
+
+            }
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao carregar sessão:",
+                erro
+            );
+
+        }
+
+
+        if (!representanteLogado) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       REPRESENTANTE
+    ===================================================== */
+
+    function carregarRepresentante() {
+
+        if (!representanteLogado) return;
+
+
+        const nome =
+            representanteLogado.nome ||
+            representanteLogado.usuario ||
+            "Representante";
+
+
+        document.getElementById(
+            "nomeRepresentante"
+        ).textContent =
+            nome;
+
+
+        document.getElementById(
+            "avatarRepresentante"
+        ).textContent =
+            nome
+                .charAt(0)
+                .toUpperCase();
+
+    }
+
+
+    /* =====================================================
+       TURMA
+    ===================================================== */
+
+    function carregarTurma() {
+
+        if (!turmaAtual) return;
+
+
+        const nome =
+            turmaAtual.nome ||
+            "Turma";
+
+
+        document.getElementById(
+            "nomeTurma"
+        ).textContent =
+            nome;
+
+
+        document.getElementById(
+            "informacaoTurma"
+        ).textContent =
+            nome;
+
+
+        document.getElementById(
+            "dadoTurma"
+        ).textContent =
+            nome;
+
+    }
+
+
+    /* =====================================================
+       BUSCAR ALUNO NO BANCO
+    ===================================================== */
+
+    async function carregarAluno(id) {
+
+        try {
+
+            const resposta =
+                await fetch(
+                    `/api/alunos/${id}`
+                );
+
+
+            if (!resposta.ok) {
+
+                throw new Error(
+                    "Aluno não encontrado."
+                );
+
+            }
+
+
+            const dados =
+                await resposta.json();
+
+
+            /*
+             * O backend pode retornar:
+             *
+             * { id, nome, ... }
+             *
+             * ou:
+             *
+             * { aluno: {...} }
+             */
+
+            alunoAtual =
+                dados.aluno ||
+                dados;
+
+
+            prepararDadosAluno();
+
+
+            /*
+             * Essas informações serão buscadas
+             * separadamente.
+             */
+
+            await Promise.all([
+                carregarDisciplinas(),
+                carregarNotas(),
+                carregarFrequencia(),
+                carregarAdvertencias()
+            ]);
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao carregar aluno:",
+                erro
+            );
+
+
+            mostrarAlunoNaoEncontrado();
+
+        }
+
+    }
+
+
+    /* =====================================================
+       DADOS PRINCIPAIS
+    ===================================================== */
+
+    function prepararDadosAluno() {
+
+        if (!alunoAtual) return;
+
+
+        const nome =
+            alunoAtual.nome ||
+            "Aluno";
+
+
+        document.getElementById(
+            "nomeAluno"
+        ).textContent =
+            nome;
+
+
+        document.getElementById(
+            "dadoNome"
+        ).textContent =
+            nome;
+
+
+        document.getElementById(
+            "avatarAluno"
+        ).textContent =
+            nome
+                .charAt(0)
+                .toUpperCase();
+
+
+        const nascimento =
+            alunoAtual.data_nascimento ||
+            alunoAtual.dataNascimento ||
+            "";
+
+
+        document.getElementById(
+            "dadoNascimento"
+        ).textContent =
+            nascimento
+                ? formatarData(nascimento)
+                : "Não informado";
+
+
+        document.getElementById(
+            "dadoIdade"
+        ).textContent =
+            nascimento
+                ? calcularIdade(nascimento) + " anos"
+                : "Não informado";
+
+
+        /*
+         * Enquanto a chamada ainda não estiver
+         * conectada a este perfil, começamos em 0%.
+         */
+
+        atualizarIndicadorFrequencia(
+            0,
+            0,
+            0
+        );
+
+
+        document.getElementById(
+            "advertenciasAluno"
+        ).textContent =
+            "0";
+
+    }
+
+
+    /* =====================================================
+       DISCIPLINAS
+    ===================================================== */
+
+    async function carregarDisciplinas() {
+
+        if (!turmaAtual || !turmaAtual.id) {
+
+            document.getElementById(
+                "totalDisciplinas"
+            ).textContent = "0";
+
+            return;
+
+        }
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    `/api/disciplinas/turma/${turmaAtual.id}`
+                );
+
+
+            if (!resposta.ok) {
+
+                throw new Error(
+                    "Erro ao carregar disciplinas."
+                );
+
+            }
+
+
+            const dados =
+                await resposta.json();
+
+
+            const disciplinas =
+                Array.isArray(dados)
+                    ? dados
+                    : (
+                        Array.isArray(
+                            dados.disciplinas
+                        )
+                            ? dados.disciplinas
+                            : []
+                    );
+
+
+            document.getElementById(
+                "totalDisciplinas"
+            ).textContent =
+                disciplinas.length;
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao carregar disciplinas:",
+                erro
+            );
+
+
+            document.getElementById(
+                "totalDisciplinas"
+            ).textContent =
+                "0";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       NOTAS
+    ===================================================== */
+
+    async function carregarNotas() {
+
+        const container =
+            document.getElementById(
+                "listaNotasAluno"
+            );
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    `/api/notas/aluno/${alunoAtual.id}`
+                );
+
+
+            /*
+             * Caso a rota ainda não esteja criada,
+             * não quebramos o restante da página.
+             */
+
+            if (!resposta.ok) {
+
+                mostrarNotasVazias();
+
+                return;
+
+            }
+
+
+            const dados =
+                await resposta.json();
+
+
+            const notas =
+                Array.isArray(dados)
+                    ? dados
+                    : (
+                        Array.isArray(dados.notas)
+                            ? dados.notas
+                            : []
+                    );
+
+
+            if (notas.length === 0) {
+
+                mostrarNotasVazias();
+
+                return;
+
+            }
+
+
+            let soma = 0;
+
+            let quantidade = 0;
+
+
+            notas.forEach(nota => {
+
+                const valor =
+                    Number(
+                        nota.nota || 0
+                    );
+
+
+                soma += valor;
+
+                quantidade++;
+
+            });
+
+
+            const media =
+                quantidade
+                    ? soma / quantidade
+                    : 0;
+
+
+            document.getElementById(
+                "mediaAluno"
+            ).textContent =
+                media
+                    .toFixed(1)
+                    .replace(".", ",");
+
+
+            container.innerHTML = "";
+
+
+            notas.forEach(nota => {
+
+                const item =
+                    document.createElement("div");
+
+
+                item.className =
+                    "nota-aluno-item";
+
+
+                const disciplina =
+                    nota.disciplina ||
+                    nota.disciplina_nome ||
+                    "Disciplina";
+
+
+                const etapa =
+                    nota.etapa ||
+                    nota.trimestre ||
+                    "Etapa";
+
+
+                item.innerHTML = `
+
+                    <div>
+
+                        <strong>
+                            ${escaparHTML(
+                                disciplina
+                            )}
+                        </strong>
+
+                        <span>
+                            ${escaparHTML(
+                                String(etapa)
+                            )}
+                        </span>
+
+                    </div>
+
+                    <strong class="valor-nota">
+                        ${Number(
+                            nota.nota || 0
+                        ).toFixed(1)}
+                    </strong>
+
+                `;
+
+
+                container.appendChild(item);
+
+            });
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao carregar notas:",
+                erro
+            );
+
+
+            mostrarNotasVazias();
+
+        }
+
+    }
+
+
+    function mostrarNotasVazias() {
+
+        document.getElementById(
+            "mediaAluno"
+        ).textContent =
+            "0,0";
+
+
+        document.getElementById(
+            "listaNotasAluno"
+        ).innerHTML = `
+
+            <div class="estado-vazio-perfil">
+
+                <div>▣</div>
+
+                <h4>Nenhuma nota registrada</h4>
+
+                <p>
+                    As notas cadastradas aparecerão aqui.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       FREQUÊNCIA
+    ===================================================== */
+
+    async function carregarFrequencia() {
+
+        try {
+
+            const resposta =
+                await fetch(
+                    `/api/chamadas/aluno/${alunoAtual.id}`
+                );
+
+
+            if (!resposta.ok) {
+
+                atualizarIndicadorFrequencia(
+                    0,
+                    0,
+                    0
+                );
+
+                return;
+
+            }
+
+
+            const dados =
+                await resposta.json();
+
+
+            const chamadas =
+                Array.isArray(dados)
+                    ? dados
+                    : (
+                        Array.isArray(
+                            dados.chamadas
+                        )
+                            ? dados.chamadas
+                            : []
+                    );
+
+
+            let presencas = 0;
+
+            let faltas = 0;
+
+
+            chamadas.forEach(chamada => {
+
+                if (
+                    Number(chamada.presente) === 1 ||
+                    chamada.presente === true
+                ) {
+
+                    presencas++;
+
+                } else {
+
+                    faltas++;
+
+                }
+
+            });
+
+
+            const total =
+                presencas +
+                faltas;
+
+
+            const frequencia =
+                total > 0
+                    ? (presencas / total) * 100
+                    : 0;
+
+
+            atualizarIndicadorFrequencia(
+                frequencia,
+                presencas,
+                faltas
+            );
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao carregar frequência:",
+                erro
+            );
+
+
+            atualizarIndicadorFrequencia(
+                0,
+                0,
+                0
+            );
+
+        }
+
+    }
+
+
+    function atualizarIndicadorFrequencia(
+        frequencia,
+        presencas,
+        faltas
+    ) {
+
+        const valor =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    Number(frequencia) || 0
+                )
+            );
+
+
+        const texto =
+            `${valor.toFixed(0)}%`;
+
+
+        document.getElementById(
+            "frequenciaAluno"
+        ).textContent =
+            texto;
+
+
+        document.getElementById(
+            "porcentagemFrequencia"
+        ).textContent =
+            texto;
+
+
+        document.getElementById(
+            "circuloNumero"
+        ).textContent =
+            texto;
+
+
+        document.getElementById(
+            "totalPresencas"
+        ).textContent =
+            presencas;
+
+
+        document.getElementById(
+            "totalFaltas"
+        ).textContent =
+            faltas;
+
+
+        /*
+         * Ajusta visualmente o círculo,
+         * caso o CSS utilize conic-gradient.
+         */
+
+        const circulo =
+            document.querySelector(
+                ".circulo-frequencia"
+            );
+
+
+        if (circulo) {
+
+            circulo.style.setProperty(
+                "--frequencia",
+                `${valor}%`
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ADVERTÊNCIAS
+    ===================================================== */
+
+    async function carregarAdvertencias() {
+
+        const container =
+            document.getElementById(
+                "listaAdvertencias"
+            );
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    `/api/advertencias/aluno/${alunoAtual.id}`
+                );
+
+
+            if (!resposta.ok) {
+
+                mostrarAdvertenciasVazias();
+
+                return;
+
+            }
+
+
+            const dados =
+                await resposta.json();
+
+
+            const lista =
+                Array.isArray(dados)
+                    ? dados
+                    : (
+                        Array.isArray(
+                            dados.advertencias
+                        )
+                            ? dados.advertencias
+                            : []
+                    );
+
+
+            document.getElementById(
+                "advertenciasAluno"
+            ).textContent =
+                lista.length;
+
+
+            if (lista.length === 0) {
+
+                mostrarAdvertenciasVazias();
+
+                return;
+
+            }
+
+
+            container.innerHTML = "";
+
+
+            lista.forEach(item => {
+
+                const registro =
+                    document.createElement("div");
+
+
+                registro.className =
+                    "advertencia-item";
+
+
+                registro.innerHTML = `
+
+                    <div class="icone-advertencia">
+                        !
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            ${escaparHTML(
+                                item.descricao ||
+                                "Registro"
+                            )}
+                        </strong>
+
+                        <span>
+                            ${
+                                item.data
+                                    ? formatarData(
+                                        item.data
+                                      )
+                                    : "Data não informada"
+                            }
+                        </span>
+
+                    </div>
+
+                `;
+
+
+                container.appendChild(registro);
+
+            });
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao carregar advertências:",
+                erro
+            );
+
+
+            mostrarAdvertenciasVazias();
+
+        }
+
+    }
+
+
+    function mostrarAdvertenciasVazias() {
+
+        document.getElementById(
+            "advertenciasAluno"
+        ).textContent =
+            "0";
+
+
+        document.getElementById(
+            "listaAdvertencias"
+        ).innerHTML = `
+
+            <div class="estado-vazio-perfil">
+
+                <div>✓</div>
+
+                <h4>Nenhuma advertência registrada</h4>
+
+                <p>
+                    Não existem registros para este aluno.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       ADICIONAR ADVERTÊNCIA
+    ===================================================== */
+
+    async function adicionarAdvertencia() {
+
+        if (!alunoAtual) return;
+
+
+        const descricao =
+            prompt(
+                "Digite a descrição da advertência:"
+            );
+
+
+        if (
+            !descricao ||
+            !descricao.trim()
+        ) {
+
+            return;
+
+        }
+
+
+        try {
+
+            const hoje =
+                new Date()
+                    .toISOString()
+                    .split("T")[0];
+
+
+            const resposta =
+                await fetch(
+                    "/api/advertencias",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                aluno_id:
+                                    alunoAtual.id,
+
+                                descricao:
+                                    descricao.trim(),
+
+                                data:
+                                    hoje
+
+                            })
+
+                    }
+                );
+
+
+            const dados =
+                await resposta.json()
+                    .catch(() => ({}));
+
+
+            if (!resposta.ok) {
+
+                throw new Error(
+                    dados.erro ||
+                    dados.error ||
+                    "Não foi possível registrar a advertência."
+                );
+
+            }
+
+
+            await carregarAdvertencias();
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao registrar advertência:",
+                erro
+            );
+
+
+            alert(
+                erro.message ||
+                "Erro ao registrar advertência."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       EDITAR ALUNO
+    ===================================================== */
+
+    function abrirEdicao() {
+
+        if (!alunoAtual) return;
+
+
+        const nascimento =
+            alunoAtual.data_nascimento ||
+            alunoAtual.dataNascimento ||
+            "";
+
+
+        document.getElementById(
+            "editarNome"
+        ).value =
+            alunoAtual.nome || "";
+
+
+        document.getElementById(
+            "editarNascimento"
+        ).value =
+            nascimento;
+
+
+        document.getElementById(
+            "mensagemEdicao"
+        ).textContent =
+            "";
+
+
+        document.getElementById(
+            "modalEdicaoAluno"
+        ).classList.add("aberto");
+
+    }
+
+
+    function fecharEdicao() {
+
+        document.getElementById(
+            "modalEdicaoAluno"
+        ).classList.remove("aberto");
+
+    }
+
+
+    /* =====================================================
+       SALVAR EDIÇÃO NO BANCO
+    ===================================================== */
+
+    async function salvarEdicao() {
+
+        if (!alunoAtual) return;
+
+
+        const nome =
+            document.getElementById(
+                "editarNome"
+            ).value.trim();
+
+
+        const nascimento =
+            document.getElementById(
+                "editarNascimento"
+            ).value;
+
+
+        if (!nome) {
+
+            mostrarMensagemEdicao(
+                "Informe o nome do aluno.",
+                "erro-form"
+            );
+
+            return;
+
+        }
+
+
+        const botao =
+            document.getElementById(
+                "botaoSalvarEdicao"
+            );
+
+
+        botao.disabled = true;
+
+        botao.textContent =
+            "Salvando...";
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    `/api/alunos/${alunoAtual.id}`,
+                    {
+
+                        method: "PUT",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                nome:
+                                    nome,
+
+                                data_nascimento:
+                                    nascimento || null
+
+                            })
+
+                    }
+                );
+
+
+            const dados =
+                await resposta.json()
+                    .catch(() => ({}));
+
+
+            if (!resposta.ok) {
+
+                throw new Error(
+                    dados.erro ||
+                    dados.error ||
+                    "Não foi possível salvar as alterações."
+                );
+
+            }
+
+
+            alunoAtual.nome =
+                nome;
+
+
+            alunoAtual.data_nascimento =
+                nascimento;
+
+
+            prepararDadosAluno();
+
+            fecharEdicao();
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao editar aluno:",
+                erro
+            );
+
+
+            mostrarMensagemEdicao(
+                erro.message ||
+                "Erro ao salvar alterações.",
+                "erro-form"
+            );
+
+        } finally {
+
+            botao.disabled = false;
+
+            botao.textContent =
+                "Salvar alterações";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       UTILIDADES
+    ===================================================== */
+
+    function calcularIdade(data) {
+
+        if (!data) return "--";
+
+
+        const nascimento =
+            new Date(
+                data + "T00:00:00"
+            );
+
+
+        if (
+            isNaN(
+                nascimento.getTime()
+            )
+        ) {
+
+            return "--";
+
+        }
+
+
+        const hoje =
+            new Date();
+
+
+        let idade =
+            hoje.getFullYear() -
+            nascimento.getFullYear();
+
+
+        const mes =
+            hoje.getMonth() -
+            nascimento.getMonth();
+
+
+        if (
+            mes < 0 ||
+            (
+                mes === 0 &&
+                hoje.getDate() <
+                nascimento.getDate()
+            )
+        ) {
+
+            idade--;
+
+        }
+
+
+        return idade;
+
+    }
+
+
+    function formatarData(data) {
+
+        if (!data) return "--";
+
+
+        const partes =
+            String(data).split("-");
+
+
+        if (
+            partes.length === 3
+        ) {
+
+            return (
+                partes[2] +
+                "/" +
+                partes[1] +
+                "/" +
+                partes[0]
+            );
+
+        }
+
+
+        return data;
+
+    }
+
+
+    function escaparHTML(texto) {
+
+        const div =
+            document.createElement("div");
+
+
+        div.textContent =
+            texto || "";
+
+
+        return div.innerHTML;
+
+    }
+
+
+    function mostrarMensagemEdicao(
+        texto,
+        classe
+    ) {
+
+        const mensagem =
+            document.getElementById(
+                "mensagemEdicao"
+            );
+
+
+        mensagem.textContent =
+            texto;
+
+
+        mensagem.className =
+            "mensagem-form " +
+            classe;
+
+    }
+
+
+    function voltarAlunos() {
+
+        window.location.href =
+            "alunos.html";
+
+    }
+
+
+    function sairSistema() {
+
+        sessionStorage.removeItem(
+            "representanteLogado"
+        );
+
+        sessionStorage.removeItem(
+            "turmaAtual"
+        );
+
+        sessionStorage.removeItem(
+            "alunoSelecionado"
+        );
+
+
+        window.location.href =
+            "login.html";
+
+    }
+
+
+    function mostrarAlunoNaoEncontrado() {
+
+        document.getElementById(
+            "nomeAluno"
+        ).textContent =
+            "Aluno não encontrado";
+
+
+        document.getElementById(
+            "dadoNome"
+        ).textContent =
+            "Nenhum aluno selecionado";
+
+
+        document.getElementById(
+            "informacaoTurma"
+        ).textContent =
+            "Não foi possível localizar o estudante";
+
+    }
+
+
+    /* =====================================================
+       FECHAR MODAL CLICANDO FORA
+    ===================================================== */
+
+    document.getElementById(
+        "modalEdicaoAluno"
+    ).addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                fecharEdicao();
+
+            }
+
+        }
+    );
+    async function carregarFrequencia() {
+
+    if (!aluno || !aluno.id) {
+        return;
+    }
+
+    try {
+
+        const resposta =
+            await fetch(
+                `/api/frequencia/aluno/${aluno.id}`
+            );
+
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                "Erro ao carregar frequência."
+            );
+
+        }
+
+
+        const dados =
+            await resposta.json();
+
+
+        const frequencia =
+            Number(
+                dados.frequencia ?? 100
+            );
+
+
+        const presencas =
+            Number(
+                dados.presencas ?? 0
+            );
+
+
+        const faltas =
+            Number(
+                dados.faltas ?? 0
+            );
+
+
+        /*
+        Indicador principal
+        */
+
+        const indicador =
+            document.getElementById(
+                "frequenciaAluno"
+            );
+
+        if (indicador) {
+
+            indicador.textContent =
+                frequencia + "%";
+
+        }
+
+
+        /*
+        Círculo de frequência
+        */
+
+        const circulo =
+            document.getElementById(
+                "circuloFrequencia"
+            );
+
+        if (circulo) {
+
+            circulo.textContent =
+                frequencia + "%";
+
+        }
+
+
+        /*
+        Presenças
+        */
+
+        const elementoPresencas =
+            document.getElementById(
+                "totalPresencas"
+            );
+
+        if (elementoPresencas) {
+
+            elementoPresencas.textContent =
+                presencas;
+
+        }
+
+
+        /*
+        Faltas
+        */
+
+        const elementoFaltas =
+            document.getElementById(
+                "totalFaltas"
+            );
+
+        if (elementoFaltas) {
+
+            elementoFaltas.textContent =
+                faltas;
+
+        }
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar frequência:",
+            erro
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
