@@ -1,13 +1,18 @@
 {
   "name": "representantes",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Sistema de Representantes de Turma",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "escola",
+    "representantes",
+    "alunos",
+    "educacao"
+  ],
+  "author": "Gustavo Henrique",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
