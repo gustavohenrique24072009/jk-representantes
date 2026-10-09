@@ -201,47 +201,50 @@ const db = {
             return;
         }
 
-        let sqlAdaptado = adaptarSqlPostgres(sqlOriginal);
+       
+let sqlAdaptado = adaptarSqlPostgres(sqlOriginal);
 
-        const convertido = converterParametros(
-            sqlAdaptado,
-            parametros
-        );
+const ehInsert = /^INSERT\s/i.test(sqlOriginal);
 
-        const ehInsert = /^INSERT\s/i.test(sqlOriginal);
+if (ehInsert && !/RETURNING\s/i.test(sqlAdaptado)) {
+    sqlAdaptado += " RETURNING id";
+}
 
-        if (ehInsert && !/RETURNING\s/i.test(sqlAdaptado)) {
-            sqlAdaptado += " RETURNING id";
-        }
+const convertido = converterParametros(
+    sqlAdaptado,
+    parametros
+);
 
-        pool.query(
-            sqlAdaptado,
-            convertido.parametros
-        )
-        .then(resultado => {
+console.log("SQL ENVIADO AO POSTGRES:", convertido.sql);
 
-            const primeiro = resultado.rows[0];
+pool.query(
+    convertido.sql,
+    convertido.parametros
+)
+.then(resultado => {
+    const primeiro = resultado.rows[0];
 
-            callback.call(
-                {
-                    lastID: primeiro?.id || 0,
-                    changes: resultado.rowCount || 0
-                },
-                null
-            );
+    callback.call(
+        {
+            lastID: primeiro?.id || 0,
+            changes: resultado.rowCount || 0
+        },
+        null
+    );
+})
+.catch(erro => {
+    console.error("ERRO NO SQL:", erro.message);
+    console.error("CONSULTA EXECUTADA:", convertido.sql);
+    console.error("PARÂMETROS:", convertido.parametros);
 
-        })
-        .catch(erro => {
-
-            callback.call(
-                {
-                    lastID: 0,
-                    changes: 0
-                },
-                erro
-            );
-
-        });
+    callback.call(
+        {
+            lastID: 0,
+            changes: 0
+        },
+        erro
+    );
+});
     },
 
     all(sql, parametros = [], callback = () => {}) {
