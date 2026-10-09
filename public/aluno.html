@@ -731,75 +731,50 @@
        BUSCAR ALUNO NO BANCO
     ===================================================== */
 
-    async function carregarAluno(id) {
+    
+async function carregarAluno(id) {
 
-        try {
+    try {
 
-            const resposta =
-                await fetch(
-                    `/api/alunos/${id}`
-                );
+        const resposta = await fetch(
+            `/api/alunos/${id}`
+        );
 
-
-            if (!resposta.ok) {
-
-                throw new Error(
-                    "Aluno não encontrado."
-                );
-
-            }
-
-
-            const dados =
-                await resposta.json();
-
-
-            /*
-             * O backend pode retornar:
-             *
-             * { id, nome, ... }
-             *
-             * ou:
-             *
-             * { aluno: {...} }
-             */
-
-            alunoAtual =
-                dados.aluno ||
-                dados;
-
-
-            prepararDadosAluno();
-
-
-            /*
-             * Essas informações serão buscadas
-             * separadamente.
-             */
-
-            await Promise.all([
-                carregarDisciplinas(),
-                carregarNotas(),
-                carregarFrequencia(),
-                carregarAdvertencias()
-            ]);
-
-
-        } catch (erro) {
-
-            console.error(
-                "Erro ao carregar aluno:",
-                erro
-            );
-
-
-            mostrarAlunoNaoEncontrado();
-
+        if (!resposta.ok) {
+            throw new Error("Aluno não encontrado.");
         }
+
+        const dados = await resposta.json();
+
+        /*
+         * Guarda os dados do aluno.
+         */
+        alunoAtual = dados.aluno || dados;
+
+        prepararDadosAluno();
+
+        /*
+         * Carrega as informações complementares.
+         */
+        await Promise.all([
+            carregarDisciplinas(),
+            carregarNotas(),
+            carregarFrequencia(alunoAtual),
+            carregarAdvertencias()
+        ]);
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar aluno:",
+            erro
+        );
+
+        mostrarAlunoNaoEncontrado();
 
     }
 
-
+}
     /* =====================================================
        DADOS PRINCIPAIS
     ===================================================== */
@@ -1146,104 +1121,44 @@
        FREQUÊNCIA
     ===================================================== */
 
-    async function carregarFrequencia() {
-
-        try {
-
-            const resposta =
-                await fetch(
-                    `/api/chamadas/aluno/${alunoAtual.id}`
-                );
-
-
-            if (!resposta.ok) {
-
-                atualizarIndicadorFrequencia(
-                    0,
-                    0,
-                    0
-                );
-
-                return;
-
-            }
-
-
-            const dados =
-                await resposta.json();
-
-
-            const chamadas =
-                Array.isArray(dados)
-                    ? dados
-                    : (
-                        Array.isArray(
-                            dados.chamadas
-                        )
-                            ? dados.chamadas
-                            : []
-                    );
-
-
-            let presencas = 0;
-
-            let faltas = 0;
-
-
-            chamadas.forEach(chamada => {
-
-                if (
-                    Number(chamada.presente) === 1 ||
-                    chamada.presente === true
-                ) {
-
-                    presencas++;
-
-                } else {
-
-                    faltas++;
-
-                }
-
-            });
-
-
-            const total =
-                presencas +
-                faltas;
-
-
-            const frequencia =
-                total > 0
-                    ? (presencas / total) * 100
-                    : 0;
-
-
-            atualizarIndicadorFrequencia(
-                frequencia,
-                presencas,
-                faltas
-            );
-
-
-        } catch (erro) {
-
-            console.error(
-                "Erro ao carregar frequência:",
-                erro
-            );
-
-
-            atualizarIndicadorFrequencia(
-                0,
-                0,
-                0
-            );
-
-        }
-
+   
+async function carregarFrequencia(alunoAtual) {
+    if (!alunoAtual || !alunoAtual.id) {
+        console.warn("Aluno não informado para carregar a frequência.");
+        return;
     }
 
+    try {
+        const resposta = await fetch(
+            `/api/frequencia/aluno/${alunoAtual.id}`
+        );
+
+        if (!resposta.ok) {
+            throw new Error("Erro ao carregar frequência: HTTP " + resposta.status);
+        }
+
+        const dados = await resposta.json();
+
+        const frequencia = Number(dados.frequencia ?? 100);
+        const presencas = Number(dados.presencas ?? 0);
+        const faltas = Number(dados.faltas ?? 0);
+
+        const indicador = document.getElementById("frequenciaAluno");
+        if (indicador) indicador.textContent = frequencia + "%";
+
+        const circulo = document.getElementById("circuloFrequencia");
+        if (circulo) circulo.textContent = frequencia + "%";
+
+        const elementoPresencas = document.getElementById("totalPresencas");
+        if (elementoPresencas) elementoPresencas.textContent = presencas;
+
+        const elementoFaltas = document.getElementById("totalFaltas");
+        if (elementoFaltas) elementoFaltas.textContent = faltas;
+
+    } catch (erro) {
+        console.error("Erro ao carregar frequência:", erro);
+    }
+}
 
     function atualizarIndicadorFrequencia(
         frequencia,
@@ -1944,118 +1859,77 @@
 
         }
     );
-    async function carregarFrequencia() {
+   
+async function carregarFrequencia(alunoAtual) {
 
-    if (!aluno || !aluno.id) {
+    if (!alunoAtual || !alunoAtual.id) {
+        console.warn(
+            "Não foi possível carregar a frequência: aluno não informado."
+        );
         return;
     }
 
     try {
 
-        const resposta =
-            await fetch(
-                `/api/frequencia/aluno/${aluno.id}`
-            );
-
+        const resposta = await fetch(
+            `/api/frequencia/aluno/${alunoAtual.id}`
+        );
 
         if (!resposta.ok) {
-
             throw new Error(
                 "Erro ao carregar frequência."
             );
-
         }
 
+        const dados = await resposta.json();
 
-        const dados =
-            await resposta.json();
+        const frequencia = Number(
+            dados.frequencia ?? 100
+        );
 
+        const presencas = Number(
+            dados.presencas ?? 0
+        );
 
-        const frequencia =
-            Number(
-                dados.frequencia ?? 100
-            );
+        const faltas = Number(
+            dados.faltas ?? 0
+        );
 
-
-        const presencas =
-            Number(
-                dados.presencas ?? 0
-            );
-
-
-        const faltas =
-            Number(
-                dados.faltas ?? 0
-            );
-
-
-        /*
-        Indicador principal
-        */
-
-        const indicador =
-            document.getElementById(
-                "frequenciaAluno"
-            );
+        // Indicador principal
+        const indicador = document.getElementById(
+            "frequenciaAluno"
+        );
 
         if (indicador) {
-
-            indicador.textContent =
-                frequencia + "%";
-
+            indicador.textContent = frequencia + "%";
         }
 
-
-        /*
-        Círculo de frequência
-        */
-
-        const circulo =
-            document.getElementById(
-                "circuloFrequencia"
-            );
+        // Círculo de frequência
+        const circulo = document.getElementById(
+            "circuloFrequencia"
+        );
 
         if (circulo) {
-
-            circulo.textContent =
-                frequencia + "%";
-
+            circulo.textContent = frequencia + "%";
         }
 
-
-        /*
-        Presenças
-        */
-
-        const elementoPresencas =
-            document.getElementById(
-                "totalPresencas"
-            );
+        // Total de presenças
+        const elementoPresencas = document.getElementById(
+            "totalPresencas"
+        );
 
         if (elementoPresencas) {
-
-            elementoPresencas.textContent =
-                presencas;
-
+            elementoPresencas.textContent = presencas;
         }
 
-
-        /*
-        Faltas
-        */
-
-        const elementoFaltas =
-            document.getElementById(
-                "totalFaltas"
-            );
+        // Total de faltas
+        const elementoFaltas = document.getElementById(
+            "totalFaltas"
+        );
 
         if (elementoFaltas) {
-
-            elementoFaltas.textContent =
-                faltas;
-
+            elementoFaltas.textContent = faltas;
         }
-
 
     } catch (erro) {
 
@@ -2065,8 +1939,8 @@
         );
 
     }
-
 }
+
 
 </script>
 
