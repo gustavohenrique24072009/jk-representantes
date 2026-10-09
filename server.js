@@ -64,6 +64,7 @@ if (usandoPostgres) {
 // COMPATIBILIDADE DE SQL
 // =====================================================
 
+
 function converterParametros(sql, parametros = []) {
     let indice = 0;
 
@@ -76,7 +77,7 @@ function converterParametros(sql, parametros = []) {
         sql: novoSql,
         parametros
     };
-}
+}  
 
 function adaptarSqlPostgres(sql) {
     let novoSql = sql;
@@ -184,16 +185,19 @@ const db = {
                     null
                 );
             })
-            .catch(erro => {
-                callback.call(
-                    {
-                        lastID: 0,
-                        changes: 0
-                    },
-                    erro
-                );
-            });
+          .catch(erro => {
+    console.error("ERRO NO SQL:", erro.message);
+    console.error("CONSULTA EXECUTADA:", sqlAdaptado);
+    console.error("PARÂMETROS:", convertido.parametros);
 
+    callback.call(
+        {
+            lastID: 0,
+            changes: 0
+        },
+        erro
+    );
+});
             return;
         }
 
